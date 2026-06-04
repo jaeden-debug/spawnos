@@ -177,7 +177,7 @@ export default function CyclingCalculator() {
         <div>
           <label className="block text-xs font-semibold text-spawn-muted-text mb-2 uppercase tracking-wide">Tank Volume</label>
           <div className="flex gap-2">
-            <input
+            <input title="Calculator input" aria-label="Calculator input"
               type="number" value={tankLitres}
               onChange={(e) => setTankLitres(e.target.value)}
               min="1"
@@ -195,7 +195,7 @@ export default function CyclingCalculator() {
           <label className="block text-xs font-semibold text-spawn-muted-text mb-2 uppercase tracking-wide">
             Cycle Start Date (optional)
           </label>
-          <input
+          <input title="Calculator input" aria-label="Calculator input"
             type="date" value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
             className="w-full px-4 py-3 rounded-xl bg-spawn-bg border border-spawn-border text-spawn-text focus:outline-none focus:border-spawn-cyan/60 transition-colors"
@@ -219,7 +219,7 @@ export default function CyclingCalculator() {
           ].map(({ label, value, setter, color }) => (
             <div key={label}>
               <div className={`text-xs font-semibold mb-1 ${color}`}>{label}</div>
-              <input
+              <input title="Calculator input" aria-label="Calculator input"
                 type="number" value={value}
                 onChange={(e) => setter(e.target.value)}
                 min="0" step="0.25"
@@ -267,7 +267,7 @@ export default function CyclingCalculator() {
               <div>
                 <label className="block text-xs text-spawn-muted-text mb-1">Ammonia Concentration (%)</label>
                 <div className="flex gap-2 items-center">
-                  <input
+                  <input title="Calculator input" aria-label="Calculator input"
                     type="number"
                     value={ammoniaConcentration}
                     onChange={(e) => setAmmoniaConcentration(e.target.value)}

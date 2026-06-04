@@ -10,11 +10,11 @@ const TOOLS_LINKS = [
 ]
 
 const SPECIES_LINKS = [
-  { href: '/species/betta-splendens', label: 'Betta Splendens' },
-  { href: '/species/poecilia-reticulata', label: 'Guppy' },
-  { href: '/species/paracheirodon-innesi', label: 'Neon Tetra' },
-  { href: '/species/corydoras-paleatus', label: 'Corydoras' },
-  { href: '/species/pterophyllum-scalare', label: 'Angelfish' },
+  { href: '/species/betta-fish', label: 'Betta Fish' },
+  { href: '/species/daphnia', label: 'Daphnia' },
+  { href: '/species/scuds', label: 'Scuds' },
+  { href: '/species/cherry-shrimp', label: 'Cherry Shrimp' },
+  { href: '/species/mystery-snail', label: 'Mystery Snail' },
   { href: '/species', label: 'All Species →' },
 ]
 

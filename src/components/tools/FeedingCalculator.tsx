@@ -93,17 +93,17 @@ export default function FeedingCalculator() {
         <div className="grid sm:grid-cols-2 gap-4">
           <div>
             <label className={labelClass}>Number of Fish</label>
-            <input type="number" min="1" className={inputClass} value={fishCount} onChange={(e) => setFishCount(e.target.value)} placeholder="e.g. 12" />
+            <input title="Calculator input" aria-label="Calculator input" type="number" min="1" className={inputClass} value={fishCount} onChange={(e) => setFishCount(e.target.value)} placeholder="e.g. 12" />
           </div>
           <div>
             <label className={labelClass}>Average Length (inches)</label>
-            <input type="number" min="0.5" step="0.5" className={inputClass} value={avgLengthInches} onChange={(e) => setAvgLengthInches(e.target.value)} placeholder="e.g. 1.5" />
+            <input title="Calculator input" aria-label="Calculator input" type="number" min="0.5" step="0.5" className={inputClass} value={avgLengthInches} onChange={(e) => setAvgLengthInches(e.target.value)} placeholder="e.g. 1.5" />
           </div>
         </div>
 
         <div>
           <label className={labelClass}>Fish Type</label>
-          <select className={inputClass} value={fishType} onChange={(e) => setFishType(e.target.value as FishType)}>
+          <select title="Select option" aria-label="Select option" className={inputClass} value={fishType} onChange={(e) => setFishType(e.target.value as FishType)}>
             {Object.entries(FISH_PROFILES).map(([k, v]) => (
               <option key={k} value={k}>{v.label}</option>
             ))}
@@ -112,7 +112,7 @@ export default function FeedingCalculator() {
 
         <div>
           <label className={labelClass}>Food Type</label>
-          <select className={inputClass} value={foodType} onChange={(e) => setFoodType(e.target.value as FoodType)}>
+          <select title="Select option" aria-label="Select option" className={inputClass} value={foodType} onChange={(e) => setFoodType(e.target.value as FoodType)}>
             {Object.entries(FOOD_DENSITY).map(([k, v]) => (
               <option key={k} value={k}>{v.label}</option>
             ))}

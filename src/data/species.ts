@@ -1,6 +1,8 @@
 import type { SpeciesData } from '@/types/species'
+import { EXPANSION_SPECIES } from '@/data/species-expansion'
+import { BATCH2_SPECIES } from '@/data/species-batch2'
 
-export const SPECIES_DATA: SpeciesData[] = [
+const CORE_SPECIES: SpeciesData[] = [
 
   // ─── 1. Betta Fish ──────────────────────────────────────────────────────────
   {
@@ -8,6 +10,12 @@ export const SPECIES_DATA: SpeciesData[] = [
     commonName: 'Betta Fish',
     scientificName: 'Betta splendens',
     family: 'Osphronemidae',
+    category: 'freshwater',
+    blackwater: {
+      daphnia: true,
+      bbs: true,
+      note: 'Bettas are micro-predators that thrive on live and frozen protein. Live daphnia provide gentle roughage that prevents the constipation and bloating common on a pellet-only diet, while baby brine shrimp are the gold-standard conditioning food for spawning pairs and the first food for free-swimming betta fry.',
+    },
     origin: ['Thailand', 'Cambodia', 'Vietnam', 'Laos'],
     habitat: 'Shallow, slow-moving or stagnant water — rice paddies, floodplains, swamps, and roadside ditches. Naturally a blackwater or soft, slightly acidic environment with dense surface vegetation.',
     description: 'The iconic Siamese fighting fish. Males are spectacularly colourful with flowing finnage and must be kept alone. One of the most studied labyrinth fish in the hobby.',
@@ -43,6 +51,12 @@ export const SPECIES_DATA: SpeciesData[] = [
     commonName: 'Axolotl',
     scientificName: 'Ambystoma mexicanum',
     family: 'Ambystomatidae',
+    category: 'amphibian',
+    blackwater: {
+      daphnia: true,
+      scuds: true,
+      note: 'Live scuds (Gammarus/Hyalella) are an excellent enrichment food for juvenile and adult axolotls — they trigger natural hunting behaviour and add chitin and carotenoids that earthworm-only diets lack. Live daphnia are ideal for newly free-feeding larvae before they transition to larger foods.',
+    },
     origin: ['Mexico'],
     habitat: 'Lake Xochimilco and its canal system in the highlands of Mexico City — cool, hard, alkaline water at 2,240m elevation with soft muddy substrate and dense aquatic vegetation.',
     description: 'The permanently larval salamander. Neotenic, fully aquatic, and capable of regenerating limbs and organs. Critically endangered in the wild. Requires cool water and meticulous care.',
@@ -381,6 +395,12 @@ export const SPECIES_DATA: SpeciesData[] = [
   {
     slug: 'discus-fish',
     commonName: 'Discus',
+    category: 'freshwater',
+    blackwater: {
+      daphnia: true,
+      bbs: true,
+      note: 'Discus are demanding feeders that colour up and grow fastest on a varied live and frozen diet. Live daphnia aid digestion and add valuable carotenoids, while baby brine shrimp are the standard grow-out food for juveniles and a key conditioning food before spawning.',
+    },
     scientificName: 'Symphysodon spp.',
     family: 'Cichlidae',
     origin: ['Brazil', 'Peru', 'Colombia'],
@@ -414,6 +434,13 @@ export const SPECIES_DATA: SpeciesData[] = [
   // ─── 13. Pea Puffer ──────────────────────────────────────────────────────────
   {
     slug: 'pea-puffer',
+    category: 'freshwater',
+    blackwater: {
+      daphnia: true,
+      scuds: true,
+      bbs: true,
+      note: 'Pea puffers are obligate micro-predators with no interest in dry food — a steady supply of live and frozen invertebrates is non-negotiable. Live daphnia and baby brine shrimp trigger their hunting response, while snails and scuds help wear down their continuously growing beak.',
+    },
     commonName: 'Pea Puffer',
     scientificName: 'Carinotetraodon travancoricus',
     family: 'Tetraodontidae',
@@ -679,6 +706,11 @@ export const SPECIES_DATA: SpeciesData[] = [
     lastUpdated: '2026-05-01',
   },
 ]
+
+// Full catalog = original 20 core species + strategic expansion (live foods,
+// microfauna, snails, plants). Consumers (sitemap, search, hub, CMS fallback)
+// all read SPECIES_DATA, so the expansion is wired everywhere automatically.
+export const SPECIES_DATA: SpeciesData[] = [...CORE_SPECIES, ...EXPANSION_SPECIES, ...BATCH2_SPECIES]
 
 export function getSpeciesBySlug(slug: string): SpeciesData | undefined {
   return SPECIES_DATA.find((s) => s.slug === slug)

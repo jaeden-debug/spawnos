@@ -6,10 +6,11 @@ import { usePathname } from 'next/navigation'
 
 const NAV_LINKS = [
   { href: '/species', label: 'Species' },
+  { href: '/library', label: 'Library' },
+  { href: '/lab-notes', label: 'Lab Notes' },
   { href: '/tools', label: 'Calculators' },
   { href: '/blueprints', label: 'AI Assistant' },
   { href: '/pricing', label: 'Pricing' },
-  { href: '/about', label: 'About' },
 ]
 
 export default function SiteHeader() {

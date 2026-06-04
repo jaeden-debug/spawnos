@@ -83,7 +83,7 @@ export default function GHKHConverter() {
           General Hardness (GH) — Calcium & Magnesium
         </h3>
         <div className="flex gap-3 mb-4">
-          <input
+          <input title="Calculator input" aria-label="Calculator input"
             type="number"
             value={ghValue}
             onChange={(e) => setGhValue(e.target.value)}
@@ -91,7 +91,7 @@ export default function GHKHConverter() {
             className="flex-1 px-4 py-3 rounded-xl bg-spawn-bg border border-spawn-border text-spawn-text focus:outline-none focus:border-spawn-cyan/60 transition-colors"
             placeholder="Enter value"
           />
-          <select
+          <select title="Select option" aria-label="Select option"
             value={ghUnit}
             onChange={(e) => setGhUnit(e.target.value as InputUnit)}
             className="px-3 py-3 rounded-xl bg-spawn-bg border border-spawn-border text-spawn-text focus:outline-none focus:border-spawn-cyan/60 transition-colors text-sm"
@@ -129,7 +129,7 @@ export default function GHKHConverter() {
           Carbonate Hardness (KH) — Buffering Capacity
         </h3>
         <div className="flex gap-3 mb-4">
-          <input
+          <input title="Calculator input" aria-label="Calculator input"
             type="number"
             value={khValue}
             onChange={(e) => setKhValue(e.target.value)}
@@ -137,7 +137,7 @@ export default function GHKHConverter() {
             className="flex-1 px-4 py-3 rounded-xl bg-spawn-bg border border-spawn-border text-spawn-text focus:outline-none focus:border-spawn-cyan/60 transition-colors"
             placeholder="Enter value"
           />
-          <select
+          <select title="Select option" aria-label="Select option"
             value={khUnit}
             onChange={(e) => setKhUnit(e.target.value as InputUnit)}
             className="px-3 py-3 rounded-xl bg-spawn-bg border border-spawn-border text-spawn-text focus:outline-none focus:border-spawn-cyan/60 transition-colors text-sm"

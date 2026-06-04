@@ -9,12 +9,12 @@ import { breadcrumbSchema } from '@/lib/schema'
 export const metadata: Metadata = {
   title: 'Aquarium Species Database — Water Parameters, Care Guides & Breeding',
   description:
-    'The most comprehensive aquarium species database online. Verified water parameters, care difficulty, compatibility, and breeding guides for 20+ freshwater, saltwater, shrimp, and amphibian species.',
+    'The most comprehensive aquarium species database online. Verified water parameters, care difficulty, compatibility, and breeding guides for 100+ freshwater and saltwater fish, shrimp, snails, live foods, microfauna, amphibians, and aquatic plants.',
   alternates: { canonical: '/species' },
   openGraph: {
     title: 'Aquarium Species Database — SpawnOS',
     description:
-      'Verified water parameters, care profiles, and breeding intelligence for 20+ aquarium species. Betta, discus, axolotl, shrimp, clownfish, and more.',
+      'Verified water parameters, care profiles, and breeding intelligence for 100+ aquarium species. Betta, discus, clownfish, tangs, axolotl, shrimp, snails, daphnia, and more.',
     type: 'website',
   },
 }
@@ -23,6 +23,10 @@ const CATEGORY_STATS = [
   { key: 'freshwater', label: 'Freshwater', icon: '🐟' },
   { key: 'saltwater', label: 'Saltwater', icon: '🐠' },
   { key: 'shrimp', label: 'Shrimp', icon: '🦐' },
+  { key: 'snail', label: 'Snails', icon: '🐌' },
+  { key: 'live_food', label: 'Live Foods', icon: '🦠' },
+  { key: 'microfauna', label: 'Microfauna', icon: '🔬' },
+  { key: 'plant', label: 'Plants', icon: '🌿' },
   { key: 'amphibian', label: 'Amphibians', icon: '🦎' },
 ]
 
@@ -100,8 +104,8 @@ export default async function SpeciesPage() {
                 </h1>
                 <p className="text-spawn-muted-text leading-relaxed text-lg">
                   Peer-reviewed water parameters, scientific care data, breeding protocols, and
-                  disease identification for {totalSpecies}+ species — freshwater, saltwater, shrimp,
-                  and amphibians. Built for serious aquarists and breeders.
+                  disease identification for {totalSpecies}+ species — freshwater fish, shrimp, snails,
+                  live foods, microfauna, and aquatic plants. Built for serious aquarists and breeders.
                 </p>
               </div>
 

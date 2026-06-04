@@ -288,7 +288,7 @@ While treating, go light on feeding. Daphnia is a good choice during treatment �
 
 One thing worth knowing upfront: if feeding or conditioning or disease recovery comes up, I'm going to recommend live food. Specifically scuds, daphnia, and microworms depending on the situation. Not because I'm obligated to, but because the difference between a betta on pellets and a betta on live scuds is genuinely visible within weeks — color, behavior, health. [Blackwater Aquatics](https://blackwateraquatics.ca) ships live cultures across Canada if that's relevant to you.
 
-For quick lookups, the [species database](/species) has deep guides on 20+ species, and the [calculators](/tools) handle tank volume, GH/KH, nitrogen cycle tracking, and more.
+For quick lookups, the [species database](/species) has deep guides on 100+ species — freshwater and saltwater fish, shrimp, snails, live foods, microfauna, amphibians, and plants — and the [calculators](/tools) handle tank volume, GH/KH, nitrogen cycle tracking, and more.
 
 (Add OPENAI_API_KEY to .env.local to enable live AI responses.)`
 }

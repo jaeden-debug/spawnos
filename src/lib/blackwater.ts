@@ -236,6 +236,33 @@ export const SPAWNOS_LINKS = {
     'neon-tetra', 'corydoras', 'angelfish', 'goldfish', 'guppy', 'kuhli-loach',
     'bristlenose-pleco', 'pea-puffer', 'oscar-fish', 'clownfish', 'molly-fish',
     'platy-fish', 'zebra-danio', 'hillstream-loach', 'rope-fish',
+    // Live foods (Blackwater funnel)
+    'daphnia', 'scuds', 'moina', 'baby-brine-shrimp', 'microworms', 'vinegar-eels',
+    'grindal-worms', 'white-worms', 'banana-worms', 'walter-worms', 'blackworms',
+    'copepods', 'seed-shrimp',
+    // Microfauna & problem organisms
+    'detritus-worms', 'planaria', 'hydra', 'rotifers', 'infusoria', 'vorticella', 'green-water',
+    // Snails
+    'mystery-snail', 'nerite-snail', 'ramshorn-snail', 'bladder-snail',
+    'malaysian-trumpet-snail', 'assassin-snail',
+    // Plants & nuisance algae
+    'java-moss', 'duckweed', 'black-beard-algae', 'blue-green-algae',
+    // Freshwater fish (batch 2)
+    'swordtail', 'cardinal-tetra', 'ember-tetra', 'harlequin-rasbora', 'cherry-barb',
+    'tiger-barb', 'dwarf-gourami', 'pearl-gourami', 'honey-gourami', 'german-blue-ram',
+    'bolivian-ram', 'cockatoo-cichlid', 'kribensis', 'convict-cichlid', 'firemouth-cichlid',
+    'electric-yellow-cichlid', 'otocinclus', 'siamese-algae-eater', 'clown-loach',
+    'white-cloud-minnow', 'boesemani-rainbowfish', 'congo-tetra', 'rummynose-tetra',
+    'silver-dollar', 'denison-barb', 'paradise-fish', 'celestial-pearl-danio',
+    // Saltwater fish (batch 2)
+    'percula-clownfish', 'royal-gramma', 'yellow-tang', 'blue-tang', 'mandarin-dragonet',
+    'firefish-goby', 'neon-goby', 'yellow-watchman-goby', 'banggai-cardinalfish',
+    'pajama-cardinalfish', 'six-line-wrasse', 'flame-angelfish', 'coral-beauty-angelfish',
+    'lawnmower-blenny', 'green-chromis', 'tomato-clownfish', 'maroon-clownfish',
+    'royal-dottyback', 'copperband-butterflyfish', 'foxface-rabbitfish', 'diamond-goby',
+    // Amphibians (batch 2)
+    'african-dwarf-frog', 'african-clawed-frog', 'fire-bellied-toad', 'fire-belly-newt',
+    'spanish-ribbed-newt',
   ].map((s) => `/species/${s}`),
   toolsIndex: '/tools',
   tools: [
@@ -292,7 +319,7 @@ KNOWLEDGE BASE & GUIDES (full sitemap)
 ${renderKB()}
 
 SPAWNOS INTERNAL LINKS (suggest these to keep users in the platform)
-Species guides: ${SPAWNOS_LINKS.speciesIndex} (20+ species incl. ${SPAWNOS_LINKS.species.slice(0, 8).join(', ')} …)
+Species guides: ${SPAWNOS_LINKS.speciesIndex} (100+ species incl. ${SPAWNOS_LINKS.species.slice(0, 8).join(', ')} …)
 Calculators: ${SPAWNOS_LINKS.toolsIndex} (incl. ${SPAWNOS_LINKS.tools.slice(0, 6).join(', ')} …)
 AI Tank Blueprint generator: ${SPAWNOS_LINKS.blueprints}
 

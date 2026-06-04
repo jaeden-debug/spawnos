@@ -79,7 +79,7 @@ export default function ValuePotentialCalculator() {
         ].map(({ key, label, options }) => (
           <div key={key}>
             <label className="block text-xs font-medium text-spawn-muted-text mb-1 uppercase tracking-wider">{label}</label>
-            <select value={fields[key] ?? ''} onChange={(e) => update(key, e.target.value)} className={inputClass}>
+            <select title="Select option" aria-label="Select option" value={fields[key] ?? ''} onChange={(e) => update(key, e.target.value)} className={inputClass}>
               <option value="" className="bg-spawn-surface">Select...</option>
               {options.map((o) => <option key={o.value} value={o.value} className="bg-spawn-surface">{o.label}</option>)}
             </select>
@@ -87,7 +87,7 @@ export default function ValuePotentialCalculator() {
         ))}
         <div>
           <label className="block text-xs font-medium text-spawn-muted-text mb-1 uppercase tracking-wider">Health Score</label>
-          <input type="number" min={1} max={10} value={fields.health_score} onChange={(e) => update('health_score', e.target.value)}
+          <input title="Calculator input" aria-label="Calculator input" type="number" min={1} max={10} value={fields.health_score} onChange={(e) => update('health_score', e.target.value)}
             className={inputClass} />
         </div>
       </div>

@@ -31,11 +31,37 @@ export interface CareProfile {
   breeding: string
 }
 
+// Canonical category taxonomy for the species database. Drives the hub tabs,
+// CMS `category` column, sitemap grouping, and the recommendation engine.
+export type SpeciesCategory =
+  | 'freshwater'
+  | 'saltwater'
+  | 'shrimp'
+  | 'amphibian'
+  | 'turtle'
+  | 'snail'
+  | 'invertebrate'
+  | 'live_food'
+  | 'microfauna'
+  | 'plant'
+
+// Blackwater Aquatics funnel hooks. When present, the species page surfaces
+// the matching live-food product cards and the contextual `note` copy.
+export interface BlackwaterFunnel {
+  daphnia?: boolean
+  scuds?: boolean
+  microworms?: boolean
+  bbs?: boolean
+  note?: string
+}
+
 export interface SpeciesData {
   slug: string
   commonName: string
   scientificName: string
   family: string
+  category?: SpeciesCategory     // defaults inferred from tags when omitted (legacy records)
+  blackwater?: BlackwaterFunnel  // Blackwater Aquatics recommendation hooks
   origin: string[]
   habitat: string
   description: string         // 2–3 sentences for card previews

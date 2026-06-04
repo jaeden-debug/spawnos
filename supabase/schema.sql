@@ -24,8 +24,11 @@ CREATE TYPE species_category AS ENUM (
   'shrimp',
   'amphibian',
   'turtle',
+  'snail',
   'invertebrate',
-  'live_food'
+  'live_food',
+  'microfauna',
+  'plant'
 );
 
 CREATE TYPE difficulty_level AS ENUM (
@@ -233,8 +236,11 @@ INSERT INTO species_categories (slug, label, description, icon, sort_order) VALU
   ('shrimp',        'Shrimp',             'Freshwater and saltwater shrimp species for aquariums.',             '🦐', 3),
   ('amphibian',     'Amphibians',         'Axolotls, frogs, and other aquatic and semi-aquatic amphibians.',    '🦎', 4),
   ('turtle',        'Turtles',            'Aquatic and semi-aquatic turtle species.',                           '🐢', 5),
-  ('invertebrate',  'Invertebrates',      'Snails, crabs, crayfish, and other aquatic invertebrates.',          '🦀', 6),
-  ('live_food',     'Live Foods',         'Daphnia, scuds, microworms, and other live food cultures.',          '🦠', 7);
+  ('snail',         'Snails',             'Nerite, mystery, ramshorn, assassin, and other aquarium snails.',    '🐌', 6),
+  ('invertebrate',  'Invertebrates',      'Crabs, crayfish, and other non-shrimp aquatic invertebrates.',       '🦀', 7),
+  ('live_food',     'Live Foods',         'Daphnia, scuds, microworms, brine shrimp, and other live cultures.', '🦠', 8),
+  ('microfauna',    'Microfauna',         'Planaria, hydra, detritus worms, rotifers, and tank micro-life.',    '🔬', 9),
+  ('plant',         'Aquatic Plants',     'Mosses, floating plants, and nuisance algae identification.',        '🌿', 10);
 
 -- ============================================================
 -- SEARCH INDEX OPTIMIZATION

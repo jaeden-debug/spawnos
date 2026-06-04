@@ -224,3 +224,21 @@ input[type='number']::-webkit-outer-spin-button {
 .page-enter {
   animation: page-in 0.3s ease-out;
 }
+
+/* Accessibility-safe calculator score bars */
+.score-bar-fill,
+.compat-score-fill {
+  width: var(--score-width, 0%);
+}
+
+.score-bar-fill[data-score="good"] {
+  background: #10b981;
+}
+
+.score-bar-fill[data-score="caution"] {
+  background: #f59e0b;
+}
+
+.score-bar-fill[data-score="risk"] {
+  background: #f43f5e;
+}

@@ -120,7 +120,7 @@ export default function FilterSizeCalculator() {
         <div>
           <label className="block text-xs font-semibold text-spawn-muted-text mb-2 uppercase tracking-wide">Tank Volume</label>
           <div className="flex gap-2">
-            <input
+            <input title="Calculator input" aria-label="Calculator input"
               type="number"
               value={tankLitres}
               onChange={(e) => setTankLitres(e.target.value)}
@@ -182,7 +182,7 @@ export default function FilterSizeCalculator() {
       {/* Checkboxes */}
       <div className="flex flex-wrap gap-4">
         <label className="flex items-center gap-2 cursor-pointer">
-          <input
+          <input title="Calculator input" aria-label="Calculator input"
             type="checkbox"
             checked={isPlanted}
             onChange={(e) => setIsPlanted(e.target.checked)}
@@ -192,7 +192,7 @@ export default function FilterSizeCalculator() {
           <span className="text-xs text-spawn-muted-text">(plants absorb nitrates, reduces required turnover slightly)</span>
         </label>
         <label className="flex items-center gap-2 cursor-pointer">
-          <input
+          <input title="Calculator input" aria-label="Calculator input"
             type="checkbox"
             checked={isSaltwater}
             onChange={(e) => setIsSaltwater(e.target.checked)}

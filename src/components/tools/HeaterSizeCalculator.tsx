@@ -100,7 +100,7 @@ export default function HeaterSizeCalculator() {
             Tank Volume
           </label>
           <div className="flex gap-2">
-            <input
+            <input title="Calculator input" aria-label="Calculator input"
               type="number"
               value={tankLitres}
               onChange={(e) => setTankLitres(e.target.value)}
@@ -149,7 +149,7 @@ export default function HeaterSizeCalculator() {
           <label className="block text-xs font-semibold text-spawn-muted-text mb-2 uppercase tracking-wide">
             Room Temperature (°C)
           </label>
-          <input
+          <input title="Calculator input" aria-label="Calculator input"
             type="number"
             value={roomTemp}
             onChange={(e) => setRoomTemp(e.target.value)}
@@ -162,7 +162,7 @@ export default function HeaterSizeCalculator() {
           <label className="block text-xs font-semibold text-spawn-muted-text mb-2 uppercase tracking-wide">
             Target Water Temperature (°C)
           </label>
-          <input
+          <input title="Calculator input" aria-label="Calculator input"
             type="number"
             value={targetTemp}
             onChange={(e) => setTargetTemp(e.target.value)}
@@ -190,7 +190,7 @@ export default function HeaterSizeCalculator() {
       {/* Electricity rate */}
       <div className="flex items-center gap-3">
         <label className="text-xs text-spawn-muted-text whitespace-nowrap">Electricity Rate ($/kWh):</label>
-        <input
+        <input title="Calculator input" aria-label="Calculator input"
           type="number"
           value={electricityRate}
           onChange={(e) => setElectricityRate(e.target.value)}

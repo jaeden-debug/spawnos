@@ -1,5 +1,28 @@
 'use client'
 
+function scoreWidthClass(value: number) {
+  if (value >= 95) return 'w-[95%]'
+  if (value >= 90) return 'w-[90%]'
+  if (value >= 85) return 'w-[85%]'
+  if (value >= 80) return 'w-[80%]'
+  if (value >= 75) return 'w-[75%]'
+  if (value >= 70) return 'w-[70%]'
+  if (value >= 65) return 'w-[65%]'
+  if (value >= 60) return 'w-[60%]'
+  if (value >= 55) return 'w-[55%]'
+  if (value >= 50) return 'w-[50%]'
+  if (value >= 45) return 'w-[45%]'
+  if (value >= 40) return 'w-[40%]'
+  if (value >= 35) return 'w-[35%]'
+  if (value >= 30) return 'w-[30%]'
+  if (value >= 25) return 'w-[25%]'
+  if (value >= 20) return 'w-[20%]'
+  if (value >= 15) return 'w-[15%]'
+  if (value >= 10) return 'w-[10%]'
+  if (value > 0) return 'w-[5%]'
+  return 'w-0'
+}
+
 import { useState } from 'react'
 import { predictPairing } from '@/lib/genetics/predictionEngine'
 import type { Fish, AggressionLevel, FertilityConfidence } from '@/types/fish'
@@ -11,6 +34,31 @@ import {
 } from '@/types/fish'
 import { slugToLabel, scoreColor } from '@/lib/utils'
 import type { PredictionOutput } from '@/types/genetics'
+
+function scoreWidthClass(value: number) {
+  if (value >= 95) return 'w-[95%]'
+  if (value >= 90) return 'w-[90%]'
+  if (value >= 85) return 'w-[85%]'
+  if (value >= 80) return 'w-[80%]'
+  if (value >= 75) return 'w-[75%]'
+  if (value >= 70) return 'w-[70%]'
+  if (value >= 65) return 'w-[65%]'
+  if (value >= 60) return 'w-[60%]'
+  if (value >= 55) return 'w-[55%]'
+  if (value >= 50) return 'w-[50%]'
+  if (value >= 45) return 'w-[45%]'
+  if (value >= 40) return 'w-[40%]'
+  if (value >= 35) return 'w-[35%]'
+  if (value >= 30) return 'w-[30%]'
+  if (value >= 25) return 'w-[25%]'
+  if (value >= 20) return 'w-[20%]'
+  if (value >= 15) return 'w-[15%]'
+  if (value >= 10) return 'w-[10%]'
+  if (value > 0) return 'w-[5%]'
+  return 'w-0'
+}
+
+
 
 function buildFishFromFields(fields: Record<string, string>, sex: 'male' | 'female'): Fish {
   return {
@@ -113,7 +161,7 @@ function FishInputPanel({
               {field.label}
             </label>
             {field.type === 'select' && field.options ? (
-              <select
+              <select title="Select option" aria-label="Select option"
                 value={fields[field.key] ?? ''}
                 onChange={(e) => onChange(field.key, e.target.value)}
                 className="w-full px-3 py-2 rounded-xl bg-spawn-surface border border-spawn-border text-spawn-text text-sm focus:outline-none focus:border-spawn-cyan/50 transition-colors appearance-none"
@@ -124,7 +172,7 @@ function FishInputPanel({
                 ))}
               </select>
             ) : (
-              <input
+              <input title="Calculator input" aria-label="Calculator input"
                 type={field.type}
                 min={field.min}
                 max={field.max}

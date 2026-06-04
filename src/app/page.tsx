@@ -32,11 +32,11 @@ const CATEGORY_ICON: Record<string, string> = {
 const PLATFORM_FEATURES = [
   {
     icon: '🐠',
-    title: '20+ Species Database',
-    desc: 'Every species guide is 2,000–5,000 words of real care science — water parameters, breeding protocols, disease identification, compatible tankmates.',
+    title: '100+ Species Database',
+    desc: 'Every species guide is real care science — water parameters, breeding protocols, disease identification, compatible tankmates — spanning fish, shrimp, snails, live foods, microfauna, and plants.',
     href: '/species',
     accent: 'cyan',
-    stat: '20+ guides',
+    stat: '100+ guides',
   },
   {
     icon: '⚗️',
@@ -199,7 +199,7 @@ export default async function HomePage() {
                 </p>
               </div>
               <Link href="/species" className="hidden sm:inline-flex items-center gap-2 text-sm text-spawn-cyan hover:underline font-semibold shrink-0 ml-8">
-                All 20+ species →
+                All 100+ species →
               </Link>
             </div>
 

@@ -32,7 +32,7 @@ export interface CMSSpecies {
   family: string
   order_name: string | null
   class_name: string | null
-  category: 'freshwater' | 'saltwater' | 'shrimp' | 'amphibian' | 'turtle' | 'invertebrate' | 'live_food'
+  category: 'freshwater' | 'saltwater' | 'shrimp' | 'amphibian' | 'turtle' | 'snail' | 'invertebrate' | 'live_food' | 'microfauna' | 'plant'
   difficulty: 'beginner' | 'intermediate' | 'advanced' | 'expert'
   temperament: 'peaceful' | 'semi-aggressive' | 'aggressive' | 'community' | 'species-only'
   lifespan_years_min: number | null
@@ -108,8 +108,24 @@ function isSupabaseConfigured(): boolean {
 
 // ─── Convert static SpeciesData to CMSSpecies shape ─────────────────────────
 // This allows the page template to work with a single type regardless of data source.
+// Infer a canonical category from the explicit field first, then legacy tags.
+// This keeps the 20 original tag-driven records working while letting the
+// expansion records (live foods, microfauna, snails, plants) categorise correctly.
+function resolveCategory(s: SpeciesData): CMSSpecies['category'] {
+  if (s.category) return s.category
+  if (s.tags.includes('saltwater')) return 'saltwater'
+  if (s.tags.includes('shrimp')) return 'shrimp'
+  if (s.tags.includes('amphibian')) return 'amphibian'
+  if (s.tags.includes('snail')) return 'snail'
+  if (s.tags.includes('live food') || s.tags.includes('live-food')) return 'live_food'
+  if (s.tags.includes('microfauna')) return 'microfauna'
+  if (s.tags.includes('plant')) return 'plant'
+  return 'freshwater'
+}
+
 function staticToCMS(s: SpeciesData): CMSSpecies {
   const p = s.parameters
+  const bw = s.blackwater
   return {
     id: s.slug,
     slug: s.slug,
@@ -118,8 +134,9 @@ function staticToCMS(s: SpeciesData): CMSSpecies {
     family: s.family,
     order_name: null,
     class_name: null,
-    category: (s.tags.includes('saltwater') ? 'saltwater' : s.tags.includes('shrimp') ? 'shrimp' : 'freshwater') as CMSSpecies['category'],
-    difficulty: s.difficulty as CMSSpecies['difficulty'],
+    category: resolveCategory(s),
+    // SpeciesData uses Capitalised difficulty; the CMS layer + UI expect lowercase.
+    difficulty: s.difficulty.toLowerCase() as CMSSpecies['difficulty'],
     temperament: 'peaceful' as CMSSpecies['temperament'],
     lifespan_years_min: null,
     lifespan_years_max: null,
@@ -147,11 +164,11 @@ function staticToCMS(s: SpeciesData): CMSSpecies {
     care_social: null,
     compatible_with: s.care.compatibleWith ?? [],
     incompatible_with: s.care.incompatibleWith ?? [],
-    recommend_daphnia: false,
-    recommend_scuds: false,
-    recommend_microworms: false,
-    recommend_bbs: false,
-    blackwater_note: null,
+    recommend_daphnia: bw?.daphnia ?? false,
+    recommend_scuds: bw?.scuds ?? false,
+    recommend_microworms: bw?.microworms ?? false,
+    recommend_bbs: bw?.bbs ?? false,
+    blackwater_note: bw?.note ?? null,
     seo_title: s.seoTitle,
     seo_description: s.seoDescription,
     seo_keywords: [],
@@ -288,34 +305,40 @@ export async function getSpeciesList(opts?: {
   difficulty?: CMSSpecies['difficulty']
   limit?: number
 }): Promise<CMSSpecies[]> {
+  // Start from the full static catalog (the content source of truth), then let
+  // Supabase rows override matching slugs and contribute any DB-only species.
+  // This guarantees newly added static species (e.g. the expansion catalog)
+  // always appear, even while a Supabase project with an older seed is connected.
+  const bySlug = new Map<string, CMSSpecies>(
+    SPECIES_DATA.map((s) => [s.slug, staticToCMS(s)])
+  )
+
   if (isSupabaseConfigured()) {
     try {
       const { createClient } = await import('@/lib/supabase/server')
       const supabase = await createClient()
-      let query = supabase
+      const { data } = await supabase
         .from('species_with_stats')
         .select('*')
         .eq('published', true)
+        .order('common_name', { ascending: true })
 
-      if (opts?.category) query = query.eq('category', opts.category)
-      if (opts?.difficulty) query = query.eq('difficulty', opts.difficulty)
-      if (opts?.limit) query = query.limit(opts.limit)
-
-      query = query.order('common_name', { ascending: true })
-
-      const { data } = await query
-      if (data && data.length > 0) return data as CMSSpecies[]
+      if (data && data.length > 0) {
+        for (const row of data as CMSSpecies[]) {
+          bySlug.set(row.slug, row) // Supabase is authoritative for slugs it has
+        }
+      }
     } catch {
-      // Fall through
+      // Supabase unavailable — static catalog still serves the full list
     }
   }
 
-  // Static fallback — convert all static species
-  let list = SPECIES_DATA.map(staticToCMS)
+  let list = Array.from(bySlug.values())
   if (opts?.category) list = list.filter((s) => s.category === opts.category)
   if (opts?.difficulty) list = list.filter((s) => s.difficulty === opts.difficulty)
+  list = list.sort((a, b) => a.common_name.localeCompare(b.common_name))
   if (opts?.limit) list = list.slice(0, opts.limit)
-  return list.sort((a, b) => a.common_name.localeCompare(b.common_name))
+  return list
 }
 
 /**
@@ -344,46 +367,21 @@ export async function getFeaturedSpecies(limit = 6): Promise<CMSSpecies[]> {
 }
 
 /**
- * Full-text search species (Supabase only — client-side fallback for static).
+ * Search species across the full merged catalog (static + Supabase).
+ * Filtering the already-merged list keeps every species — including new static
+ * entries not yet present in Supabase — searchable and consistent with the hub.
  */
 export async function searchSpecies(query: string): Promise<CMSSpecies[]> {
-  if (!query.trim()) return getSpeciesList()
+  const all = await getSpeciesList()
+  const q = query.trim().toLowerCase()
+  if (!q) return all
 
-  if (isSupabaseConfigured()) {
-    try {
-      const { createClient } = await import('@/lib/supabase/server')
-      const supabase = await createClient()
-
-      // Try full-text search first
-      const { data: ftsData } = await supabase
-        .from('species')
-        .select('*')
-        .textSearch('search_vector', query)
-        .eq('published', true)
-
-      if (ftsData && ftsData.length > 0) return ftsData as CMSSpecies[]
-
-      // Fall back to ilike
-      const { data: ilikeData } = await supabase
-        .from('species')
-        .select('*')
-        .eq('published', true)
-        .or(`common_name.ilike.%${query}%,scientific_name.ilike.%${query}%`)
-
-      return (ilikeData ?? []) as CMSSpecies[]
-    } catch {
-      // Fall through
-    }
-  }
-
-  // Client-side filter on static data
-  const q = query.toLowerCase()
-  return SPECIES_DATA
-    .filter(
-      (s) =>
-        s.commonName.toLowerCase().includes(q) ||
-        s.scientificName.toLowerCase().includes(q) ||
-        s.family.toLowerCase().includes(q)
-    )
-    .map(staticToCMS)
+  return all.filter(
+    (s) =>
+      s.common_name.toLowerCase().includes(q) ||
+      s.scientific_name.toLowerCase().includes(q) ||
+      s.family.toLowerCase().includes(q) ||
+      s.category.toLowerCase().includes(q) ||
+      (s.seo_keywords ?? []).some((k) => k.toLowerCase().includes(q))
+  )
 }

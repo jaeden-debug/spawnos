@@ -75,7 +75,7 @@ export default function SpeciesHero({ species }: Props) {
             <div className="flex flex-wrap gap-2">
               {species.param_temp && (
                 <div className="param-badge">
-                  🌡️ {species.param_temp.ideal_min ?? species.param_temp.min}–{species.param_temp.ideal_max ?? species.param_temp.max}°C
+                  🌡️ {species.param_temp.ideal_min ?? species.param_temp.min}–{species.param_temp.ideal_max ?? species.param_temp.max}{species.param_temp.unit ?? '°F'}
                 </div>
               )}
               {species.param_ph && (

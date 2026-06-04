@@ -18,7 +18,7 @@ const PLANS = [
     ctaStyle: 'border',
     featured: false,
     features: [
-      { text: 'Full species database — all 20+ species', included: true },
+      { text: 'Full species database — all 100+ species', included: true },
       { text: 'All 15 aquarium calculators', included: true },
       { text: 'AI Aquarium Assistant — 10 messages/day', included: true },
       { text: 'Blackwater Aquatics knowledge base', included: true },
@@ -319,7 +319,7 @@ export default function PricingPage() {
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-14">
               {[
-                { value: '20+', label: 'Species guides', sub: 'Deep-dive care content' },
+                { value: '100+', label: 'Species guides', sub: 'Deep-dive care content' },
                 { value: '15', label: 'Calculators', sub: 'Science-based tools' },
                 { value: 'AI', label: 'Expert assistant', sub: 'Powered by GPT-4o' },
                 { value: '100%', label: 'Data ownership', sub: 'Export anytime, cancel anytime' },
