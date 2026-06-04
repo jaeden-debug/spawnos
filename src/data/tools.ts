@@ -1,0 +1,167 @@
+export interface ToolMeta {
+  slug: string
+  title: string
+  shortTitle: string
+  description: string
+  icon: string
+  seoTitle: string
+  seoDescription: string
+  category: 'water' | 'stocking' | 'chemistry' | 'utility'
+}
+
+export const TOOLS_DATA: ToolMeta[] = [
+  {
+    slug: 'water-parameters',
+    title: 'Aquarium Water Parameter Reference',
+    shortTitle: 'Water Parameters',
+    description: 'Look up ideal water parameter ranges for any freshwater species. Compare pH, GH, KH, temperature, and nitrate thresholds across species.',
+    icon: '⚗️',
+    seoTitle: 'Aquarium Water Parameter Calculator — Ideal pH, GH, Temperature by Species',
+    seoDescription: 'Look up and compare ideal water parameters for freshwater aquarium fish. pH, GH, KH, temperature, and nitrate ranges for betta, guppy, neon tetra, angelfish, and more.',
+    category: 'water',
+  },
+  {
+    slug: 'stocking-density',
+    title: 'Aquarium Stocking Density Calculator',
+    shortTitle: 'Stocking Density',
+    description: 'Calculate safe stocking levels for your tank. Accounts for tank volume, filtration, fish bioload, and species-specific space requirements.',
+    icon: '🐟',
+    seoTitle: 'Aquarium Stocking Density Calculator — How Many Fish Can My Tank Hold?',
+    seoDescription: 'Calculate how many fish your aquarium can safely hold. Accounts for tank volume, filtration type, fish bioload, and species requirements. Free online stocking calculator.',
+    category: 'stocking',
+  },
+  {
+    slug: 'nitrogen-cycle',
+    title: 'Aquarium Nitrogen Cycle Tracker',
+    shortTitle: 'Nitrogen Cycle',
+    description: 'Track your tank\'s nitrogen cycle progress. Input ammonia and nitrite readings to assess where you are in the cycle and what to do next.',
+    icon: '🔬',
+    seoTitle: 'Aquarium Nitrogen Cycle Calculator & Tracker — Is My Tank Cycled?',
+    seoDescription: 'Track aquarium nitrogen cycle progress. Enter ammonia and nitrite readings to determine cycle stage, estimated completion time, and recommended next steps.',
+    category: 'water',
+  },
+  {
+    slug: 'fish-compatibility',
+    title: 'Fish Compatibility Checker',
+    shortTitle: 'Compatibility Checker',
+    description: 'Evaluate whether two species can safely share a tank. Analyzes water parameter overlap, temperament, size disparity, and dietary compatibility.',
+    icon: '🤝',
+    seoTitle: 'Fish Compatibility Checker — Can These Fish Live Together?',
+    seoDescription: 'Check if two freshwater fish species are compatible tankmates. Analyzes water parameter overlap, aggression level, size difference, and cohabitation risk.',
+    category: 'stocking',
+  },
+  {
+    slug: 'tank-volume',
+    title: 'Aquarium Volume Calculator',
+    shortTitle: 'Tank Volume',
+    description: 'Calculate the true water volume of any tank shape — rectangle, cylinder, hex, bowfront, corner, and L-shaped tanks. Accounts for substrate and equipment displacement.',
+    icon: '📐',
+    seoTitle: 'Aquarium Volume Calculator — Gallons and Litres by Tank Shape',
+    seoDescription: 'Calculate aquarium water volume in gallons and litres. Supports rectangular, cylindrical, hexagonal, bowfront, and L-shaped tanks. Accounts for substrate displacement.',
+    category: 'utility',
+  },
+  {
+    slug: 'ph-buffer',
+    title: 'Aquarium pH Buffer Calculator',
+    shortTitle: 'pH Buffer',
+    description: 'Calculate how much pH buffer (sodium bicarbonate, crushed coral, peat, etc.) to add to raise or lower your tank\'s pH to a target value.',
+    icon: '🧪',
+    seoTitle: 'Aquarium pH Buffer Calculator — How to Raise or Lower Aquarium pH',
+    seoDescription: 'Calculate how much pH buffer to add to reach your target aquarium pH. Supports sodium bicarbonate, sodium biphosphate, crushed coral, and peat. Safe dosing guides included.',
+    category: 'chemistry',
+  },
+  {
+    slug: 'temperature-converter',
+    title: 'Aquarium Temperature Converter',
+    shortTitle: 'Temperature Converter',
+    description: 'Convert aquarium temperatures between Fahrenheit and Celsius. Includes species-specific ideal temperature reference table.',
+    icon: '🌡️',
+    seoTitle: 'Aquarium Temperature Converter — Fahrenheit to Celsius for Fish',
+    seoDescription: 'Convert aquarium temperatures between Fahrenheit and Celsius with species-specific ideal temperature ranges. Quick reference for tropical and subtropical fish.',
+    category: 'utility',
+  },
+  {
+    slug: 'feeding-calculator',
+    title: 'Fish Feeding Calculator',
+    shortTitle: 'Feeding Calculator',
+    description: 'Calculate correct daily feeding amounts based on fish count, species type, and food form. Prevents overfeeding — the leading cause of aquarium water quality issues.',
+    icon: '🍽️',
+    seoTitle: 'Fish Feeding Calculator — How Much to Feed Aquarium Fish',
+    seoDescription: 'Calculate correct aquarium fish feeding amounts. Prevents overfeeding and ammonia spikes. Enter fish count, species type, and food type to get precise daily feeding amounts.',
+    category: 'utility',
+  },
+  {
+    slug: 'water-change',
+    title: 'Water Change Calculator',
+    shortTitle: 'Water Change',
+    description: 'Calculate exact volumes to remove, predict nitrate concentration after each change, and determine how many changes are needed to reach your target nitrate level.',
+    icon: '💧',
+    seoTitle: 'Aquarium Water Change Calculator — Volume & Nitrate Reduction',
+    seoDescription: 'Calculate water change volumes and nitrate reduction. Supports litres and US gallons with tap water nitrate adjustment and weekly maintenance recommendations.',
+    category: 'water',
+  },
+  {
+    slug: 'gh-kh-converter',
+    title: 'GH/KH Hardness Converter',
+    shortTitle: 'GH/KH Converter',
+    description: 'Convert between dGH, dKH, ppm (mg/L CaCO₃), and mmol/L. Includes carbonate hardness buffering guide and species GH/KH reference table.',
+    icon: '⚗️',
+    seoTitle: 'GH/KH Hardness Converter — dGH, ppm, mmol/L',
+    seoDescription: 'Convert aquarium water hardness between dGH, dKH, ppm (mg/L CaCO₃), and mmol/L. Includes species reference table and carbonate hardness buffering guide.',
+    category: 'chemistry',
+  },
+  {
+    slug: 'heater-size',
+    title: 'Heater Size Calculator',
+    shortTitle: 'Heater Size',
+    description: 'Calculate the correct wattage for your tank, room environment, and species requirements. Includes model recommendations, dual heater guidance, and monthly energy cost.',
+    icon: '🌡️',
+    seoTitle: 'Aquarium Heater Size Calculator — Wattage & Model Selector',
+    seoDescription: 'Calculate aquarium heater wattage for your tank size and room temperature. Get specific model recommendations with reliability ratings and monthly energy cost estimates.',
+    category: 'utility',
+  },
+  {
+    slug: 'filter-size',
+    title: 'Filter Size Calculator',
+    shortTitle: 'Filter Size',
+    description: 'Calculate required filter flow rate based on tank volume, stocking level, and species bioload. Get specific canister, HOB, sponge, and sump model recommendations.',
+    icon: '🔬',
+    seoTitle: 'Aquarium Filter Size Calculator — Flow Rate & Model Selector',
+    seoDescription: 'Calculate aquarium filter flow rate requirements. Get canister, HOB, sponge, and sump model recommendations based on tank size and bioload.',
+    category: 'water',
+  },
+  {
+    slug: 'lighting-calculator',
+    title: 'Aquarium Lighting Calculator',
+    shortTitle: 'Lighting',
+    description: 'Calculate PAR requirements for your plants. Convert between PAR, lux, and lumens. Get fixture recommendations for low, medium, and high-light planted tanks with CO₂ interaction analysis.',
+    icon: '💡',
+    seoTitle: 'Aquarium Lighting Calculator — PAR, Lux & Plant Requirements',
+    seoDescription: 'Calculate aquarium lighting PAR for planted tanks. Convert between PAR, lux, and lumens. Get fixture recommendations and algae risk assessment based on CO₂ and plant selection.',
+    category: 'utility',
+  },
+  {
+    slug: 'salt-dosage',
+    title: 'Salt Dosage Calculator',
+    shortTitle: 'Salt Dosage',
+    description: 'Calculate precise salt doses for freshwater disease treatment, electrolyte support, brackish water preparation, and marine saltwater mixing with SG presets.',
+    icon: '🧂',
+    seoTitle: 'Aquarium Salt Dosage Calculator — Freshwater, Brackish & Marine',
+    seoDescription: 'Calculate aquarium salt doses for disease treatment, brackish water, and marine saltwater. Includes marine SG presets, gram-to-tablespoon conversions, and species safety warnings.',
+    category: 'chemistry',
+  },
+  {
+    slug: 'medication-calculator',
+    title: 'Medication Dosage Calculator',
+    shortTitle: 'Medication',
+    description: 'Calculate precise doses for kanamycin, metronidazole, copper, ich treatments, and praziquantel. Generates treatment schedules with water change timing and species safety warnings.',
+    icon: '💊',
+    seoTitle: 'Aquarium Medication Dosage Calculator — Fish Disease Treatment',
+    seoDescription: 'Calculate aquarium medication doses for kanamycin, metronidazole, copper, ich treatments and more. Includes treatment schedules, half-dose guidance, and species safety warnings.',
+    category: 'chemistry',
+  },
+]
+
+export function getToolBySlug(slug: string): ToolMeta | undefined {
+  return TOOLS_DATA.find((t) => t.slug === slug)
+}
