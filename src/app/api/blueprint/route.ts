@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import type { BlueprintFormInput, BlueprintOutput } from '@/types/blueprint'
+import { BLACKWATER_AI_CONTEXT } from '@/lib/blackwater'
 
 // ─── Mock output for local dev without OPENAI_API_KEY ────────────────────────
 function getMockBlueprint(input: BlueprintFormInput): BlueprintOutput {
@@ -109,7 +110,7 @@ export async function POST(request: NextRequest) {
       messages: [
         {
           role: 'system',
-          content: 'You are a professional aquarium consultant. Always respond with valid JSON only — no markdown, no code blocks, just the raw JSON object.',
+          content: `You are a professional aquarium consultant. Always respond with valid JSON only — no markdown, no code blocks, just the raw JSON object. In the free-text "Feeding Guide" and "Maintenance Schedule" sections you may reference real Blackwater Aquatics live foods and products using the catalog below (at most one or two links, only where genuinely relevant). Never invent product URLs.\n\n${BLACKWATER_AI_CONTEXT}`,
         },
         {
           role: 'user',

@@ -11,19 +11,54 @@ interface Message {
   streaming?: boolean
 }
 
-// ─── Starter prompts — shown only before first message ───────────────────────
-const STARTERS = [
-  'Build me a 60L blackwater planted betta setup',
-  'What water parameters do cherry shrimp actually need?',
-  "My fish have white spots — what is it and how do I treat it?",
-  'Can discus and angelfish share a tank?',
-  'Set up a 120L community tank for a beginner',
-  'Why does my pH crash overnight?',
+// ─── Categorised starter prompts (shown before first message) ────────────────
+const STARTER_GROUPS: { label: string; icon: React.ReactNode; prompts: string[] }[] = [
+  {
+    label: 'Feeding',
+    icon: <path d="M8 2v12M3 5c0 2 1 3 2.5 3.5M13 5c0 2-1 3-2.5 3.5" />,
+    prompts: [
+      'What is the best live food for my betta?',
+      'My fish stopped eating — what should I do?',
+    ],
+  },
+  {
+    label: 'Setup',
+    icon: <path d="M2 12h12M4 12V7m4 5V4m4 8V8" />,
+    prompts: [
+      'Build me a 20-gallon planted betta tank',
+      'Set up a beginner 120L community tank',
+    ],
+  },
+  {
+    label: 'Health',
+    icon: <path d="M8 2.5 9.6 6l3.9.3-3 2.6.9 3.8L8 10.8 4.6 12.7l.9-3.8-3-2.6L6.4 6 8 2.5Z" />,
+    prompts: [
+      'My fish have white spots — what is it?',
+      'Why is my betta laying on the bottom?',
+    ],
+  },
+  {
+    label: 'Breeding',
+    icon: <path d="M5 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm6 0a3 3 0 1 0 0-6M8 11v3" />,
+    prompts: [
+      'How do I condition a betta pair to spawn?',
+      'What is the best first food for fry?',
+    ],
+  },
 ]
 
-// ─── Inline text renderer ────────────────────────────────────────────────────
-// Handles bold, inline code, and [links](url). That's all.
-// The AI is instructed not to produce headers or heavy markdown.
+// ─── Brand mark used as the assistant avatar ─────────────────────────────────
+function AssistantAvatar() {
+  return (
+    <div className="w-8 h-8 rounded-xl shrink-0 flex items-center justify-center bg-gradient-to-br from-spawn-cyan/25 to-spawn-cyan/5 border border-spawn-cyan/30 shadow-[0_0_16px_rgba(0,212,255,0.18)]">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true" className="text-spawn-cyan">
+        <path d="M8 1.5 9.7 6.3 14.5 8 9.7 9.7 8 14.5 6.3 9.7 1.5 8 6.3 6.3 8 1.5Z" fill="currentColor" />
+      </svg>
+    </div>
+  )
+}
+
+// ─── Inline text renderer: bold, inline code, [links](url) ───────────────────
 function renderInline(text: string, key: string | number): React.ReactNode {
   const parts: React.ReactNode[] = []
   const regex = /(\*\*(.+?)\*\*|`([^`]+)`|\[([^\]]+)\]\(([^)]+)\))/g
@@ -31,33 +66,24 @@ function renderInline(text: string, key: string | number): React.ReactNode {
   let match: RegExpExecArray | null
 
   while ((match = regex.exec(text)) !== null) {
-    if (match.index > last) {
-      parts.push(text.slice(last, match.index))
-    }
+    if (match.index > last) parts.push(text.slice(last, match.index))
     if (match[2] !== undefined) {
       parts.push(
-        <strong key={`b${match.index}`} className="font-semibold text-spawn-text">
-          {match[2]}
-        </strong>
+        <strong key={`b${match.index}`} className="font-semibold text-spawn-text">{match[2]}</strong>
       )
     } else if (match[3] !== undefined) {
       parts.push(
-        <code key={`c${match.index}`} className="font-mono text-spawn-cyan text-[0.85em] bg-spawn-surface/80 px-1.5 py-0.5 rounded">
-          {match[3]}
-        </code>
+        <code key={`c${match.index}`} className="font-mono text-spawn-cyan text-[0.85em] bg-spawn-surface/80 border border-spawn-border/50 px-1.5 py-0.5 rounded">{match[3]}</code>
       )
     } else if (match[4] !== undefined && match[5] !== undefined) {
       const href = match[5]
       const label = match[4]
+      const cls = 'font-medium text-spawn-cyan underline underline-offset-2 decoration-spawn-cyan/30 hover:decoration-spawn-cyan transition-colors'
       parts.push(
         href.startsWith('/') ? (
-          <Link key={`l${match.index}`} href={href} className="text-spawn-cyan underline underline-offset-2 decoration-spawn-cyan/40 hover:decoration-spawn-cyan transition-colors">
-            {label}
-          </Link>
+          <Link key={`l${match.index}`} href={href} className={cls}>{label}</Link>
         ) : (
-          <a key={`l${match.index}`} href={href} target="_blank" rel="noopener noreferrer" className="text-spawn-cyan underline underline-offset-2 decoration-spawn-cyan/40 hover:decoration-spawn-cyan transition-colors">
-            {label}
-          </a>
+          <a key={`l${match.index}`} href={href} target="_blank" rel="noopener noreferrer" className={cls}>{label}↗</a>
         )
       )
     }
@@ -67,35 +93,42 @@ function renderInline(text: string, key: string | number): React.ReactNode {
   return <span key={key}>{parts}</span>
 }
 
-// ─── Prose renderer ──────────────────────────────────────────────────────────
-// Converts the AI's text into clean paragraphs.
-// Supports: paragraphs (blank line), soft line breaks, bullet lists, inline formatting.
-// Does NOT attempt to render markdown headers — the AI is told not to use them.
+// ─── Prose renderer — paragraphs, lists, light headings, inline formatting ───
 function ProseMessage({ text, isStreaming }: { text: string; isStreaming?: boolean }) {
   const cursor = isStreaming ? (
-    <span className="inline-block w-[2px] h-[1.1em] bg-spawn-cyan/80 align-middle ml-0.5 animate-pulse" aria-hidden="true" />
+    <span className="inline-block w-[2px] h-[1.05em] bg-spawn-cyan/80 align-[-0.15em] ml-0.5 animate-pulse" aria-hidden="true" />
   ) : null
 
-  // Split into blocks on double newlines
   const blocks = text.split(/\n\n+/)
+  const visible = blocks.filter((b) => b.trim())
   const rendered: React.ReactNode[] = []
 
   blocks.forEach((block, bi) => {
     const trimmed = block.trim()
     if (!trimmed) return
 
-    // Bullet list block
+    // Light heading support (AI is told to avoid these, but render gracefully)
+    const headingMatch = trimmed.match(/^#{2,4}\s+(.*)$/)
+    if (headingMatch && trimmed.split('\n').length === 1) {
+      rendered.push(
+        <p key={`h${bi}`} className="text-[0.8rem] font-bold uppercase tracking-widest text-spawn-cyan/90 mt-1">
+          {renderInline(headingMatch[1], bi)}
+        </p>
+      )
+      return
+    }
+
     const lines = trimmed.split('\n')
     const isList = lines.every((l) => l.match(/^[-*]\s/) || l.match(/^\d+\.\s/))
 
-    if (isList && lines.length >= 2) {
+    if (isList && lines.length >= 1 && lines.some((l) => l.match(/^[-*]\s/) || l.match(/^\d+\.\s/))) {
       rendered.push(
-        <ul key={`ul${bi}`} className="space-y-1.5 my-3 pl-0">
+        <ul key={`ul${bi}`} className="space-y-2 my-1">
           {lines.map((line, li) => {
             const content = line.replace(/^[-*]\s/, '').replace(/^\d+\.\s/, '')
             return (
-              <li key={li} className="flex gap-2.5 text-[0.925rem] leading-relaxed text-spawn-muted-text">
-                <span className="mt-[0.35em] w-1 h-1 rounded-full bg-spawn-cyan/50 shrink-0" />
+              <li key={li} className="flex gap-2.5 leading-[1.7]">
+                <span className="mt-[0.6em] w-1.5 h-1.5 rounded-full bg-spawn-cyan/60 shrink-0" />
                 <span>{renderInline(content, li)}</span>
               </li>
             )
@@ -105,33 +138,31 @@ function ProseMessage({ text, isStreaming }: { text: string; isStreaming?: boole
       return
     }
 
-    // Mixed block — may have soft line breaks within a paragraph
     const softLines = trimmed.split('\n').filter(Boolean)
-    const isLast = bi === blocks.filter((b) => b.trim()).length - 1
-
     rendered.push(
-      <p key={`p${bi}`} className="text-[0.925rem] leading-[1.75] text-spawn-muted-text">
+      <p key={`p${bi}`} className="leading-[1.75]">
         {softLines.map((line, li) => (
           <span key={li}>
             {renderInline(line, li)}
-            {li < softLines.length - 1 && ' '}
+            {li < softLines.length - 1 && <br />}
           </span>
         ))}
-        {isLast && cursor}
+        {bi === blocks.length - 1 && cursor}
       </p>
     )
   })
 
-  // If still streaming but no blocks rendered yet (first few chars)
-  if (rendered.length === 0 && isStreaming) {
-    rendered.push(
-      <p key="empty" className="text-[0.925rem] leading-[1.75] text-spawn-muted-text">
-        {cursor}
-      </p>
+  if (visible.length === 0 && isStreaming) {
+    return (
+      <div className="flex items-center gap-1.5 h-5" aria-label="Thinking">
+        <span className="w-1.5 h-1.5 rounded-full bg-spawn-cyan/70 animate-bounce [animation-delay:-0.3s]" />
+        <span className="w-1.5 h-1.5 rounded-full bg-spawn-cyan/70 animate-bounce [animation-delay:-0.15s]" />
+        <span className="w-1.5 h-1.5 rounded-full bg-spawn-cyan/70 animate-bounce" />
+      </div>
     )
   }
 
-  return <div className="space-y-3">{rendered}</div>
+  return <div className="space-y-4 text-[0.95rem] text-spawn-text-dim">{rendered}</div>
 }
 
 // ─── Main component ───────────────────────────────────────────────────────────
@@ -149,21 +180,17 @@ export default function AquaChat() {
     bottomRef.current?.scrollIntoView({ behavior: smooth ? 'smooth' : 'instant', block: 'end' })
   }, [])
 
-  useEffect(() => {
-    scrollToBottom()
-  }, [messages, scrollToBottom])
+  useEffect(() => { scrollToBottom() }, [messages, scrollToBottom])
 
-  // Auto-resize textarea
   function resize(el: HTMLTextAreaElement) {
     el.style.height = 'auto'
-    el.style.height = Math.min(el.scrollHeight, 140) + 'px'
+    el.style.height = Math.min(el.scrollHeight, 160) + 'px'
   }
 
   async function send(text: string) {
     const trimmed = text.trim()
     if (!trimmed || isStreaming) return
 
-    // Abort any prior stream
     abortRef.current?.abort()
     abortRef.current = new AbortController()
 
@@ -180,20 +207,14 @@ export default function AquaChat() {
       textareaRef.current.focus()
     }
 
-    // Placeholder streaming message
     const assistantId = `a-${Date.now()}`
-    setMessages((prev) => [
-      ...prev,
-      { id: assistantId, role: 'assistant', content: '', streaming: true },
-    ])
+    setMessages((prev) => [...prev, { id: assistantId, role: 'assistant', content: '', streaming: true }])
 
     try {
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          messages: history.map(({ role, content }) => ({ role, content })),
-        }),
+        body: JSON.stringify({ messages: history.map(({ role, content }) => ({ role, content })) }),
         signal: abortRef.current.signal,
       })
 
@@ -201,7 +222,6 @@ export default function AquaChat() {
         const errData = await res.json().catch(() => ({ error: 'Request failed' }))
         throw new Error(errData.error ?? 'Request failed')
       }
-
       if (!res.body) throw new Error('No response stream')
 
       const reader = res.body.getReader()
@@ -213,21 +233,15 @@ export default function AquaChat() {
         if (done) break
         accumulated += decoder.decode(value, { stream: true })
         const snap = accumulated
-        setMessages((prev) =>
-          prev.map((m) => (m.id === assistantId ? { ...m, content: snap, streaming: true } : m))
-        )
+        setMessages((prev) => prev.map((m) => (m.id === assistantId ? { ...m, content: snap, streaming: true } : m)))
         scrollToBottom(false)
       }
 
-      // Finalise — remove streaming flag
-      setMessages((prev) =>
-        prev.map((m) => (m.id === assistantId ? { ...m, content: accumulated, streaming: false } : m))
-      )
+      setMessages((prev) => prev.map((m) => (m.id === assistantId ? { ...m, content: accumulated, streaming: false } : m)))
     } catch (err: unknown) {
       if (err instanceof Error && err.name === 'AbortError') return
       const msg = err instanceof Error ? err.message : 'Something went wrong.'
       setError(msg)
-      // Remove the empty placeholder
       setMessages((prev) => prev.filter((m) => m.id !== assistantId))
     } finally {
       setIsStreaming(false)
@@ -254,21 +268,27 @@ export default function AquaChat() {
   const isEmpty = messages.length === 0
 
   return (
-    <div className="flex flex-col flex-1 overflow-hidden">
+    <div className="flex flex-col flex-1 overflow-hidden bg-spawn-bg">
 
       {/* ── Top bar ─────────────────────────────────────────────────── */}
-      <div className="flex items-center justify-between px-6 py-3 border-b border-spawn-border/30 shrink-0">
+      <div className="flex items-center justify-between px-4 sm:px-6 py-3 border-b border-spawn-border/40 shrink-0 bg-spawn-bg/70 backdrop-blur-md">
         <div className="flex items-center gap-2.5">
-          <div className="w-2 h-2 rounded-full bg-spawn-cyan animate-pulse" />
-          <span className="text-sm font-semibold text-spawn-text tracking-tight">SpawnOS Intelligence</span>
+          <AssistantAvatar />
+          <div className="leading-tight">
+            <div className="text-sm font-bold text-spawn-text tracking-tight">SpawnOS Intelligence</div>
+            <div className="text-[0.68rem] text-spawn-muted-text flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-spawn-cyan animate-pulse" />
+              Aquatic AI · GPT-4o
+            </div>
+          </div>
         </div>
         {!isEmpty && (
           <button
             onClick={reset}
-            className="text-xs text-spawn-muted-text hover:text-spawn-text transition-colors flex items-center gap-1.5"
+            className="text-xs font-medium text-spawn-muted-text hover:text-spawn-text transition-colors flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-spawn-border/50 hover:border-spawn-border"
           >
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-              <path d="M2 6a4 4 0 1 1 4 4H4m0 0 2-2m-2 2 2 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M2 6a4 4 0 1 1 4 4H4m0 0 2-2m-2 2 2 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             New chat
           </button>
@@ -278,41 +298,56 @@ export default function AquaChat() {
       {/* ── Message thread ──────────────────────────────────────────── */}
       <div className="flex-1 overflow-y-auto">
         {isEmpty ? (
-          /* ── Empty state ─── */
-          <div className="flex flex-col items-center justify-center h-full px-6 pb-8 text-center">
-            <p className="text-spawn-muted-text text-sm mb-8 max-w-xs leading-relaxed">
-              Ask anything — fish care, chemistry, compatibility, breeding, or disease.
+          <div className="flex flex-col items-center justify-center min-h-full px-5 py-10 text-center">
+            <div className="w-14 h-14 rounded-2xl flex items-center justify-center bg-gradient-to-br from-spawn-cyan/25 to-spawn-cyan/5 border border-spawn-cyan/30 shadow-[0_0_32px_rgba(0,212,255,0.22)] mb-6">
+              <svg width="26" height="26" viewBox="0 0 16 16" fill="none" aria-hidden="true" className="text-spawn-cyan">
+                <path d="M8 1.5 9.7 6.3 14.5 8 9.7 9.7 8 14.5 6.3 9.7 1.5 8 6.3 6.3 8 1.5Z" fill="currentColor" />
+              </svg>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-spawn-text mb-2">How can I help your tank?</h2>
+            <p className="text-spawn-muted-text text-sm mb-9 max-w-sm leading-relaxed">
+              Fish care, water chemistry, compatibility, breeding, disease — straight answers from a real aquatic intelligence.
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full max-w-lg">
-              {STARTERS.map((s) => (
-                <button
-                  key={s}
-                  onClick={() => send(s)}
-                  disabled={isStreaming}
-                  className="text-left px-4 py-3 rounded-xl border border-spawn-border/40 text-xs text-spawn-muted-text hover:text-spawn-text hover:border-spawn-border/80 transition-all leading-snug"
-                >
-                  {s}
-                </button>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-2xl">
+              {STARTER_GROUPS.map((group) => (
+                <div key={group.label} className="text-left rounded-2xl border border-spawn-border/50 bg-spawn-card/40 p-4">
+                  <div className="flex items-center gap-2 mb-3">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" className="text-spawn-cyan" aria-hidden="true">
+                      {group.icon}
+                    </svg>
+                    <span className="text-[0.7rem] font-bold uppercase tracking-widest text-spawn-muted-text">{group.label}</span>
+                  </div>
+                  <div className="space-y-1.5">
+                    {group.prompts.map((p) => (
+                      <button
+                        key={p}
+                        onClick={() => send(p)}
+                        disabled={isStreaming}
+                        className="block w-full text-left text-[0.82rem] text-spawn-text-dim hover:text-spawn-text px-3 py-2 rounded-xl hover:bg-spawn-surface/70 transition-colors leading-snug"
+                      >
+                        {p}
+                      </button>
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
           </div>
         ) : (
-          /* ── Conversation ─── */
-          <div className="max-w-2xl mx-auto px-4 sm:px-6 py-6 space-y-8">
+          <div className="max-w-2xl mx-auto px-4 sm:px-6 py-7 space-y-7">
             {messages.map((msg) => (
-              <div key={msg.id}>
+              <div key={msg.id} className="animate-fade-in">
                 {msg.role === 'user' ? (
-                  /* User message */
                   <div className="flex justify-end">
-                    <p className="text-[0.875rem] text-spawn-muted-text max-w-[78%] leading-relaxed text-right">
+                    <div className="bg-spawn-surface border border-spawn-border/60 rounded-2xl rounded-br-md px-4 py-2.5 max-w-[85%] text-[0.95rem] text-spawn-text leading-relaxed">
                       {msg.content}
-                    </p>
+                    </div>
                   </div>
                 ) : (
-                  /* Assistant message */
                   <div className="flex gap-3">
-                    <div className="w-[2px] bg-spawn-cyan/20 rounded-full shrink-0 mt-1" style={{ minHeight: '1.2em' }} />
-                    <div className="flex-1 min-w-0">
+                    <AssistantAvatar />
+                    <div className="flex-1 min-w-0 pt-0.5">
                       <ProseMessage text={msg.content} isStreaming={msg.streaming} />
                     </div>
                   </div>
@@ -322,8 +357,8 @@ export default function AquaChat() {
 
             {error && (
               <div className="flex justify-center">
-                <div className="text-xs text-rose-400/80 flex items-center gap-2">
-                  <span>Something went wrong.</span>
+                <div className="text-xs text-rose-400/90 flex items-center gap-2 bg-rose-500/5 border border-rose-500/20 rounded-lg px-3 py-2">
+                  <span>{error}</span>
                   <button onClick={() => setError('')} className="underline hover:no-underline">Dismiss</button>
                 </div>
               </div>
@@ -335,46 +370,43 @@ export default function AquaChat() {
       </div>
 
       {/* ── Input bar ───────────────────────────────────────────────── */}
-      <div className="shrink-0 border-t border-spawn-border/30 bg-spawn-bg/80 backdrop-blur-sm px-4 sm:px-6 py-4">
+      <div className="shrink-0 border-t border-spawn-border/40 bg-spawn-bg/85 backdrop-blur-md px-4 sm:px-6 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
         <div className="max-w-2xl mx-auto">
-          <div className="flex items-end gap-3">
+          <div className="flex items-end gap-2 rounded-3xl border border-spawn-border/60 bg-spawn-surface/60 pl-4 pr-2 py-2 transition-all focus-within:border-spawn-cyan/40 focus-within:ring-2 focus-within:ring-spawn-cyan/10">
             <textarea
               ref={textareaRef}
               id={`${uid}-input`}
               value={draft}
-              onChange={(e) => {
-                setDraft(e.target.value)
-                resize(e.target)
-              }}
+              onChange={(e) => { setDraft(e.target.value); resize(e.target) }}
               onKeyDown={handleKeyDown}
               placeholder="Ask about your fish, tank, or water chemistry…"
               rows={1}
               disabled={isStreaming}
               aria-label="Message input"
-              className="flex-1 resize-none bg-spawn-surface/50 border border-spawn-border/50 rounded-xl px-4 py-3 text-sm text-spawn-text placeholder:text-spawn-muted focus:outline-none focus:border-spawn-cyan/40 focus:ring-1 focus:ring-spawn-cyan/15 transition-all leading-relaxed disabled:opacity-60"
-              style={{ maxHeight: '140px', minHeight: '46px' }}
+              className="flex-1 resize-none bg-transparent py-2 text-[0.95rem] text-spawn-text placeholder:text-spawn-muted focus:outline-none leading-relaxed disabled:opacity-60"
+              style={{ maxHeight: '160px', minHeight: '24px' }}
             />
             <button
               onClick={() => send(draft)}
               disabled={!draft.trim() || isStreaming}
               aria-label={isStreaming ? 'Waiting for response' : 'Send message'}
-              className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all shrink-0 disabled:opacity-35 disabled:cursor-not-allowed ${
+              className={`w-9 h-9 rounded-full flex items-center justify-center transition-all shrink-0 mb-0.5 disabled:opacity-30 disabled:cursor-not-allowed ${
                 draft.trim() && !isStreaming
-                  ? 'bg-spawn-cyan text-spawn-bg'
-                  : 'bg-spawn-surface border border-spawn-border/50 text-spawn-muted-text'
+                  ? 'bg-spawn-cyan text-spawn-bg shadow-[0_0_16px_rgba(0,212,255,0.4)] hover:scale-105'
+                  : 'bg-spawn-border/60 text-spawn-muted-text'
               }`}
             >
               {isStreaming ? (
-                <span className="w-3 h-3 rounded-sm bg-current opacity-70" />
+                <span className="w-2.5 h-2.5 rounded-sm bg-current opacity-80" />
               ) : (
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                  <path d="M14 2L7 9M14 2L10 14L7 9M14 2L2 6L7 9" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M8 13V3M8 3 4 7M8 3l4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               )}
             </button>
           </div>
-          <p className="text-[0.7rem] text-spawn-muted mt-2 text-center opacity-50">
-            Enter to send · Shift+Enter for new line
+          <p className="text-[0.68rem] text-spawn-muted mt-2 text-center">
+            SpawnOS Intelligence can make mistakes — verify critical parameters. Enter to send · Shift+Enter for new line.
           </p>
         </div>
       </div>

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { MDXRemote } from 'next-mdx-remote/rsc'
+import remarkGfm from 'remark-gfm'
 import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/layout/SiteFooter'
 import SpeciesSidebar from '@/components/species/SpeciesSidebar'
@@ -40,54 +41,70 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 const mdxComponents = {
   h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h2 className="text-2xl font-bold text-spawn-text mt-12 mb-4 scroll-mt-24" {...props} />
+    <h2
+      className="group relative text-[1.7rem] sm:text-3xl font-black tracking-tight text-spawn-text mt-16 mb-5 pl-4 scroll-mt-28 border-l-[3px] border-spawn-cyan/70"
+      {...props}
+    />
   ),
   h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h3 className="text-xl font-semibold text-spawn-text mt-8 mb-3 scroll-mt-24" {...props} />
+    <h3 className="text-xl sm:text-2xl font-bold text-spawn-text mt-10 mb-3 scroll-mt-28" {...props} />
   ),
   h4: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h4 className="text-lg font-semibold text-spawn-text mt-6 mb-2" {...props} />
+    <h4 className="text-base font-bold uppercase tracking-widest text-spawn-cyan/90 mt-8 mb-2" {...props} />
   ),
   p: (props: React.HTMLAttributes<HTMLParagraphElement>) => (
-    <p className="text-spawn-muted-text leading-relaxed mb-4" {...props} />
+    <p className="text-[1.0625rem] text-spawn-text-dim leading-[1.85] mb-5" {...props} />
   ),
   ul: (props: React.HTMLAttributes<HTMLUListElement>) => (
-    <ul className="list-disc list-inside text-spawn-muted-text space-y-1.5 mb-4 ml-2" {...props} />
+    <ul className="space-y-2.5 mb-6 ml-1 marker:text-spawn-cyan list-disc pl-5 text-spawn-text-dim" {...props} />
   ),
   ol: (props: React.HTMLAttributes<HTMLOListElement>) => (
-    <ol className="list-decimal list-inside text-spawn-muted-text space-y-1.5 mb-4 ml-2" {...props} />
+    <ol className="space-y-2.5 mb-6 ml-1 list-decimal pl-5 marker:text-spawn-cyan marker:font-bold text-spawn-text-dim" {...props} />
   ),
   li: (props: React.HTMLAttributes<HTMLLIElement>) => (
-    <li className="text-spawn-muted-text leading-relaxed" {...props} />
+    <li className="text-[1.0625rem] text-spawn-text-dim leading-[1.7] pl-1.5" {...props} />
   ),
   strong: (props: React.HTMLAttributes<HTMLElement>) => (
-    <strong className="font-semibold text-spawn-text" {...props} />
+    <strong className="font-bold text-spawn-text" {...props} />
   ),
   em: (props: React.HTMLAttributes<HTMLElement>) => (
-    <em className="italic text-spawn-muted-text" {...props} />
+    <em className="italic text-spawn-text-dim" {...props} />
   ),
   a: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
-    <a className="text-spawn-cyan hover:underline" target={props.href?.startsWith('http') ? '_blank' : undefined} rel={props.href?.startsWith('http') ? 'noopener noreferrer' : undefined} {...props} />
+    <a
+      className="font-semibold text-spawn-cyan underline decoration-spawn-cyan/30 underline-offset-[3px] hover:decoration-spawn-cyan transition-colors"
+      target={props.href?.startsWith('http') ? '_blank' : undefined}
+      rel={props.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
+      {...props}
+    />
   ),
   blockquote: (props: React.HTMLAttributes<HTMLQuoteElement>) => (
-    <blockquote className="border-l-4 border-spawn-cyan/50 pl-4 my-6 text-spawn-muted-text italic" {...props} />
+    <blockquote
+      className="relative my-7 rounded-2xl border border-spawn-cyan/25 bg-gradient-to-br from-spawn-cyan/[0.07] to-transparent pl-6 pr-5 py-5 text-spawn-text-dim [&>p]:mb-0 [&_strong]:text-spawn-cyan"
+      {...props}
+    />
+  ),
+  code: (props: React.HTMLAttributes<HTMLElement>) => (
+    <code className="rounded-md bg-spawn-surface border border-spawn-border/60 px-1.5 py-0.5 text-[0.85em] font-mono text-spawn-cyan" {...props} />
   ),
   table: (props: React.HTMLAttributes<HTMLTableElement>) => (
-    <div className="overflow-x-auto my-6"><table className="w-full text-sm text-spawn-muted-text border-collapse" {...props} /></div>
+    <div className="my-8 overflow-x-auto rounded-2xl border border-spawn-border/70 bg-spawn-card/60 shadow-card backdrop-blur">
+      <table className="w-full text-sm border-collapse" {...props} />
+    </div>
   ),
   thead: (props: React.HTMLAttributes<HTMLTableSectionElement>) => (
-    <thead className="bg-spawn-surface border-b border-spawn-border" {...props} />
+    <thead className="bg-spawn-cyan/[0.06] border-b border-spawn-border" {...props} />
   ),
   th: (props: React.ThHTMLAttributes<HTMLTableCellElement>) => (
-    <th className="px-4 py-2 text-left font-semibold text-spawn-text text-xs uppercase tracking-wider" {...props} />
+    <th className="px-5 py-3.5 text-left font-bold text-spawn-text text-[0.7rem] uppercase tracking-[0.12em]" {...props} />
   ),
   td: (props: React.TdHTMLAttributes<HTMLTableCellElement>) => (
-    <td className="px-4 py-2 border-b border-spawn-border/30" {...props} />
+    <td className="px-5 py-3.5 text-spawn-text-dim align-top [&>strong]:text-spawn-text" {...props} />
   ),
   tr: (props: React.HTMLAttributes<HTMLTableRowElement>) => (
-    <tr className="hover:bg-spawn-surface/50 transition-colors" {...props} />
+    <tr className="border-b border-spawn-border/30 last:border-0 hover:bg-spawn-surface/40 transition-colors" {...props} />
   ),
-  hr: () => <hr className="border-spawn-border/50 my-10" />,
+  hr: () => <hr className="border-0 h-px my-12 bg-gradient-to-r from-transparent via-spawn-border to-transparent" />,
 }
 
 export default async function SpeciesDetailPage({ params }: Props) {
@@ -210,8 +227,12 @@ export default async function SpeciesDetailPage({ params }: Props) {
 
               {/* MDX LONG-FORM CONTENT */}
               {mdxSource ? (
-                <div className="prose-aqua">
-                  <MDXRemote source={mdxSource} components={mdxComponents} />
+                <div className="max-w-none">
+                  <MDXRemote
+                    source={mdxSource}
+                    components={mdxComponents}
+                    options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }}
+                  />
                 </div>
               ) : (
                 <div className="prose-aqua space-y-8">

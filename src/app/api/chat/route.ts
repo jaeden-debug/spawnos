@@ -1,4 +1,5 @@
 import { NextRequest } from 'next/server'
+import { BLACKWATER_AI_CONTEXT } from '@/lib/blackwater'
 
 export const runtime = 'nodejs'
 
@@ -339,7 +340,7 @@ export async function POST(request: NextRequest) {
     const completion = await openai.chat.completions.create({
       model: process.env.OPENAI_CHAT_MODEL || 'gpt-4o',
       messages: [
-        { role: 'system', content: SYSTEM_PROMPT },
+        { role: 'system', content: `${SYSTEM_PROMPT}\n\n${BLACKWATER_AI_CONTEXT}` },
         ...messages,
       ],
       temperature: 0.65,

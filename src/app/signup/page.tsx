@@ -5,7 +5,9 @@ import Link from 'next/link'
 
 type Step = 'form' | 'success'
 
-const DISCOUNT_CODE = 'SPAWNOS15'
+const DEFAULT_CODE = 'SPAWNOS15'
+const DEFAULT_APPLY_URL =
+  'https://blackwateraquatics.ca/discount/SPAWNOS15?redirect=/collections/live-fish-food-canada'
 
 export default function SignupPage() {
   const [step, setStep] = useState<Step>('form')
@@ -13,6 +15,9 @@ export default function SignupPage() {
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [code, setCode] = useState(DEFAULT_CODE)
+  const [applyUrl, setApplyUrl] = useState(DEFAULT_APPLY_URL)
+  const [copied, setCopied] = useState(false)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -20,30 +25,34 @@ export default function SignupPage() {
     setLoading(true)
 
     try {
-      const endpoint = process.env.NEXT_PUBLIC_NEWSLETTER_ENDPOINT
+      // Registers the email as a Blackwater Aquatics Shopify customer (with
+      // marketing consent → email flow) and returns the first-order code.
+      const res = await fetch('/api/blackwater/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, firstName: name, consent: true }),
+      })
+      const data = await res.json().catch(() => ({}))
 
-      if (endpoint) {
-        // POST to configured newsletter endpoint (Klaviyo, Mailchimp, Shopify, etc.)
-        const res = await fetch(endpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, name }),
-        })
-        if (!res.ok) {
-          // Non-fatal — still show success since we have the email
-          console.warn('Newsletter endpoint returned non-OK status:', res.status)
-        }
+      if (!res.ok) {
+        setError(data.error ?? 'Something went wrong. Please try again.')
+        return
       }
 
-      // Always show success — we captured the email
+      if (data.code) setCode(data.code)
+      if (data.applyUrl) setApplyUrl(data.applyUrl)
       setStep('success')
-    } catch (err) {
-      // If network error on newsletter POST, still show success
-      console.warn('Newsletter submit error (non-fatal):', err)
-      setStep('success')
+    } catch {
+      setError('Network error. Please check your connection and try again.')
     } finally {
       setLoading(false)
     }
+  }
+
+  function copyCode() {
+    navigator.clipboard?.writeText(code)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 1800)
   }
 
   if (step === 'success') {

@@ -6,9 +6,9 @@ import { getFeaturedSpecies } from '@/lib/species-db'
 import { softwareApplicationSchema, websiteSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
-  title: 'SpawnOS — The Aquarium Intelligence Platform',
+  title: 'SpawnOS — The Aquarium Operating System',
   description:
-    'Species database, science-based calculators, AI aquarium assistant, and breeder tools — all in one platform. Built for aquarists who take fishkeeping seriously.',
+    'Species intelligence, science-grade calculators, and an AI that actually knows fish. The operating system for serious aquarists — by Blackwater Aquatics Canada.',
   alternates: { canonical: '/' },
 }
 
@@ -84,68 +84,62 @@ export default async function HomePage() {
       <main>
 
         {/* ── HERO ─────────────────────────────────────────────────────── */}
-        <section className="relative pt-28 pb-24 px-4 overflow-hidden min-h-[88vh] flex items-center">
-          <div className="absolute inset-0 grid-overlay opacity-25 pointer-events-none" />
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-spawn-cyan/4 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 right-1/4 w-[400px] h-[300px] bg-spawn-amber/3 rounded-full blur-3xl pointer-events-none" />
+        <section className="relative w-full min-h-[100svh] overflow-hidden">
+          {/* Brand hero art — desktop (logo sits on the right) */}
+          <img
+            src="/spawnos-aquarium-operating-system-desktop-hero.png"
+            alt="SpawnOS — the aquarium operating system"
+            className="absolute inset-0 w-full h-full object-cover object-center hidden md:block"
+          />
+          {/* Brand hero art — mobile (logo sits in the top half) */}
+          <img
+            src="/spawnos-aquarium-operating-system-mobile-hero.png"
+            alt="SpawnOS — the aquarium operating system"
+            className="absolute inset-0 w-full h-full object-cover object-center md:hidden"
+          />
 
-          <div className="relative max-w-5xl mx-auto w-full text-center">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-spawn-surface/60 border border-spawn-border/60 text-spawn-muted-text text-xs font-semibold mb-8 tracking-wide">
-              <span className="w-1.5 h-1.5 rounded-full bg-spawn-cyan animate-pulse" />
-              By Blackwater Aquatics Canada
-            </div>
+          {/* Legibility gradients — darken the text side without covering the logo */}
+          <div className="absolute inset-0 hidden md:block bg-gradient-to-r from-spawn-bg via-spawn-bg/75 to-transparent pointer-events-none" />
+          <div className="absolute inset-0 md:hidden bg-gradient-to-t from-spawn-bg via-spawn-bg/80 to-transparent pointer-events-none" />
+          {/* Bottom fade into the page */}
+          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-spawn-bg to-transparent pointer-events-none" />
 
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.05] mb-7 text-spawn-text tracking-tight">
-              The platform serious<br />
-              <span className="text-spawn-cyan">fishkeepers actually use.</span>
-            </h1>
+          <div className="relative z-10 min-h-[100svh] max-w-7xl mx-auto px-6 sm:px-8 flex flex-col justify-end pb-20 md:pb-0 md:justify-center md:items-start">
+            <div className="max-w-xl animate-slide-up">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-spawn-surface/70 border border-spawn-border/70 backdrop-blur text-spawn-text-dim text-xs font-semibold mb-6 tracking-wide">
+                <span className="w-1.5 h-1.5 rounded-full bg-spawn-cyan animate-pulse" />
+                Blackwater Aquatics Canada
+              </div>
 
-            <p className="text-xl text-spawn-muted-text leading-relaxed mb-10 max-w-2xl mx-auto">
-              Species database with real parameters. 15 free calculators. An AI assistant that
-              gives direct answers. A breeder dashboard that runs your operation.
-              All in one place.
-            </p>
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.02] tracking-tight text-spawn-text mb-6">
+                The Aquarium<br />
+                <span className="text-spawn-cyan" style={{ textShadow: '0 0 44px rgba(0,212,255,0.45)' }}>
+                  Operating System.
+                </span>
+              </h1>
 
-            <div className="flex flex-col sm:flex-row gap-3 justify-center mb-14">
-              <Link
-                href="/blueprints"
-                className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl bg-spawn-cyan text-spawn-bg font-bold text-sm hover:bg-opacity-90 transition-all"
-                style={{ boxShadow: '0 0 24px rgba(0,212,255,0.2)' }}
-              >
-                Ask the AI anything
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                  <path d="M3 8H13M9 4L13 8L9 12" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </Link>
-              <Link
-                href="/species"
-                className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl border border-spawn-border/70 text-spawn-text hover:border-spawn-cyan/40 hover:bg-spawn-surface/50 transition-all text-sm font-semibold"
-              >
-                Browse Species Database
-              </Link>
-              <Link
-                href="/pricing"
-                className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl text-spawn-muted-text hover:text-spawn-text transition-colors text-sm font-semibold"
-              >
-                See Pricing →
-              </Link>
-            </div>
+              <p className="text-lg sm:text-xl text-spawn-text-dim leading-relaxed mb-9 max-w-md">
+                Species intelligence. Science-grade tools. An AI that actually knows fish.
+              </p>
 
-            {/* Stats bar */}
-            <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
-              {[
-                { value: '20+', label: 'Species Guides' },
-                { value: '15', label: 'Free Calculators' },
-                { value: 'GPT-4o', label: 'AI Model' },
-                { value: '100%', label: 'Data Ownership' },
-                { value: 'Free', label: 'Core Tools, Forever' },
-              ].map((stat, i) => (
-                <div key={i} className="flex items-center gap-2">
-                  {i > 0 && <span className="text-spawn-border/60 hidden sm:block">·</span>}
-                  <span className="font-black text-spawn-text text-sm">{stat.value}</span>
-                  <span className="text-spawn-muted-text text-xs">{stat.label}</span>
-                </div>
-              ))}
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Link
+                  href="/blueprints"
+                  className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl bg-spawn-cyan text-spawn-bg font-bold text-sm hover:bg-opacity-90 transition-all"
+                  style={{ boxShadow: '0 0 28px rgba(0,212,255,0.28)' }}
+                >
+                  Ask the AI
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <path d="M3 8H13M9 4L13 8L9 12" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </Link>
+                <Link
+                  href="/species"
+                  className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl border border-spawn-border/70 bg-spawn-surface/40 backdrop-blur text-spawn-text hover:border-spawn-cyan/40 hover:bg-spawn-surface/70 transition-all text-sm font-semibold"
+                >
+                  Explore Species
+                </Link>
+              </div>
             </div>
           </div>
         </section>
