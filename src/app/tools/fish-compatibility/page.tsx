@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import ToolLayout from '@/components/layout/ToolLayout'
 import CompatibilityChecker from '@/components/tools/CompatibilityChecker'
 import { getToolBySlug } from '@/data/tools'
@@ -41,7 +42,10 @@ function CompatibilityArticle() {
       <p>
         Fish compatibility is one of the most misunderstood topics in aquarium keeping, partly because so many sources
         reduce it to a binary "yes/no" answer that ignores the nuance of tank size, individual fish temperament,
-        setup design, and water parameter overlap.
+        setup design, and water parameter overlap. For the full framework behind this checker, read the{' '}
+        <Link href="/compatibility/fish-compatibility-guide" className="text-spawn-cyan font-semibold underline decoration-spawn-cyan/30 underline-offset-2 hover:decoration-spawn-cyan">
+          complete fish compatibility guide
+        </Link>.
       </p>
 
       <h3>The Four Pillars of Compatibility</h3>

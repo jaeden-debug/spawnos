@@ -5,6 +5,7 @@ import { getAllLabNotes } from '@/lib/lab-notes'
 import { getAllMicrofauna } from '@/lib/microfauna'
 import { getAllProblems } from '@/lib/problems'
 import { getAllCompat } from '@/lib/compatibility'
+import { getAllToolArticleSlugs } from '@/lib/tools-content'
 
 const BASE = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://spawnos.app').replace(/\/$/, '')
 
@@ -19,6 +20,9 @@ const STATIC_ROUTES = [
   { path: '/microfauna', priority: 0.9, changeFrequency: 'weekly' },
   { path: '/problems', priority: 0.9, changeFrequency: 'weekly' },
   { path: '/compatibility', priority: 0.9, changeFrequency: 'weekly' },
+  { path: '/compatibility/fish-compatibility-guide', priority: 0.9, changeFrequency: 'monthly' },
+  { path: '/spawnos-by-blackwater-aquatics', priority: 0.8, changeFrequency: 'monthly' },
+  { path: '/tools-database', priority: 0.8, changeFrequency: 'weekly' },
   { path: '/live-foods', priority: 0.9, changeFrequency: 'monthly' },
   { path: '/blueprints', priority: 0.8, changeFrequency: 'monthly' },
   { path: '/pricing', priority: 0.7, changeFrequency: 'monthly' },
@@ -81,5 +85,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }))
 
-  return [...staticEntries, ...speciesEntries, ...toolEntries, ...labNoteEntries, ...microfaunaEntries, ...problemEntries, ...compatEntries]
+  const toolArticleEntries: MetadataRoute.Sitemap = getAllToolArticleSlugs().map((slug) => ({
+    url: `${BASE}/tools-database/${slug}`,
+    lastModified: now,
+    changeFrequency: 'monthly',
+    priority: 0.8,
+  }))
+
+  return [...staticEntries, ...speciesEntries, ...toolEntries, ...labNoteEntries, ...microfaunaEntries, ...problemEntries, ...compatEntries, ...toolArticleEntries]
 }

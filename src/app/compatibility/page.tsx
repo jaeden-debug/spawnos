@@ -57,7 +57,9 @@ export default function CompatibilityPage() {
             <p>
               Pair these pages with the interactive <Link href="/tools/fish-compatibility" className="text-spawn-cyan font-semibold hover:underline">Fish Compatibility Checker</Link> to
               evaluate your own combinations, and the <Link href="/tools/stocking-density" className="text-spawn-cyan font-semibold hover:underline">Stocking Calculator</Link> to
-              confirm you have the space.
+              confirm you have the space. New here? Start with the{' '}
+              <Link href="/compatibility/fish-compatibility-guide" className="text-spawn-cyan font-semibold hover:underline">complete fish compatibility guide</Link> —
+              the full framework behind every score.
             </p>
           </div>
         </section>

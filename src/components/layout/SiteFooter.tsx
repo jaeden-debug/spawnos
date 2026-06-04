@@ -22,6 +22,7 @@ const SITE_LINKS = [
   { href: '/blueprints', label: 'AI Tank Blueprints' },
   { href: '/knowledge', label: 'Knowledge Base' },
   { href: '/about', label: 'About SpawnOS' },
+  { href: '/spawnos-by-blackwater-aquatics', label: 'SpawnOS by Blackwater' },
   { href: 'https://blackwateraquatics.ca', label: 'Blackwater Aquatics', external: true },
 ]
 
@@ -44,7 +45,7 @@ export default function SiteFooter() {
               The aquarium operating system. Science-grade tools, species data, and AI-powered tank design for hobbyists who demand precision.
             </p>
             <p className="text-xs text-spawn-muted/70">
-              A{' '}
+              <Link href="/spawnos-by-blackwater-aquatics" className="font-semibold text-spawn-text/80 hover:text-spawn-cyan transition-colors">SpawnOS</Link> is a{' '}
               <a
                 href="https://blackwateraquatics.ca"
                 target="_blank"

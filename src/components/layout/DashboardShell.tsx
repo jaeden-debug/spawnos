@@ -1,6 +1,7 @@
 import Sidebar from './Sidebar'
 import Topbar from './Topbar'
 import MobileNav from './MobileNav'
+import BrandLine from './BrandLine'
 import type { User } from '@supabase/supabase-js'
 
 interface DashboardShellProps {
@@ -18,6 +19,7 @@ export default function DashboardShell({ children, user, pageTitle }: DashboardS
         <main className="flex-1 p-4 lg:p-6 pb-24 lg:pb-6 page-enter">
           {children}
         </main>
+        <BrandLine variant="bar" className="hidden lg:block" />
       </div>
       <MobileNav />
     </div>

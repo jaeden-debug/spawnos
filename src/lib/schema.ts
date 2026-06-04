@@ -25,6 +25,44 @@ export function softwareApplicationSchema() {
   }
 }
 
+/**
+ * Brand/Organization graph emitted on every page. Declares SpawnOS as a
+ * product/brand of the parent company, Blackwater Aquatics Canada, so search
+ * engines understand the relationship sitewide.
+ */
+export function organizationSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Organization',
+        '@id': 'https://blackwateraquatics.ca/#organization',
+        name: 'Blackwater Aquatics Canada',
+        url: 'https://blackwateraquatics.ca',
+        description:
+          'Canadian aquatics company specializing in breeder-grade live foods, fish, and aquarium intelligence. Parent company of SpawnOS.',
+        brand: {
+          '@type': 'Brand',
+          name: 'SpawnOS',
+          url: SITE_URL,
+        },
+      },
+      {
+        '@type': 'WebApplication',
+        '@id': `${SITE_URL}/#spawnos`,
+        name: 'SpawnOS',
+        url: SITE_URL,
+        applicationCategory: 'UtilitiesApplication',
+        operatingSystem: 'Web',
+        description:
+          'SpawnOS is a Blackwater Aquatics Canada product — the aquarium operating system. Species intelligence, science-grade calculators, fish compatibility tools, and AI-powered tank blueprints.',
+        publisher: { '@id': 'https://blackwateraquatics.ca/#organization' },
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'CAD' },
+      },
+    ],
+  }
+}
+
 export function websiteSchema() {
   return {
     '@context': 'https://schema.org',

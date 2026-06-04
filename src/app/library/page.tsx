@@ -6,6 +6,7 @@ import RecommendedReading from '@/components/lab-notes/RecommendedReading'
 import { getAllMicrofauna } from '@/lib/microfauna'
 import { getAllProblems } from '@/lib/problems'
 import { getAllCompat } from '@/lib/compatibility'
+import { getAllToolArticles } from '@/lib/tools-content'
 import { getRecentLabNotes } from '@/lib/lab-notes'
 
 export const metadata: Metadata = {
@@ -28,6 +29,7 @@ export default function LibraryPage() {
   const microfaunaCount = getAllMicrofauna().length
   const problemsCount = getAllProblems().length
   const compatCount = getAllCompat().length
+  const toolsCount = getAllToolArticles().length
   const labNotes = getRecentLabNotes(3)
 
   const clusters: Cluster[] = [
@@ -55,12 +57,27 @@ export default function LibraryPage() {
       count: problemsCount,
     },
     {
+      title: 'Blackwater Aquarium Database',
+      href: '/spawnos-by-blackwater-aquatics',
+      icon: '🌑',
+      desc: 'SpawnOS by Blackwater Aquatics Canada — how the aquarium tools, fish compatibility engine, species data, and breeder intelligence connect into one operating system.',
+      status: 'live',
+    },
+    {
       title: 'Compatibility Database',
       href: '/compatibility',
       icon: '🤝',
       desc: 'Species-by-species compatibility with scores, parameter overlap, temperament, tank size, risks, and success tips.',
       status: 'live',
       count: compatCount,
+    },
+    {
+      title: 'Tools Database',
+      href: '/tools-database',
+      icon: '🧮',
+      desc: 'The science behind every aquarium calculator — stocking, cycling, chemistry, filtration, heating, lighting, and dosing. In-depth guides with worked examples, each linked to its free tool.',
+      status: 'live',
+      count: toolsCount,
     },
   ]
 

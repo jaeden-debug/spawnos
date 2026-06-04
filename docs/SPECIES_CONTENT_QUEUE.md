@@ -11,28 +11,28 @@
 ## Progress
 
 - **Total species:** 103
-- **Deep content done:** 13 — betta-fish ✅, axolotl ✅, cherry-shrimp ✅, african-clawed-frog ✅, african-dwarf-frog ✅, fire-bellied-toad ✅, fire-belly-newt ✅, spanish-ribbed-newt ✅, percula-clownfish ✅, royal-gramma ✅, yellow-tang ✅, blue-tang ✅, mandarin-dragonet ✅
-- **Remaining:** 90 (69 with no MDX, 21 short)
+- **Deep content done:** 43 — original 3 + 5 amphibians + 10 saltwater flagships + 10 freshwater centerpieces + 10 schoolers (Batch 5) + 5 specialists (swordtail/denison-barb/silver-dollar/clown-loach/paradise-fish)
+- **Remaining:** 60 (39 with no MDX, 21 short)
 
 ---
 
 ## Batch 1 — Amphibians ✅ COMPLETE
 african-clawed-frog ✅ · african-dwarf-frog ✅ · fire-bellied-toad ✅ · fire-belly-newt ✅ · spanish-ribbed-newt ✅
 
-## Batch 2 — Saltwater flagships 🟡 (5/10 done)
-percula-clownfish ✅ · royal-gramma ✅ · yellow-tang ✅ · blue-tang ✅ · mandarin-dragonet ✅ · tomato-clownfish ⬜ · maroon-clownfish ⬜ · firefish-goby ⬜ · neon-goby ⬜ · yellow-watchman-goby ⬜
+## Batch 2 — Saltwater flagships ✅ COMPLETE (10/10)
+percula-clownfish ✅ · royal-gramma ✅ · yellow-tang ✅ · blue-tang ✅ · mandarin-dragonet ✅ · tomato-clownfish ✅ · maroon-clownfish ✅ · firefish-goby ✅ · neon-goby ✅ · yellow-watchman-goby ✅
 
 ## Batch 3 — Saltwater II ⬜
 banggai-cardinalfish · pajama-cardinalfish · six-line-wrasse · flame-angelfish · coral-beauty-angelfish · lawnmower-blenny · green-chromis · royal-dottyback · copperband-butterflyfish · foxface-rabbitfish · diamond-goby
 
-## Batch 4 — Freshwater centerpieces ⬜
-german-blue-ram · bolivian-ram · cockatoo-cichlid · kribensis · convict-cichlid · firemouth-cichlid · electric-yellow-cichlid · dwarf-gourami · pearl-gourami · honey-gourami
+## Batch 4 — Freshwater centerpieces ✅ COMPLETE (10/10)
+german-blue-ram ✅ · bolivian-ram ✅ · cockatoo-cichlid ✅ · kribensis ✅ · convict-cichlid ✅ · firemouth-cichlid ✅ · electric-yellow-cichlid ✅ · dwarf-gourami ✅ · pearl-gourami ✅ · honey-gourami ✅
 
-## Batch 5 — Freshwater schoolers ⬜
-cardinal-tetra · ember-tetra · rummynose-tetra · congo-tetra · harlequin-rasbora · cherry-barb · tiger-barb · celestial-pearl-danio · white-cloud-minnow · boesemani-rainbowfish
+## Batch 5 — Freshwater schoolers ✅ COMPLETE (10/10)
+cardinal-tetra ✅ · ember-tetra ✅ · rummynose-tetra ✅ · congo-tetra ✅ · harlequin-rasbora ✅ · cherry-barb ✅ · tiger-barb ✅ · celestial-pearl-danio ✅ · white-cloud-minnow ✅ · boesemani-rainbowfish ✅
 
-## Batch 6 — Freshwater specialists ⬜
-swordtail · denison-barb · silver-dollar · clown-loach · paradise-fish · otocinclus · siamese-algae-eater
+## Batch 6 — Freshwater specialists 🟡 (5/7 done)
+swordtail ✅ · denison-barb ✅ · silver-dollar ✅ · clown-loach ✅ · paradise-fish ✅ · otocinclus ⬜ · siamese-algae-eater ⬜
 
 ## Batch 7 — Snails ⬜
 mystery-snail · nerite-snail · ramshorn-snail · bladder-snail · malaysian-trumpet-snail · assassin-snail
