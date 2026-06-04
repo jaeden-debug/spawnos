@@ -11,8 +11,8 @@
 ## Progress
 
 - **Total species:** 103
-- **Deep content done:** 43 — original 3 + 5 amphibians + 10 saltwater flagships + 10 freshwater centerpieces + 10 schoolers (Batch 5) + 5 specialists (swordtail/denison-barb/silver-dollar/clown-loach/paradise-fish)
-- **Remaining:** 60 (39 with no MDX, 21 short)
+- **Deep content done:** 63 — original 3 + 5 amphibians + 10 saltwater flagships + 10 freshwater centerpieces + 10 schoolers + 7 freshwater specialists + 6 snails + 9 live foods + 3 microfauna
+- **Remaining:** 40 (19 with no MDX, 21 short)
 
 ---
 
@@ -31,17 +31,17 @@ german-blue-ram ✅ · bolivian-ram ✅ · cockatoo-cichlid ✅ · kribensis ✅
 ## Batch 5 — Freshwater schoolers ✅ COMPLETE (10/10)
 cardinal-tetra ✅ · ember-tetra ✅ · rummynose-tetra ✅ · congo-tetra ✅ · harlequin-rasbora ✅ · cherry-barb ✅ · tiger-barb ✅ · celestial-pearl-danio ✅ · white-cloud-minnow ✅ · boesemani-rainbowfish ✅
 
-## Batch 6 — Freshwater specialists 🟡 (5/7 done)
-swordtail ✅ · denison-barb ✅ · silver-dollar ✅ · clown-loach ✅ · paradise-fish ✅ · otocinclus ⬜ · siamese-algae-eater ⬜
+## Batch 6 — Freshwater specialists ✅ COMPLETE (7/7)
+swordtail ✅ · denison-barb ✅ · silver-dollar ✅ · clown-loach ✅ · paradise-fish ✅ · otocinclus ✅ · siamese-algae-eater ✅
 
-## Batch 7 — Snails ⬜
-mystery-snail · nerite-snail · ramshorn-snail · bladder-snail · malaysian-trumpet-snail · assassin-snail
+## Batch 7 — Snails ✅ COMPLETE (6/6)
+mystery-snail ✅ · nerite-snail ✅ · ramshorn-snail ✅ · bladder-snail ✅ · malaysian-trumpet-snail ✅ · assassin-snail ✅
 
-## Batch 8 — Live foods ⬜ (Blackwater funnel — high commercial value)
-moina · vinegar-eels · grindal-worms · white-worms · banana-worms · walter-worms · blackworms · copepods · seed-shrimp
+## Batch 8 — Live foods ✅ COMPLETE (9/9)
+moina ✅ · vinegar-eels ✅ · grindal-worms ✅ · white-worms ✅ · banana-worms ✅ · walter-worms ✅ · blackworms ✅ · copepods ✅ · seed-shrimp ✅
 
-## Batch 9 — Microfauna & problem organisms ⬜
-detritus-worms · planaria · hydra · rotifers · infusoria · vorticella · green-water
+## Batch 9 — Microfauna & problem organisms 🟡 (3/7 done)
+detritus-worms ✅ · planaria ✅ · hydra ✅ · rotifers ⬜ · infusoria ⬜ · vorticella ⬜ · green-water ⬜
 
 ## Batch 10 — Plants & nuisance algae ⬜
 java-moss · duckweed · black-beard-algae · blue-green-algae
