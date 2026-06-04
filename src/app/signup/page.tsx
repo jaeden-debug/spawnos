@@ -87,12 +87,12 @@ export default function SignupPage() {
             <div className="bg-spawn-amber/8 border border-spawn-amber/25 rounded-xl p-5 mb-8">
               <p className="text-xs text-spawn-amber font-semibold uppercase tracking-widest mb-2">Your discount code</p>
               <div className="flex items-center justify-between gap-3 bg-spawn-bg/60 border border-spawn-border/60 rounded-lg px-4 py-3">
-                <span className="text-xl font-black text-spawn-text tracking-widest">{DISCOUNT_CODE}</span>
+                <span className="text-xl font-black text-spawn-text tracking-widest">{code}</span>
                 <button
-                  onClick={() => navigator.clipboard?.writeText(DISCOUNT_CODE)}
+                  onClick={copyCode}
                   className="text-xs text-spawn-cyan hover:text-spawn-text transition-colors font-medium shrink-0"
                 >
-                  Copy
+                  {copied ? 'Copied!' : 'Copy'}
                 </button>
               </div>
               <p className="text-xs text-spawn-muted-text mt-2.5 leading-relaxed">
@@ -107,12 +107,12 @@ export default function SignupPage() {
             {/* CTA links */}
             <div className="flex flex-col gap-3">
               <a
-                href="https://blackwateraquatics.ca/collections/live-foods"
+                href={applyUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full py-3 rounded-xl bg-spawn-cyan text-spawn-bg font-bold text-sm hover:bg-opacity-90 transition-colors text-center"
               >
-                Shop Live Foods at Blackwater Aquatics
+                Shop Live Foods — discount auto-applied →
               </a>
               <Link
                 href="/species"
