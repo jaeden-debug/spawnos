@@ -52,25 +52,25 @@ export default function FishProfilePage() {
       supabase.from('lineage_links').select('child_fish_id').eq('parent_fish_id', fishId).eq('user_id', u.id),
     ])
 
-    setFish(fishRes.data as Fish)
+    setFish(fishRes.data as unknown as Fish)
     setNotes(notesRes.data ?? [])
     setPairs(pairsRes.data ?? [])
 
     // Resolve parent fish names
     if (lineageParentRes.data && lineageParentRes.data.length > 0) {
-      const parentIds = lineageParentRes.data.map((l) => l.parent_fish_id)
-      const { data: parentFish } = await supabase.from('fish').select('id, name, sex').in('id', parentIds)
+      const parentIds = (lineageParentRes.data as any[]).map((l) => l.parent_fish_id)
+      const { data: parentFish } = await (supabase as any).from('fish').select('id, name, sex').in('id', parentIds)
       setLineageParents(
-        lineageParentRes.data.map((l) => {
-          const pf = parentFish?.find((f) => f.id === l.parent_fish_id)
+        (lineageParentRes.data as any[]).map((l) => {
+          const pf = (parentFish as any[] | null)?.find((f) => f.id === l.parent_fish_id)
           return { id: l.parent_fish_id, name: pf?.name ?? 'Unknown', sex: pf?.sex ?? 'unknown', relationship: l.relationship }
         })
       )
     }
 
     if (lineageChildRes.data && lineageChildRes.data.length > 0) {
-      const childIds = lineageChildRes.data.map((l) => l.child_fish_id)
-      const { data: childFish } = await supabase.from('fish').select('id, name, sex').in('id', childIds)
+      const childIds = (lineageChildRes.data as any[]).map((l) => l.child_fish_id)
+      const { data: childFish } = await (supabase as any).from('fish').select('id, name, sex').in('id', childIds)
       setLineageOffspring(childFish ?? [])
     }
 
@@ -82,7 +82,7 @@ export default function FishProfilePage() {
   async function handleDelete() {
     setDeleteLoading(true)
     const supabase = createClient()
-    await supabase.from('fish').delete().eq('id', fishId)
+    await (supabase as any).from('fish').delete().eq('id', fishId)
     router.push('/dashboard/fish')
   }
 
@@ -91,7 +91,7 @@ export default function FishProfilePage() {
     if (!noteTitle || !noteContent) return
     setNoteSaving(true)
     const supabase = createClient()
-    await supabase.from('fish_notes').insert({
+    await (supabase as any).from('fish_notes').insert({
       fish_id: fishId,
       user_id: user!.id,
       note_type: noteType as 'health' | 'growth' | 'breeding' | 'trait' | 'general',

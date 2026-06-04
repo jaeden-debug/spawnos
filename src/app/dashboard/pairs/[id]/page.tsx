@@ -25,10 +25,10 @@ export default function PairDetailPage() {
   const pairId = params.id as string
 
   const [user, setUser] = useState<User | null>(null)
-  const [pair, setPair] = useState<Record<string, unknown> | null>(null)
+  const [pair, setPair] = useState<any | null>(null)
   const [male, setMale] = useState<Fish | null>(null)
   const [female, setFemale] = useState<Fish | null>(null)
-  const [spawns, setSpawns] = useState<Array<Record<string, unknown>>>([])
+  const [spawns, setSpawns] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [deleteOpen, setDeleteOpen] = useState(false)
   const [deleteLoading, setDeleteLoading] = useState(false)
@@ -58,21 +58,21 @@ export default function PairDetailPage() {
         .order('created_at', { ascending: false }),
     ])
 
-    const p = pairRes.data
+    const p = pairRes.data as any
     if (!p) { setLoading(false); return }
 
     setPair(p)
     setGoalDraft(p.goal as string ?? '')
     setNotesDraft(p.notes as string ?? '')
-    setSpawns(spawnsRes.data ?? [])
+    setSpawns((spawnsRes.data as any[]) ?? [])
 
     const [maleRes, femaleRes] = await Promise.all([
       supabase.from('fish').select('*').eq('id', p.male_id as string).single(),
       supabase.from('fish').select('*').eq('id', p.female_id as string).single(),
     ])
 
-    setMale(maleRes.data as Fish)
-    setFemale(femaleRes.data as Fish)
+    setMale(maleRes.data as unknown as Fish)
+    setFemale(femaleRes.data as unknown as Fish)
     setLoading(false)
   }, [pairId])
 
@@ -81,14 +81,14 @@ export default function PairDetailPage() {
   async function handleStatusChange(newStatus: string) {
     setSavingStatus(true)
     const supabase = createClient()
-    await supabase.from('pairs').update({ status: newStatus, updated_at: new Date().toISOString() }).eq('id', pairId)
+    await (supabase as any).from('pairs').update({ status: newStatus, updated_at: new Date().toISOString() }).eq('id', pairId)
     setSavingStatus(false)
     loadData()
   }
 
   async function handleSaveGoal() {
     const supabase = createClient()
-    await supabase.from('pairs').update({
+    await (supabase as any).from('pairs').update({
       goal: goalDraft || null,
       notes: notesDraft || null,
       updated_at: new Date().toISOString(),
@@ -100,7 +100,7 @@ export default function PairDetailPage() {
   async function handleDelete() {
     setDeleteLoading(true)
     const supabase = createClient()
-    await supabase.from('pairs').delete().eq('id', pairId)
+    await (supabase as any).from('pairs').delete().eq('id', pairId)
     router.push('/dashboard/pairs')
   }
 
@@ -216,8 +216,8 @@ export default function PairDetailPage() {
                     <div className="text-xs text-spawn-muted-text uppercase tracking-wider">Breeding Goal</div>
                     <button onClick={() => setEditingGoal(true)} className="text-xs text-spawn-cyan hover:text-spawn-cyan-dim transition-colors">Edit</button>
                   </div>
-                  <p className="text-sm text-spawn-muted-text">{pair.goal as string || 'No goal set'}</p>
-                  {pair.notes && <p className="text-xs text-spawn-muted mt-1">{pair.notes as string}</p>}
+                  <p className="text-sm text-spawn-muted-text">{String(pair.goal || 'No goal set')}</p>
+                  {String(pair.notes || '') && <p className="text-xs text-spawn-muted mt-1">{String(pair.notes || '')}</p>}
                 </div>
               )}
             </div>

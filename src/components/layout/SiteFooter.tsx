@@ -36,14 +36,7 @@ export default function SiteFooter() {
           <div className="lg:col-span-1">
             <Link href="/" className="flex items-center gap-2.5 mb-4" aria-label="SpawnOS home">
               <div className="relative w-7 h-7 rounded-md bg-spawn-cyan/10 border border-spawn-cyan/30 flex items-center justify-center overflow-hidden">
-                <img
-                  src="/branding/spawnos-logo-master.png"
-                  alt=""
-                  aria-hidden="true"
-                  className="w-full h-full object-contain"
-                  onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none' }}
-                />
-                <span className="text-spawn-cyan text-xs font-black absolute">S</span>
+                <span className="text-spawn-cyan text-xs font-black">S</span>
               </div>
               <span className="font-bold text-spawn-text">SpawnOS</span>
             </Link>

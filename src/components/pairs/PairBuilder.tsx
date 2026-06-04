@@ -85,7 +85,7 @@ function FishSelector({
                 >
                   <div className="font-medium text-spawn-text text-sm">{f.name}</div>
                   <div className="text-xs text-spawn-muted-text mt-0.5">
-                    {[f.tail_type, f.color_base, f.pattern_type].filter(Boolean).map(slugToLabel).join(' · ')}
+                    {[f.tail_type, f.color_base, f.pattern_type].flatMap((v) => (v ? [slugToLabel(v)] : [])).join(' · ')}
                   </div>
                 </button>
               ))

@@ -13,11 +13,11 @@ import { formatDate, stageLabel } from '@/lib/utils'
 
 export default function SpawnsPage() {
   const [user, setUser] = useState<User | null>(null)
-  const [spawns, setSpawns] = useState<Array<Record<string, unknown>>>([])
-  const [pairs, setPairs] = useState<Array<Record<string, unknown>>>([])
+  const [spawns, setSpawns] = useState<any[]>([])
+  const [pairs, setPairs] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [createOpen, setCreateOpen] = useState(false)
-  const [selectedSpawn, setSelectedSpawn] = useState<Record<string, unknown> | null>(null)
+  const [selectedSpawn, setSelectedSpawn] = useState<any | null>(null)
   const [editOpen, setEditOpen] = useState(false)
   const [logOpen, setLogOpen] = useState(false)
   const [stageFilter, setStageFilter] = useState('')
@@ -31,7 +31,7 @@ export default function SpawnsPage() {
   const [logHealth, setLogHealth] = useState('')
   const [logNotes, setLogNotes] = useState('')
   const [logSaving, setLogSaving] = useState(false)
-  const [logs, setLogs] = useState<Array<Record<string, unknown>>>([])
+  const [logs, setLogs] = useState<any[]>([])
 
   const loadData = useCallback(async () => {
     const supabase = createClient()
@@ -71,7 +71,7 @@ export default function SpawnsPage() {
 
   useEffect(() => { loadData() }, [loadData])
 
-  async function openSpawn(spawn: Record<string, unknown>) {
+  async function openSpawn(spawn: any) {
     setSelectedSpawn(spawn)
     await loadLogs(spawn.id as string)
   }
@@ -83,7 +83,7 @@ export default function SpawnsPage() {
     const supabase = createClient()
     const fryCountNum = logFryCount ? parseInt(logFryCount) : null
 
-    await supabase.from('spawn_logs').insert({
+    await (supabase as any).from('spawn_logs').insert({
       spawn_id: selectedSpawn.id as string,
       user_id: user!.id,
       log_date: logDate,
@@ -100,7 +100,7 @@ export default function SpawnsPage() {
       const eggs = selectedSpawn.estimated_eggs as number ?? 0
       const hatched = selectedSpawn.estimated_hatched as number ?? 0
       const survival = hatched > 0 ? (fryCountNum / hatched) * 100 : null
-      await supabase.from('spawns').update({
+      await (supabase as any).from('spawns').update({
         current_fry_count: fryCountNum,
         survival_rate: survival !== null ? Math.round(survival * 10) / 10 : null,
         updated_at: new Date().toISOString(),
@@ -181,7 +181,7 @@ export default function SpawnsPage() {
           <div className="glass-card rounded-2xl border border-spawn-cyan/20 p-6 space-y-6">
             <div className="flex items-center justify-between">
               <h2 className="font-black text-spawn-text text-lg">
-                {(selectedSpawn.pair as Record<string, unknown>)?.pair_name as string ?? 'Spawn Detail'}
+                {(selectedSpawn.pair as any)?.pair_name as string ?? 'Spawn Detail'}
               </h2>
               <div className="flex gap-2">
                 <Button size="sm" variant="secondary" onClick={() => setLogOpen(true)}>

@@ -75,7 +75,6 @@ export interface Database {
           social_youtube?: string | null
           updated_at?: string
         }
-        Relationships: []
       }
       fish: {
         Row: {
@@ -153,7 +152,6 @@ export interface Database {
           status?: 'active' | 'retired' | 'sold' | 'deceased'
           updated_at?: string
         }
-        Relationships: []
       }
       pairs: {
         Row: {
@@ -198,7 +196,6 @@ export interface Database {
           status?: 'planned' | 'active' | 'spawned' | 'retired'
           updated_at?: string
         }
-        Relationships: []
       }
       spawns: {
         Row: {
@@ -243,7 +240,6 @@ export interface Database {
           notes?: string | null
           updated_at?: string
         }
-        Relationships: []
       }
       spawn_logs: {
         Row: {
@@ -284,7 +280,6 @@ export interface Database {
           photos?: Json | null
           notes?: string | null
         }
-        Relationships: []
       }
       lineage_links: {
         Row: {
@@ -309,7 +304,6 @@ export interface Database {
           relationship?: 'father' | 'mother' | 'offspring'
           spawn_id?: string | null
         }
-        Relationships: []
       }
       fish_notes: {
         Row: {
@@ -338,7 +332,6 @@ export interface Database {
           content?: string
           photos?: Json | null
         }
-        Relationships: []
       }
       calculator_runs: {
         Row: {
@@ -361,7 +354,6 @@ export interface Database {
           input_data?: Json
           output_data?: Json
         }
-        Relationships: []
       }
     }
     Views: Record<string, never>

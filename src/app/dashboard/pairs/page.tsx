@@ -12,7 +12,7 @@ import type { User } from '@supabase/supabase-js'
 
 export default function PairsPage() {
   const [user, setUser] = useState<User | null>(null)
-  const [pairs, setPairs] = useState<Array<Record<string, unknown>>>([])
+  const [pairs, setPairs] = useState<any[]>([])
   const [allFish, setAllFish] = useState<Fish[]>([])
   const [loading, setLoading] = useState(true)
   const [createOpen, setCreateOpen] = useState(false)
@@ -94,7 +94,7 @@ export default function PairsPage() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {filtered.map((pair) => (
-              <PairCard key={pair.id as string} pair={pair as Parameters<typeof PairCard>[0]['pair']} />
+              <PairCard key={pair.id as string} pair={pair as unknown as Parameters<typeof PairCard>[0]['pair']} />
             ))}
           </div>
         )}

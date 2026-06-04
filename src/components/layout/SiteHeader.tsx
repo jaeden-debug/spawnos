@@ -46,15 +46,7 @@ export default function SiteHeader() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 shrink-0" aria-label="SpawnOS home">
             <div className="relative w-8 h-8 rounded-lg bg-spawn-cyan/10 border border-spawn-cyan/30 flex items-center justify-center overflow-hidden">
-              {/* Logo renders when branding assets are present */}
-              <img
-                src="/branding/spawnos-logo-master.png"
-                alt=""
-                aria-hidden="true"
-                className="w-full h-full object-contain"
-                onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none' }}
-              />
-              <span className="text-spawn-cyan text-xs font-black absolute">S</span>
+              <span className="text-spawn-cyan text-xs font-black">S</span>
             </div>
             <span className="font-bold text-lg text-spawn-text tracking-tight">SpawnOS</span>
           </Link>

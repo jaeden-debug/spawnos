@@ -44,7 +44,7 @@ export default function LineagePage() {
       supabase.from('lineage_links').select('*').eq('user_id', u.id),
     ])
 
-    setFish((fishRes.data as Fish[]) ?? [])
+    setFish((fishRes.data as unknown as Fish[]) ?? [])
     setLinks(linksRes.data ?? [])
     setLoading(false)
   }, [])
@@ -64,7 +64,7 @@ export default function LineagePage() {
     const exists = links.some((l) => l.parent_fish_id === parentId && l.child_fish_id === childId)
     if (exists) { setLinkError('This link already exists'); setLinkSaving(false); return }
 
-    const { error } = await supabase.from('lineage_links').insert({
+    const { error } = await (supabase as any).from('lineage_links').insert({
       user_id: user!.id,
       parent_fish_id: parentId,
       child_fish_id: childId,
@@ -210,7 +210,7 @@ export default function LineagePage() {
                     <button
                       onClick={async () => {
                         const supabase = createClient()
-                        await supabase.from('lineage_links').delete().eq('id', link.id)
+                        await (supabase as any).from('lineage_links').delete().eq('id', link.id)
                         loadData()
                       }}
                       className="text-xs text-spawn-muted hover:text-rose-400 transition-colors"

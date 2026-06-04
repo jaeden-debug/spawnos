@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { predictPairing } from '@/lib/genetics/predictionEngine'
-import type { Fish } from '@/types/fish'
+import type { Fish, AggressionLevel, FertilityConfidence } from '@/types/fish'
 import {
   TAIL_TYPE_OPTIONS,
   BASE_COLOR_OPTIONS,
@@ -29,8 +29,8 @@ function buildFishFromFields(fields: Record<string, string>, sex: 'male' | 'fema
     eye_color: null,
     traits: {
       health_score: parseInt(fields.health_score) || 7,
-      aggression_level: fields.aggression_level || 'medium',
-      fertility_confidence: fields.fertility_confidence || 'unknown',
+      aggression_level: (fields.aggression_level as AggressionLevel) || 'medium',
+      fertility_confidence: (fields.fertility_confidence as FertilityConfidence) || 'unknown',
     },
     genotype_notes: null,
     breeder_notes: null,

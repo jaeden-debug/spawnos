@@ -60,7 +60,7 @@ export default function MatchCalculator() {
                     >
                       <div className="font-medium">{f.name}</div>
                       <div className="text-xs text-spawn-muted">
-                        {[f.tail_type, f.color_base, f.pattern_type].filter(Boolean).map(slugToLabel).join(' · ')}
+                        {[f.tail_type, f.color_base, f.pattern_type].flatMap((v) => (v ? [slugToLabel(v)] : [])).join(' · ')}
                       </div>
                     </button>
                   ))}
@@ -83,7 +83,7 @@ export default function MatchCalculator() {
                     >
                       <div className="font-medium">{f.name}</div>
                       <div className="text-xs text-spawn-muted">
-                        {[f.tail_type, f.color_base, f.pattern_type].filter(Boolean).map(slugToLabel).join(' · ')}
+                        {[f.tail_type, f.color_base, f.pattern_type].flatMap((v) => (v ? [slugToLabel(v)] : [])).join(' · ')}
                       </div>
                     </button>
                   ))}

@@ -40,16 +40,16 @@ export async function POST(request: NextRequest) {
 
     // Get or create Stripe customer
     const { default: Stripe } = await import('stripe')
-    const stripe = new Stripe(stripeKey, { apiVersion: '2024-11-20.acacia' })
+    const stripe = new Stripe(stripeKey, { apiVersion: '2026-05-27.dahlia' })
 
     // Check if user already has a Stripe customer ID
     const { data: profile } = await supabase
-      .from('profiles')
+      .from('profiles' as any)
       .select('stripe_customer_id, subscription_tier')
       .eq('id', user.id)
       .single()
 
-    let customerId = profile?.stripe_customer_id
+    let customerId = (profile as any)?.stripe_customer_id
 
     if (!customerId) {
       // Create a new Stripe customer
@@ -63,7 +63,7 @@ export async function POST(request: NextRequest) {
       customerId = customer.id
 
       // Save customer ID to profile
-      await supabase
+      await (supabase as any)
         .from('profiles')
         .update({ stripe_customer_id: customerId })
         .eq('id', user.id)

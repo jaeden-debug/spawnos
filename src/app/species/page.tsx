@@ -51,7 +51,7 @@ export default async function SpeciesPage() {
         position: i + 1,
         name: s.common_name,
         url: `https://spawnos.com/species/${s.slug}`,
-        description: s.meta_description,
+        description: s.seo_description,
       })),
     },
     breadcrumbSchema([

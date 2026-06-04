@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const { default: Stripe } = await import('stripe')
-    const stripe = new Stripe(stripeKey, { apiVersion: '2024-11-20.acacia' })
+    const stripe = new Stripe(stripeKey, { apiVersion: '2026-05-27.dahlia' })
     event = stripe.webhooks.constructEvent(body, signature, webhookSecret)
   } catch (err) {
     console.error('[stripe/webhook] Signature verification failed:', err)
@@ -60,13 +60,13 @@ export async function POST(request: NextRequest) {
 
       // ── Checkout completed — subscription started or trial started ──────
       case 'checkout.session.completed': {
-        const session = event.data.object as import('stripe').Stripe.CheckoutSession
+        const session = event.data.object as any
         const userId = session.metadata?.supabase_user_id
         const plan = session.metadata?.plan ?? 'pro'
 
         if (!userId) break
 
-        await supabase.from('profiles').update({
+        await (supabase as any).from('profiles').update({
           subscription_tier:   plan,
           subscription_status: 'active',
           stripe_customer_id:  session.customer as string,
@@ -79,10 +79,10 @@ export async function POST(request: NextRequest) {
 
       // ── Subscription updated (plan change, renewal) ───────────────────
       case 'customer.subscription.updated': {
-        const sub = event.data.object as import('stripe').Stripe.Subscription
+        const sub = event.data.object as any
 
         // Find user by Stripe customer ID
-        const { data: profile } = await supabase
+        const { data: profile } = await (supabase as any)
           .from('profiles')
           .select('id')
           .eq('stripe_customer_id', sub.customer as string)
@@ -97,7 +97,7 @@ export async function POST(request: NextRequest) {
           ? new Date(sub.current_period_end * 1000).toISOString()
           : null
 
-        await supabase.from('profiles').update({
+        await (supabase as any).from('profiles').update({
           subscription_tier:    tier,
           subscription_status:  status,
           stripe_subscription_id: sub.id,
@@ -113,9 +113,9 @@ export async function POST(request: NextRequest) {
 
       // ── Subscription deleted (cancelled, expired) ─────────────────────
       case 'customer.subscription.deleted': {
-        const sub = event.data.object as import('stripe').Stripe.Subscription
+        const sub = event.data.object as any
 
-        const { data: profile } = await supabase
+        const { data: profile } = await (supabase as any)
           .from('profiles')
           .select('id')
           .eq('stripe_customer_id', sub.customer as string)
@@ -123,7 +123,7 @@ export async function POST(request: NextRequest) {
 
         if (!profile) break
 
-        await supabase.from('profiles').update({
+        await (supabase as any).from('profiles').update({
           subscription_tier:    'free',
           subscription_status:  'canceled',
           subscription_ends_at: new Date().toISOString(),
@@ -135,9 +135,9 @@ export async function POST(request: NextRequest) {
 
       // ── Invoice payment failed ────────────────────────────────────────
       case 'invoice.payment_failed': {
-        const invoice = event.data.object as import('stripe').Stripe.Invoice
+        const invoice = event.data.object as any
 
-        const { data: profile } = await supabase
+        const { data: profile } = await (supabase as any)
           .from('profiles')
           .select('id')
           .eq('stripe_customer_id', invoice.customer as string)
@@ -145,7 +145,7 @@ export async function POST(request: NextRequest) {
 
         if (!profile) break
 
-        await supabase.from('profiles').update({
+        await (supabase as any).from('profiles').update({
           subscription_status: 'past_due',
           updated_at: new Date().toISOString(),
         }).eq('id', profile.id)

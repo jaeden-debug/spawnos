@@ -18,10 +18,10 @@ export default async function DashboardPage() {
     supabase.from('spawn_logs').select('id, log_date, notes, fry_count, spawn_id').eq('user_id', user!.id).order('log_date', { ascending: false }).limit(5),
   ])
 
-  const fish = fishRes.data ?? []
-  const pairs = pairsRes.data ?? []
-  const spawns = spawnsRes.data ?? []
-  const recentLogs = logsRes.data ?? []
+  const fish = (fishRes.data as any[]) ?? []
+  const pairs = (pairsRes.data as any[]) ?? []
+  const spawns = (spawnsRes.data as any[]) ?? []
+  const recentLogs = (logsRes.data as any[]) ?? []
 
   const activeFish = fish.filter((f) => f.status === 'active').length
   const activePairs = pairs.filter((p) => p.status === 'active' || p.status === 'planned').length
