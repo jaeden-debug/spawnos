@@ -1,4 +1,4 @@
-## Species Overview
+## Species Overview {#overview}
 
 The **neon tetra** (*Paracheirodon innesi*) is arguably the most iconic freshwater aquarium fish in the world. The electric blue horizontal stripe running from nose to adipose fin, paired with the vivid red stripe covering the posterior half of the body, has made this small characid recognizable even to people who have never kept fish. Globally, hundreds of millions of neon tetras are produced and sold annually — it is the single highest-volume ornamental fish in the trade.
 
@@ -22,7 +22,7 @@ The genus *Paracheirodon* contains three species: *P. innesi* (neon tetra), *P. 
 
 ---
 
-## Natural Habitat
+## Natural Habitat {#natural-habitat}
 
 ### The Blackwater Rivers of South America
 
@@ -53,19 +53,19 @@ Understanding this explains why neon tetras in hard, alkaline, mineral-rich tap 
 
 ---
 
-## Aquarium Care Requirements
+## Aquarium Care Requirements {#aquarium-care}
 
 ### Water Parameters
 
 | Parameter | Optimal Range | Acceptable Range | Avoid |
 |-----------|--------------|-----------------|-------|
-| Temperature | 22–25°C (72–77°F) | 20–28°C | &gt;28°C sustained |
-| pH | 5.5–7.0 | 5.0–7.5 | &gt;8.0 |
-| General Hardness (GH) | 1–6 dGH | 1–12 dGH | &gt;18 dGH |
+| Temperature | 22–25°C (72–77°F) | 20–28°C | >28°C sustained |
+| pH | 5.5–7.0 | 5.0–7.5 | >8.0 |
+| General Hardness (GH) | 1–6 dGH | 1–12 dGH | >18 dGH |
 | Carbonate Hardness (KH) | 1–4 dKH | 0–6 dKH | — |
-| Ammonia | 0 ppm | — | &gt;0.1 ppm |
-| Nitrite | 0 ppm | — | &gt;0.25 ppm |
-| Nitrate | &lt;10 ppm | &lt;20 ppm | &gt;40 ppm |
+| Ammonia | 0 ppm | — | >0.1 ppm |
+| Nitrite | 0 ppm | — | >0.25 ppm |
+| Nitrate | <10 ppm | <20 ppm | >40 ppm |
 
 Neon tetras are **more sensitive to water quality than many commonly kept fish**. The "neon tetra disease" often discussed in the hobby (a wasting disease caused by *Pleistophora hyphessobryconis*) is strongly associated with chronic stress from inappropriate water chemistry and overcrowding — not an inevitable feature of the species.
 
@@ -83,7 +83,7 @@ Neon tetras are obligate schooling fish. **Minimum group: 8–10 individuals.** 
 
 ---
 
-## Tank Setup Guide
+## Tank Setup Guide {#tank-setup}
 
 ### The Blackwater Biotope Approach
 
@@ -107,7 +107,7 @@ For maximum color display: soft acidic water, dim warm-spectrum lighting, dark s
 
 ---
 
-## Feeding Guide
+## Feeding Guide {#feeding}
 
 Neon tetras are micro-predators and omnivores in the wild, consuming primarily small invertebrates, zooplankton, and occasional plant matter.
 
@@ -123,7 +123,7 @@ Feed small amounts twice daily. Neons have small mouths — particle size matter
 
 ---
 
-## Compatibility
+## Compatibility {#compatibility}
 
 Neon tetras are peaceful, community-appropriate fish. Avoid:
 
@@ -137,9 +137,9 @@ Neon tetras are peaceful, community-appropriate fish. Avoid:
 
 ---
 
-## Breeding Guide
+## Breeding Guide {#breeding}
 
-Breeding neon tetras is considered challenging — they require soft, acidic water (pH 5.5–6.5, GH &lt;3) that many keepers cannot produce from tap water. However, it is achievable with RO water or rainwater blended to target parameters.
+Breeding neon tetras is considered challenging — they require soft, acidic water (pH 5.5–6.5, GH <3) that many keepers cannot produce from tap water. However, it is achievable with RO water or rainwater blended to target parameters.
 
 Condition a breeding pair with [live Daphnia](https://blackwateraquatics.ca/collections/live-foods) and [baby brine shrimp](https://blackwateraquatics.ca/collections/live-foods) for 2–3 weeks. Set up a small (10–15 litre) breeding tank with blackwater conditions, fine-leaved plants (Java moss, *Cabomba*), very dim or no light, and a spawning mop.
 
@@ -147,7 +147,7 @@ At dusk, the pair will scatter adhesive eggs among fine-leaved plants. Remove ad
 
 ---
 
-## Health and Disease
+## Health and Disease {#health}
 
 **Neon Tetra Disease (NTD):** Caused by the microsporidian parasite *Pleistophora hyphessobryconis*. Symptoms: fading of the blue stripe (the first visible sign), white cyst-like patches in muscle tissue, curved spine, wasting. **There is no cure.** Affected fish must be removed and euthanized humanely to prevent spread. Prevention: quarantine all new fish, maintain excellent water quality, avoid overcrowding, use soft acidic water.
 
@@ -157,7 +157,7 @@ At dusk, the pair will scatter adhesive eggs among fine-leaved plants. Remove ad
 
 ---
 
-## References
+## References {#references}
 
 Myers, G.S. (1936). A new genus and species of characid fish from the upper Solimões River. *Proceedings of the Biological Society of Washington*, 49: 49–50.
 

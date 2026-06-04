@@ -1,4 +1,4 @@
-## Species Overview
+## Species Overview {#overview}
 
 The **Betta fish** (*Betta splendens*), also called the Siamese fighting fish, is one of the most recognized and widely kept freshwater fish in the world. Its extraordinary finnage, vivid coloration, and accessible care requirements have made it a staple of the aquarium hobby since the late 19th century — yet it remains deeply misunderstood by casual keepers who still house these animals in bowls, vases, and unheated containers entirely unsuitable for their survival.
 
@@ -28,7 +28,7 @@ Juvenile bettas do not develop a fully functional labyrinth organ until around 3
 
 ---
 
-## Natural Habitat
+## Natural Habitat {#natural-habitat}
 
 ### Geographic Range
 
@@ -76,7 +76,7 @@ Wild bettas feed primarily at the surface and in the upper water column, using t
 
 ---
 
-## Aquarium Care Requirements
+## Aquarium Care Requirements {#aquarium-care}
 
 ### The Minimum Tank Debate — Setting the Record Straight
 
@@ -96,14 +96,14 @@ Arguments for larger tanks:
 
 | Parameter | Optimal Range | Acceptable Range | Danger Zone |
 |-----------|--------------|-----------------|-------------|
-| Temperature | 25–28°C (77–82°F) | 22–30°C (72–86°F) | &lt;20°C or &gt;32°C |
-| pH | 6.5–7.5 | 6.0–8.0 | &lt;5.5 or &gt;8.5 |
-| General Hardness (GH) | 3–8 dGH | 2–15 dGH | &lt;1 dGH |
-| Carbonate Hardness (KH) | 2–5 dKH | 1–8 dKH | &lt;1 dKH |
-| Ammonia (NH₃/NH₄⁺) | 0 ppm | — | &gt;0.25 ppm |
-| Nitrite (NO₂⁻) | 0 ppm | — | &gt;0.5 ppm |
-| Nitrate (NO₃⁻) | &lt;20 ppm | &lt;40 ppm | &gt;80 ppm |
-| TDS | 100–250 ppm | 50–400 ppm | &gt;600 ppm |
+| Temperature | 25–28°C (77–82°F) | 22–30°C (72–86°F) | <20°C or >32°C |
+| pH | 6.5–7.5 | 6.0–8.0 | <5.5 or >8.5 |
+| General Hardness (GH) | 3–8 dGH | 2–15 dGH | <1 dGH |
+| Carbonate Hardness (KH) | 2–5 dKH | 1–8 dKH | <1 dKH |
+| Ammonia (NH₃/NH₄⁺) | 0 ppm | — | >0.25 ppm |
+| Nitrite (NO₂⁻) | 0 ppm | — | >0.5 ppm |
+| Nitrate (NO₃⁻) | <20 ppm | <40 ppm | >80 ppm |
+| TDS | 100–250 ppm | 50–400 ppm | >600 ppm |
 
 **Temperature is critical and commonly neglected.** Bettas kept below 22°C become lethargic, stop eating, develop suppressed immune function, and are highly susceptible to fin rot and opportunistic bacterial infections. Below 18°C, they can die from cold shock. Unheated room-temperature tanks in most temperate climates are dangerously cold for bettas.
 
@@ -113,7 +113,7 @@ Arguments for larger tanks:
 
 ---
 
-## Tank Setup Guide
+## Tank Setup Guide {#tank-setup}
 
 ### Creating a Betta Biotope
 
@@ -121,7 +121,7 @@ The ideal betta tank mimics the structure and chemistry of Central Thai paddy an
 
 **Dimensions:** Bettas prefer shallow, wide tanks over tall narrow ones. A 40cm deep tank is ample for a single betta. Long, low tanks (common in modern "shallow" tank designs) are excellent choices that prioritize surface area — the dimension that actually matters for betta territory and labyrinth organ breathing.
 
-**Lighting:** Moderate. Bettas appreciate dimmer conditions and will use shaded areas under floating plants. Heavily planted tanks with floating plant coverage (frogbit, water sprite, salvinia) provide natural dimming and greatly enrich the betta's environment. Long daylight photoperiods (&gt;12 hours) can trigger aggressive flaring behavior; 10–12 hours is appropriate.
+**Lighting:** Moderate. Bettas appreciate dimmer conditions and will use shaded areas under floating plants. Heavily planted tanks with floating plant coverage (frogbit, water sprite, salvinia) provide natural dimming and greatly enrich the betta's environment. Long daylight photoperiods (>12 hours) can trigger aggressive flaring behavior; 10–12 hours is appropriate.
 
 **Substrate:** Fine or medium sand, or aquarium gravel. Bettas do not forage in substrate significantly — but dark substrate (black sand, dark gravel) makes colors appear more vibrant against a dark background. Planted tanks benefit from nutrient-enriched substrate (Fluval Stratum, ADA Amazonia) under regular substrate.
 
@@ -141,7 +141,7 @@ The ideal betta tank mimics the structure and chemistry of Central Thai paddy an
 
 ---
 
-## Fin Types and Colour Morphs
+## Fin Types and Colour Morphs {#morphs}
 
 The aquarium trade has produced an extraordinary diversity of betta tail types and color patterns through selective breeding over many generations. Understanding these helps keepers choose appropriate specimens and set appropriate care expectations — longer-finned varieties require more careful filtration management and are more prone to fin damage.
 
@@ -181,7 +181,7 @@ The aquarium trade has produced an extraordinary diversity of betta tail types a
 
 ---
 
-## Feeding Guide
+## Feeding Guide {#feeding}
 
 ### Nutritional Requirements
 
@@ -214,7 +214,7 @@ Feeding live Daphnia to bettas 2–3 times per week as part of a varied diet is 
 
 ---
 
-## Behaviour and Temperament
+## Behaviour and Temperament {#behavior}
 
 ### Territorial Aggression and the Fighting Fish Myth
 
@@ -242,7 +242,7 @@ Bettas are intelligent fish by fish standards. They learn to recognize their kee
 
 ---
 
-## Compatibility
+## Compatibility {#compatibility}
 
 ### The Solo Betta: Best Practice for Males
 
@@ -277,7 +277,7 @@ Female bettas are less aggressive than males and **can** be kept in groups under
 
 ---
 
-## Breeding Guide
+## Breeding Guide {#breeding}
 
 ### Selecting a Breeding Pair
 
@@ -328,7 +328,7 @@ If you are keeping any wild *Betta* species (not domesticated *B. splendens*), r
 
 ---
 
-## Health and Disease
+## Health and Disease {#health}
 
 ### Fin Rot
 
@@ -366,7 +366,7 @@ Irregular buoyancy — floating at the surface, sinking to the bottom, or listin
 
 ---
 
-## Conservation and Wild Betta Species
+## Conservation and Wild Betta Species {#conservation}
 
 Wild *Betta splendens* populations in their native range in Thailand are considered vulnerable to declining — the Central Thai Plains have been heavily modified by urbanization and agriculture, and genetic studies show increasingly isolated wild populations.
 
@@ -376,7 +376,7 @@ Keepers interested in wild betta species will find the [Blackwater Aquatics Know
 
 ---
 
-## Tools for Betta Keepers
+## Tools for Betta Keepers {#related-tools}
 
 Every aspect of betta keeping is supported by free SpawnOS science tools:
 
@@ -392,7 +392,7 @@ Every aspect of betta keeping is supported by free SpawnOS science tools:
 
 ---
 
-## Knowledge Base
+## Knowledge Base {#knowledge-base}
 
 The [Blackwater Aquatics Knowledge Base](https://blackwateraquatics.ca/blogs/knowledge-base) is an invaluable resource for serious betta keepers. Topics directly relevant to *B. splendens* include:
 
@@ -406,7 +406,7 @@ Blackwater Aquatics also supplies the [live foods](https://blackwateraquatics.ca
 
 ---
 
-## References
+## References {#references}
 
 Regan, C.T. (1910). The Asiatic fishes of the family Anabantidae. *Proceedings of the Zoological Society of London*, 767–787.
 

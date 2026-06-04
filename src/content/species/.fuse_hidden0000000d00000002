@@ -1,4 +1,4 @@
-## Species Overview
+## Species Overview {#overview}
 
 The **axolotl** (*Ambystoma mexicanum*) is one of the most scientifically significant and visually captivating aquatic animals kept in captivity. Unlike virtually every other amphibian, the axolotl never undergoes metamorphosis under natural conditions — it retains its larval form, external gills, and fully aquatic lifestyle throughout its entire life. This phenomenon, called **neoteny** or more precisely **paedomorphosis**, has made the axolotl a cornerstone of developmental biology research for over 150 years, while simultaneously captivating aquarium keepers with its alien appearance, expressive face, and relative hardiness compared to most amphibians.
 
@@ -30,7 +30,7 @@ All captive axolotls trace ancestry back to a founding population of approximate
 
 ---
 
-## Natural Habitat
+## Natural Habitat {#natural-habitat}
 
 ### Lake Xochimilco and the Chinampas
 
@@ -68,7 +68,7 @@ The feeding mechanism relies on a powerful suction strike: axolotls open their m
 
 ---
 
-## Aquarium Care Requirements
+## Aquarium Care Requirements {#aquarium-care}
 
 ### Why Temperature Management is the Primary Challenge
 
@@ -92,15 +92,15 @@ For a pair of axolotls, 150–200 litres (40–55 gallons) minimum. Axolotls kep
 
 | Parameter | Optimal Range | Acceptable Range | Danger Zone |
 |-----------|--------------|-----------------|-------------|
-| Temperature | 16–18°C (61–64°F) | 14–20°C (57–68°F) | &gt;23°C / &lt;10°C |
-| pH | 7.4–7.8 | 7.0–8.0 | &lt;6.5 or &gt;8.5 |
-| General Hardness (GH) | 7–14 dGH | 6–18 dGH | &lt;3 dGH |
-| Carbonate Hardness (KH) | 6–12 dKH | 4–14 dKH | &lt;3 dKH |
-| Ammonia (NH₃/NH₄⁺) | 0 ppm | — | &gt;0.25 ppm |
-| Nitrite (NO₂⁻) | 0 ppm | — | &gt;0.5 ppm |
-| Nitrate (NO₃⁻) | &lt;10 ppm | &lt;20 ppm | &gt;40 ppm |
-| TDS | 150–300 ppm | 100–450 ppm | &gt;700 ppm |
-| Dissolved Oxygen | &gt;7 mg/L | &gt;5 mg/L | &lt;4 mg/L |
+| Temperature | 16–18°C (61–64°F) | 14–20°C (57–68°F) | >23°C / <10°C |
+| pH | 7.4–7.8 | 7.0–8.0 | <6.5 or >8.5 |
+| General Hardness (GH) | 7–14 dGH | 6–18 dGH | <3 dGH |
+| Carbonate Hardness (KH) | 6–12 dKH | 4–14 dKH | <3 dKH |
+| Ammonia (NH₃/NH₄⁺) | 0 ppm | — | >0.25 ppm |
+| Nitrite (NO₂⁻) | 0 ppm | — | >0.5 ppm |
+| Nitrate (NO₃⁻) | <10 ppm | <20 ppm | >40 ppm |
+| TDS | 150–300 ppm | 100–450 ppm | >700 ppm |
+| Dissolved Oxygen | >7 mg/L | >5 mg/L | <4 mg/L |
 
 The **hardness requirement** surprises many keepers. Soft, acidic water used for South American fish is incompatible with axolotls. If your tap water is very soft, you may need to add mineral supplementation. Crushed coral or aragonite added to the filter raises both GH and KH naturally.
 
@@ -108,7 +108,7 @@ The **hardness requirement** surprises many keepers. Soft, acidic water used for
 
 ---
 
-## Tank Setup Guide
+## Tank Setup Guide {#tank-setup}
 
 ### Building the Ideal Axolotl Environment
 
@@ -142,7 +142,7 @@ Options in order of effectiveness:
 
 ---
 
-## Feeding Guide
+## Feeding Guide {#feeding}
 
 ### Nutritional Needs
 
@@ -182,7 +182,7 @@ Axolotls have poor eyesight and detect food primarily by movement and scent. For
 
 ---
 
-## Behaviour and Temperament
+## Behaviour and Temperament {#behavior}
 
 ### Activity Patterns
 
@@ -214,7 +214,7 @@ In practical terms: if your axolotl loses a limb or gill to tank mate aggression
 
 ---
 
-## Compatibility
+## Compatibility {#compatibility}
 
 ### Why Axolotls Should Generally Be Kept Species-Only
 
@@ -224,7 +224,7 @@ Additionally, the temperature requirements for axolotls (14–20°C) are incompa
 
 **Species sometimes successfully kept with adult axolotls:**
 
-- **White Cloud Mountain Minnows** (*Tanichthys albonubes*) — cold-tolerant (15–22°C), fast-moving, and small enough that adult axolotls rarely catch them. The minnows must be too large to be eaten (&gt;4 cm).
+- **White Cloud Mountain Minnows** (*Tanichthys albonubes*) — cold-tolerant (15–22°C), fast-moving, and small enough that adult axolotls rarely catch them. The minnows must be too large to be eaten (>4 cm).
 - **Dojo Loach / Weather Loach** (*Misgurnus anguillicaudatus*) — cold-tolerant, soft-bodied, benthic. Requires careful monitoring for disruption of resting axolotls.
 - **Mystery Snails** — acceptable in terms of temperature and behavior. Axolotls will occasionally mouth snails but usually cannot consume adults.
 
@@ -239,7 +239,7 @@ Additionally, the temperature requirements for axolotls (14–20°C) are incompa
 
 ---
 
-## Breeding Guide
+## Breeding Guide {#breeding}
 
 ### Sexual Maturity and Sexing
 
@@ -282,7 +282,7 @@ At 16–18°C, eggs hatch in approximately 14–21 days. Development stages:
 
 ---
 
-## Health and Disease
+## Health and Disease {#health}
 
 ### Common Health Issues
 
@@ -308,7 +308,7 @@ Captive axolotls in good conditions typically live **10–15 years**, with excep
 
 ---
 
-## Colour Morphs
+## Colour Morphs {#colour-morphs}
 
 The captive axolotl population displays a wide range of colour morphs resulting from selective breeding since the 1864 founding population:
 
@@ -328,7 +328,7 @@ The captive axolotl population displays a wide range of colour morphs resulting 
 
 ---
 
-## The Axolotl in Science
+## The Axolotl in Science {#science}
 
 No discussion of axolotl care would be complete without acknowledging the species' extraordinary importance to biological science. It is one of the most studied vertebrate animals in history.
 
@@ -340,7 +340,7 @@ No discussion of axolotl care would be complete without acknowledging the specie
 
 ---
 
-## Conservation and Responsibility
+## Conservation and Responsibility {#conservation}
 
 Keeping axolotls in captivity carries an ethical dimension absent in most fishkeeping. Wild axolotls are critically endangered, with a population likely in the hundreds in their natural habitat. Keeping axolotls responsibly means:
 
@@ -350,7 +350,7 @@ Keeping axolotls in captivity carries an ethical dimension absent in most fishke
 
 ---
 
-## Knowledge Base and Resources
+## Knowledge Base and Resources {#knowledge-base}
 
 The [Blackwater Aquatics Knowledge Base](https://blackwateraquatics.ca/blogs/knowledge-base) covers water chemistry, live food cultivation, amphibian husbandry, and planted tank design in depth. For axolotl keepers, the following topics are particularly relevant:
 
@@ -364,7 +364,7 @@ Blackwater Aquatics is Canada's trusted source for the [live food cultures](http
 
 ---
 
-## References
+## References {#references}
 
 Duméril, A.H.A. (1867). *Reproduction de l'axolotl (Siredon mexicanus).* Comptes rendus de l'Académie des sciences.
 

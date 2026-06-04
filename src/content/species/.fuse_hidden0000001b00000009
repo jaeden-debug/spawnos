@@ -1,4 +1,4 @@
-## Species Overview
+## Species Overview {#overview}
 
 The **goldfish** (*Carassius auratus*) is the oldest ornamental fish in human history. Selective breeding of wild *Carassius* carp began in Tang Dynasty China approximately 1,200 years ago, and over the subsequent millennia, Chinese, Japanese, and later Western breeders developed over 200 distinct varieties from the same ancestral wild carp — creating the fantails, orandas, ryukins, ranchus, bubble eyes, and dozens of other forms that represent one of the most dramatic examples of artificial selection in animal domestication history.
 
@@ -20,7 +20,7 @@ Goldfish are not beginner fish in small tanks. This is one of the most damaging 
 
 ---
 
-## Natural Habitat
+## Natural Habitat {#natural-habitat}
 
 ### Wild Goldfish Habitat
 
@@ -35,13 +35,13 @@ Wild habitat characteristics:
 
 ### What Goldfish Are Not
 
-Goldfish are **temperate fish**, not tropical. They do not require a heater in temperate climates and are actively harmed by consistently warm tropical temperatures (&gt;24°C sustained). The high metabolic rate driven by warm water accelerates waste production and oxygen demand in ways that are difficult to manage in standard tank setups.
+Goldfish are **temperate fish**, not tropical. They do not require a heater in temperate climates and are actively harmed by consistently warm tropical temperatures (>24°C sustained). The high metabolic rate driven by warm water accelerates waste production and oxygen demand in ways that are difficult to manage in standard tank setups.
 
 Goldfish are **high-waste, high-oxygen fish**. They produce substantially more ammonia per gram of body weight than most aquarium fish. The "goldfish in a bowl" paradigm fails because goldfish generate waste volumes that overwhelm any small unfiltered container within hours.
 
 ---
 
-## Aquarium Care Requirements
+## Aquarium Care Requirements {#aquarium-care}
 
 ### The Space Requirement Explained
 
@@ -59,7 +59,7 @@ Single-tailed goldfish varieties (commons, comets, shubunkins) grow even larger 
 | Carbonate Hardness (KH) | 6–12 dKH | 4–15 dKH |
 | Ammonia | 0 ppm | — |
 | Nitrite | 0 ppm | — |
-| Nitrate | &lt;20 ppm | &lt;40 ppm |
+| Nitrate | <20 ppm | <40 ppm |
 
 Note the temperature range: 16–22°C is optimal. Goldfish kept consistently at tropical temperatures (25–28°C) have shortened lifespans, increased susceptibility to disease, and diminished immune function. They should **not** be kept in tropical community tanks.
 
@@ -69,7 +69,7 @@ Note the temperature range: 16–22°C is optimal. Goldfish kept consistently at
 
 ---
 
-## Tank Setup Guide
+## Tank Setup Guide {#tank-setup}
 
 ### The Goldfish Environment
 
@@ -87,7 +87,7 @@ Note the temperature range: 16–22°C is optimal. Goldfish kept consistently at
 
 ---
 
-## Varieties and Morphs
+## Varieties and Morphs {#morphs}
 
 The diversity of goldfish varieties is unmatched in any domesticated fish species. A brief overview of major groups:
 
@@ -109,7 +109,7 @@ The diversity of goldfish varieties is unmatched in any domesticated fish specie
 
 ---
 
-## Feeding Guide
+## Feeding Guide {#feeding}
 
 Goldfish are omnivores with a preference for plant matter and invertebrates. Their high metabolism requires regular feeding but overfeeding is the most common mistake.
 
@@ -127,7 +127,7 @@ Goldfish are omnivores with a preference for plant matter and invertebrates. The
 
 ---
 
-## Compatibility
+## Compatibility {#compatibility}
 
 Goldfish cohabitation is limited by their temperature requirements (cool water) and their tendency to eat smaller fish.
 
@@ -146,7 +146,7 @@ Goldfish cohabitation is limited by their temperature requirements (cool water) 
 
 ---
 
-## Health and Disease
+## Health and Disease {#health}
 
 **Swim Bladder Disorder:** Extremely common in fancy goldfish. The compressed body shape of double-tail varieties crowds the internal organs, including the swim bladder. Symptoms: floating, sinking, listing. Treatment: fast for 3 days, then feed live daphnia; switch to sinking foods exclusively; consider gel food diet.
 
@@ -162,7 +162,7 @@ Goldfish cohabitation is limited by their temperature requirements (cool water) 
 
 ---
 
-## References
+## References {#references}
 
 Smartt, J. (2001). *Goldfish Varieties and Genetics*. Blackwell Science, Oxford.
 

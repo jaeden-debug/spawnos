@@ -1,4 +1,4 @@
-## Species Overview
+## Species Overview {#overview}
 
 The **freshwater angelfish** (*Pterophyllum scalare*) is one of the most graceful and recognizable aquarium fish in the world. Its laterally compressed, disc-shaped body, dramatically elongated dorsal and anal fins, and distinctive vertical banding pattern give it a silhouette unlike any other common aquarium fish. First imported to Europe in the early 1900s and to North America by the 1920s, angelfish have been bred in captivity for over a century, producing dozens of color varieties while retaining their essential wild character.
 
@@ -22,7 +22,7 @@ The genus *Pterophyllum* contains three species: *P. scalare* (the common aquari
 
 ---
 
-## Natural Habitat
+## Natural Habitat {#natural-habitat}
 
 ### The Amazon River System
 
@@ -56,7 +56,7 @@ Many of the most significant angelfish collecting sites are blackwater or blackw
 
 ---
 
-## Aquarium Care Requirements
+## Aquarium Care Requirements {#aquarium-care}
 
 ### Tank Dimensions: Height Matters
 
@@ -70,13 +70,13 @@ Minimum tank: **120 litres (30 US gallons)** for a single pair or small group, w
 
 | Parameter | Optimal Range | Acceptable Range | Avoid |
 |-----------|--------------|-----------------|-------|
-| Temperature | 26–30°C (79–86°F) | 24–32°C | &lt;22°C or &gt;34°C |
-| pH | 6.0–7.5 | 5.5–8.0 | &gt;8.5 |
-| General Hardness (GH) | 3–8 dGH | 2–15 dGH | &gt;20 dGH |
+| Temperature | 26–30°C (79–86°F) | 24–32°C | <22°C or >34°C |
+| pH | 6.0–7.5 | 5.5–8.0 | >8.5 |
+| General Hardness (GH) | 3–8 dGH | 2–15 dGH | >20 dGH |
 | Carbonate Hardness (KH) | 2–5 dKH | 1–8 dKH | — |
-| Ammonia | 0 ppm | — | &gt;0.1 ppm |
-| Nitrite | 0 ppm | — | &gt;0.25 ppm |
-| Nitrate | &lt;20 ppm | &lt;30 ppm | &gt;50 ppm |
+| Ammonia | 0 ppm | — | >0.1 ppm |
+| Nitrite | 0 ppm | — | >0.25 ppm |
+| Nitrate | <20 ppm | <30 ppm | >50 ppm |
 
 Angelfish are **sensitive to water quality changes**. Sudden parameter shifts trigger stress responses — sudden temperature drops, pH crashes, or spikes in ammonia cause visible behavioral changes (fin clamping, hiding, loss of color) within hours.
 
@@ -84,7 +84,7 @@ Angelfish are **sensitive to water quality changes**. Sudden parameter shifts tr
 
 ---
 
-## Tank Setup Guide
+## Tank Setup Guide {#tank-setup}
 
 ### Replicating the Amazon Margin
 
@@ -104,7 +104,7 @@ The ideal angelfish tank replicates the vertical structure and soft, warm chemis
 
 ---
 
-## Behaviour and Temperament
+## Behaviour and Temperament {#behavior}
 
 ### Social Structure
 
@@ -125,7 +125,7 @@ Angelfish are **not appropriate** for nano community tanks with small tetras, un
 
 ---
 
-## Compatibility
+## Compatibility {#compatibility}
 
 **Compatible tank mates for angelfish:**
 - **[Corydoras catfish](/species/corydoras)** — peaceful bottom dwellers too armored to be harassed; occupy different water column layer. A classic and reliable pairing.
@@ -145,7 +145,7 @@ Angelfish are **not appropriate** for nano community tanks with small tetras, un
 
 ---
 
-## Feeding Guide
+## Feeding Guide {#feeding}
 
 Angelfish are omnivores with a significant carnivorous lean. They are mid-column and surface feeders, using their upturned mouths to strike at prey from below.
 
@@ -163,7 +163,7 @@ Condition breeding pairs with [live foods](https://blackwateraquatics.ca/collect
 
 ---
 
-## Breeding Guide
+## Breeding Guide {#breeding}
 
 ### Natural Pair Formation
 
@@ -196,7 +196,7 @@ Quality [live foods from Blackwater Aquatics](https://blackwateraquatics.ca/coll
 
 ---
 
-## Health and Disease
+## Health and Disease {#health}
 
 **Hole in the Head (HITH) / Head and Lateral Line Erosion (HLLE):** Pitting and erosion around the head and along the lateral line. Associated with poor water quality, activated carbon overuse, and possibly hexamita parasite. Improve water quality, remove activated carbon, increase water change frequency, and consider metronidazole treatment for suspected hexamita involvement.
 
@@ -210,7 +210,7 @@ Quality [live foods from Blackwater Aquatics](https://blackwateraquatics.ca/coll
 
 ---
 
-## Tools for Angelfish Keepers
+## Tools for Angelfish Keepers {#related-tools}
 
 - **[Tank Volume Calculator](/tools/tank-volume)** — confirm your tank provides adequate height and volume for adult angelfish
 - **[Heater Size Calculator](/tools/heater-size)** — angelfish need consistent 26–30°C; reliable heating is essential
@@ -223,13 +223,13 @@ Quality [live foods from Blackwater Aquatics](https://blackwateraquatics.ca/coll
 
 ---
 
-## Knowledge Base
+## Knowledge Base {#knowledge-base}
 
 The [Blackwater Aquatics Knowledge Base](https://blackwateraquatics.ca/blogs/knowledge-base) is essential reading for serious angelfish keepers — particularly the sections on Amazonian water chemistry, tannin and humic acid science, and breeding cichlids with live foods. Angelfish from blackwater-influenced habitats respond dramatically to tannin additions in ways that are well-documented and measurable: reduced cortisol stress markers, improved immune response, more vibrant coloration, and increased spawning frequency.
 
 ---
 
-## References
+## References {#references}
 
 Lichtenstein, H. (1823). *Verzeichniss der Doubletten des zoologischen Museums der Königl. Universität zu Berlin*. Berlin.
 
