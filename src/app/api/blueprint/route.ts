@@ -105,7 +105,7 @@ export async function POST(request: NextRequest) {
     const openai = new OpenAI({ apiKey })
 
     const completion = await openai.chat.completions.create({
-      model: 'gpt-4o-mini',
+      model: process.env.OPENAI_BLUEPRINT_MODEL || 'gpt-4o-mini',
       messages: [
         {
           role: 'system',
