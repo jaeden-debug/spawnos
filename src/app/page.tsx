@@ -87,14 +87,20 @@ export default async function HomePage() {
         <section className="relative w-full min-h-[100svh] overflow-hidden">
           {/* Brand hero art — desktop (logo sits on the right) */}
           <img
-            src="/spawnos-aquarium-operating-system-desktop-hero.png"
-            alt="SpawnOS — the aquarium operating system"
+            src="/spawnos-aquarium-operating-system-desktop-hero.webp"
+            alt="SpawnOS — the aquarium operating system by Blackwater Aquatics"
+            width={1536}
+            height={1024}
+            fetchPriority="high"
             className="absolute inset-0 w-full h-full object-cover object-center hidden md:block"
           />
           {/* Brand hero art — mobile (logo sits in the top half) */}
           <img
-            src="/spawnos-aquarium-operating-system-mobile-hero.png"
-            alt="SpawnOS — the aquarium operating system"
+            src="/spawnos-aquarium-operating-system-mobile-hero.webp"
+            alt="SpawnOS — the aquarium operating system by Blackwater Aquatics"
+            width={864}
+            height={1536}
+            fetchPriority="high"
             className="absolute inset-0 w-full h-full object-cover object-center md:hidden"
           />
 

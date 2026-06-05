@@ -6,7 +6,7 @@ import SiteFooter from '@/components/layout/SiteFooter'
 import MdxRenderer, { slugify } from '@/components/content/MdxRenderer'
 import RecommendedReading from '@/components/lab-notes/RecommendedReading'
 import { getLabNote, getAllLabNoteSlugs, getRelatedLabNotes } from '@/lib/lab-notes'
-import { breadcrumbSchema } from '@/lib/schema'
+import { breadcrumbSchema, authorSchema, AUTHOR } from '@/lib/schema'
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -24,6 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${note.title} — Lab Notes`,
     description: note.excerpt,
     keywords: note.tags,
+    authors: [{ name: AUTHOR.name, url: 'https://spawnos.app/about' }],
     alternates: { canonical: `/lab-notes/${slug}` },
     openGraph: {
       title: note.title,
@@ -67,7 +68,7 @@ export default async function LabNotePage({ params }: Props) {
     datePublished: note.date,
     dateModified: note.date,
     image: note.thumbnail,
-    author: { '@type': 'Organization', name: 'SpawnOS' },
+    author: authorSchema(),
     publisher: { '@type': 'Organization', name: 'SpawnOS', url: 'https://spawnos.app' },
     mainEntityOfPage: `https://spawnos.app/lab-notes/${slug}`,
   }
@@ -109,6 +110,8 @@ export default async function LabNotePage({ params }: Props) {
             <h1 className="text-3xl sm:text-[2.75rem] font-black tracking-tight text-spawn-text leading-[1.08] mb-4">{note.title}</h1>
             <p className="text-lg text-spawn-text-dim leading-relaxed mb-5">{note.excerpt}</p>
             <div className="flex items-center gap-2 text-sm text-spawn-muted-text">
+              <span>By <span className="text-spawn-text-dim font-medium">{AUTHOR.name}</span></span>
+              <span className="w-1 h-1 rounded-full bg-spawn-border" />
               <span>{formatDate(note.date)}</span>
               <span className="w-1 h-1 rounded-full bg-spawn-border" />
               <span>{note.readingTime} min read</span>

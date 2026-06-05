@@ -2,6 +2,28 @@ import type { SpeciesData } from '@/types/species'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://spawnos.app'
 
+// ─── Author / E-E-A-T ────────────────────────────────────────────────────────
+// Jaeden Doody — founder of Blackwater Aquatics Canada and author of SpawnOS content.
+export const AUTHOR = {
+  name: 'Jaeden Doody',
+  id: `${SITE_URL}/#jaeden-doody`,
+  jobTitle: 'Founder, Blackwater Aquatics Canada',
+}
+
+/** Person schema for the content author, referenced by Article schemas. */
+export function authorSchema() {
+  return {
+    '@type': 'Person',
+    '@id': AUTHOR.id,
+    name: AUTHOR.name,
+    jobTitle: AUTHOR.jobTitle,
+    description:
+      'Aquarist, breeder, and founder of Blackwater Aquatics Canada. Writes the SpawnOS species, live-food, and breeding guides from hands-on fishkeeping and breeding experience.',
+    worksFor: { '@id': 'https://blackwateraquatics.ca/#organization' },
+    url: `${SITE_URL}/about`,
+  }
+}
+
 export function softwareApplicationSchema() {
   return {
     '@context': 'https://schema.org',
@@ -41,12 +63,19 @@ export function organizationSchema() {
         url: 'https://blackwateraquatics.ca',
         description:
           'Canadian aquatics company specializing in breeder-grade live foods, fish, and aquarium intelligence. Parent company of SpawnOS.',
+        logo: `${SITE_URL}/icon-512.png`,
+        founder: { '@id': AUTHOR.id },
+        sameAs: [
+          'https://blackwateraquatics.ca',
+          'https://www.tiktok.com/@blackwateraquaticscanada',
+        ],
         brand: {
           '@type': 'Brand',
           name: 'SpawnOS',
           url: SITE_URL,
         },
       },
+      authorSchema(),
       {
         '@type': 'WebApplication',
         '@id': `${SITE_URL}/#spawnos`,

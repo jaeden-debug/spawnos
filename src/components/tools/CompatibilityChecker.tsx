@@ -417,14 +417,16 @@ function checkCompatibility(a: SpeciesData, b: SpeciesData): CompatResult {
     aAxolotl || bAxolotl,
     (aAxolotl && bAxolotl) ? 0 : 70,
     `Axolotls are best kept species-only. Fish can nip their gills, stress them, carry pathogens, or be eaten. This is not a normal community-tank pairing.`,
-    warnings
+    warnings,
+    notes
   )
 
   score -= addRule(
     (aGoldfish && !bGoldfish) || (bGoldfish && !aGoldfish),
     45,
     `Goldfish are usually poor matches for tropical community species because of temperature, waste load, feeding style, and long-term size differences.`,
-    warnings
+    warnings,
+    notes
   )
 
   // Betta-specific intelligence
@@ -432,28 +434,32 @@ function checkCompatibility(a: SpeciesData, b: SpeciesData): CompatResult {
     (aBetta && bBetta),
     85,
     `Two bettas should not be housed together as a normal compatibility pairing. Territorial aggression can lead to severe injury or death.`,
-    warnings
+    warnings,
+    notes
   )
 
   score -= addRule(
     (aBetta && bDiscus) || (bBetta && aDiscus),
     65,
     `Bettas and discus may overlap on warm water, but they are not a good real-world pairing. Discus are sensitive, group-oriented, slow-feeding fish; bettas are territorial and can harass or stress them.`,
-    warnings
+    warnings,
+    notes
   )
 
   score -= addRule(
     (aBetta && bShrimp) || (bBetta && aShrimp),
     35,
     `Betta + shrimp is conditional, not automatically safe. Many bettas hunt cherry shrimp, and baby shrimp are especially likely to be eaten. Dense plants and individual temperament matter.`,
-    warnings
+    warnings,
+    notes
   )
 
   score -= addRule(
     (aBetta && bPuffer) || (bBetta && aPuffer),
     80,
     `Bettas and puffers are a dangerous pairing. Puffers are notorious fin nippers, and bettas are territorial with long fins that invite damage.`,
-    warnings
+    warnings,
+    notes
   )
 
   // Shrimp / prey risk
@@ -461,14 +467,16 @@ function checkCompatibility(a: SpeciesData, b: SpeciesData): CompatResult {
     ((aPredatory && bShrimp) || (bPredatory && aShrimp)) && !(aBetta || bBetta),
     30,
     `There is predation risk. Shrimp may be hunted, especially juveniles or freshly molted individuals.`,
-    warnings
+    warnings,
+    notes
   )
 
   score -= addRule(
     (aPredatory && bTinyPrey) || (bPredatory && aTinyPrey),
     20,
     `One species may treat the other as food or opportunistic prey depending on size, age, hunger, and tank structure.`,
-    warnings
+    warnings,
+    notes
   )
 
   // Fin nipping / body shape risk
@@ -476,7 +484,8 @@ function checkCompatibility(a: SpeciesData, b: SpeciesData): CompatResult {
     (aFinNipper && bLongFinSlow) || (bFinNipper && aLongFinSlow),
     35,
     `Fin-nipping risk is high. Long-finned or slow-moving fish can be stressed or injured by active nippers.`,
-    warnings
+    warnings,
+    notes
   )
 
   // Cichlid territorial risk
@@ -484,7 +493,8 @@ function checkCompatibility(a: SpeciesData, b: SpeciesData): CompatResult {
     aCichlid && bCichlid && a.slug !== b.slug,
     18,
     `Both species appear to be cichlids or cichlid-like territorial fish. Compatibility depends heavily on tank size, sex ratio, territory, and aquascape.`,
-    warnings
+    warnings,
+    notes
   )
 
   // Same family check, but don't punish common peaceful schooling groups as heavily
