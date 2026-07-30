@@ -1,6 +1,15 @@
 import type { Metadata, Viewport } from 'next'
+import { Barlow_Condensed } from 'next/font/google'
 import './globals.css'
 import { organizationSchema } from '@/lib/schema'
+
+// Blackwater Aquatics uses Barlow Condensed 600 for headings/nav.
+const barlowCondensed = Barlow_Condensed({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-barlow',
+  display: 'swap',
+})
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://spawnos.app'
 
@@ -93,7 +102,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className={barlowCondensed.variable} suppressHydrationWarning>
       <body className="bg-spawn-bg text-spawn-text antialiased">
         <script
           type="application/ld+json"

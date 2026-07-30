@@ -2,22 +2,54 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+/*
+ * SpawnOS theme — matched to Blackwater Aquatics Canada (Savor 3.1.0).
+ * Tokens read from blackwateraquatics.ca:
+ *   background   #000000            heading font  "Barlow Condensed" 600
+ *   foreground   rgb(222 222 209)   body font     SF Mono / monospace
+ *   heading      #FFFFFF            button radius 0px (sharp)
+ *   primary      rgb(107 252 246)   border        rgb(203 176 109) brass
+ *   shadow       rgb(106 252 252)
+ */
 
 :root {
-  --bg: #080c0f;
-  --surface: #0d1117;
-  --card: #111820;
-  --border: #1c2a35;
-  --cyan: #00d4ff;
-  --cyan-dim: #0099bb;
-  --amber: #f59e0b;
-  --emerald: #10b981;
-  --rose: #f43f5e;
-  --muted: #4a6070;
-  --muted-text: #8899a6;
-  --text: #e2eaf0;
-  --text-dim: #b0bec5;
+  /* Surfaces — pure black base, lifted neutrals for depth */
+  --bg: #000000;
+  --surface: #0a0d0d;
+  --card: #101414;
+  --border: #1e2626;
+  --border-strong: #2b3533;
+
+  /* Blackwater brass accent — used sparingly as a hairline/rule */
+  --gold: #cbb06d;
+  --gold-soft: rgba(203, 176, 109, 0.22);
+
+  /* Primary cyan */
+  --cyan: #6bfcf6;
+  --cyan-dim: #2fbdb8;
+  --cyan-glow: rgba(107, 252, 246, 0.15);
+
+  /* Semantic — from Blackwater stock indicators */
+  --amber: #ee9441;
+  --emerald: #3ed660;
+  --rose: #ff5c5c;
+
+  /* Type */
+  --text: #deded1;
+  --text-dim: #a7a99c;
+  --muted: #6b706a;
+  --muted-text: #8c9084;
+  --heading: #ffffff;
+
+  /* Geometry — Blackwater: sharp controls, softly rounded cards */
+  --radius-control: 0px;
+  --radius-card: 0.8rem;
+  --radius-card-lg: 1rem;
+
+  --font-mono-stack: 'SF Mono', 'JetBrains Mono', Menlo, Consolas, Monaco,
+    'Liberation Mono', 'Lucida Console', monospace;
+  --font-display: var(--font-barlow), 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --font-body: var(--font-mono-stack);
 }
 
 * {
@@ -32,9 +64,42 @@ body {
   overflow-x: hidden;
   background-color: var(--bg);
   color: var(--text);
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Blackwater headings: condensed, uppercase, tight */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-display {
+  font-family: var(--font-display);
+  color: var(--heading);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.08;
+  text-transform: uppercase;
+}
+
+/* Opt-out for content that must stay sentence case (species binomials etc.) */
+.normal-case-heading {
+  text-transform: none !important;
+  font-family: var(--font-body) !important;
+  letter-spacing: 0 !important;
+}
+
+/* Form controls are sharp-edged on Blackwater */
+input,
+select,
+textarea {
+  border-radius: var(--radius-control);
+  font-family: var(--font-body);
 }
 
 /* Scrollbar */
@@ -46,55 +111,124 @@ body {
   background: var(--surface);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 3px;
+  background: var(--border-strong);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--muted);
+  background: var(--cyan-dim);
 }
 
 /* Selection */
 ::selection {
-  background: rgba(0, 212, 255, 0.2);
-  color: var(--text);
+  background: rgba(107, 252, 246, 0.25);
+  color: var(--heading);
 }
 
 /* Focus ring */
 :focus-visible {
   outline: 2px solid var(--cyan);
   outline-offset: 2px;
-  border-radius: 4px;
+  border-radius: 0;
 }
 
-/* Glassmorphism card */
+/* ---------------------------------------------------------------- primitives */
+
+/* Blackwater primary button: near-white fill, dark text, cyan edge, sharp */
+.bw-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: var(--radius-control);
+  font-family: var(--font-display);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.85rem 1.5rem;
+  background: #fffcfc;
+  color: #1a1a1a;
+  border: 1px solid #6effed;
+  transition: background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+}
+.bw-btn:hover:not(:disabled) {
+  background: rgba(107, 255, 248, 0.91);
+  color: #06100f;
+  box-shadow: 0 0 22px rgba(106, 252, 252, 0.28);
+}
+.bw-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* Secondary / ghost */
+.bw-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: var(--radius-control);
+  font-family: var(--font-display);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.85rem 1.5rem;
+  background: rgba(107, 252, 246, 0.08);
+  color: var(--cyan);
+  border: 1px solid rgba(107, 252, 246, 0.35);
+  transition: background 0.18s ease, box-shadow 0.18s ease;
+}
+.bw-btn-ghost:hover:not(:disabled) {
+  background: rgba(107, 252, 246, 0.16);
+  box-shadow: 0 0 18px rgba(106, 252, 252, 0.18);
+}
+
+/* Eyebrow / section label — condensed, spaced, cyan */
+.bw-eyebrow {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-weight: 600;
+  font-size: 0.75rem;
+  color: var(--cyan);
+}
+
+/* Brass hairline rule, from the Blackwater border token */
+.bw-rule {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    var(--gold-soft),
+    rgba(107, 252, 246, 0.28),
+    transparent
+  );
+}
+
+/* Card */
 .glass-card {
-  background: rgba(17, 24, 32, 0.8);
+  background: rgba(16, 20, 20, 0.82);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(28, 42, 53, 0.8);
+  border: 1px solid var(--border);
 }
 
 /* Glow utilities */
 .glow-cyan {
-  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3), 0 0 40px rgba(0, 212, 255, 0.1);
+  box-shadow: 0 0 20px rgba(107, 252, 246, 0.25), 0 0 40px rgba(107, 252, 246, 0.08);
 }
 .glow-amber {
-  box-shadow: 0 0 20px rgba(245, 158, 11, 0.3), 0 0 40px rgba(245, 158, 11, 0.1);
+  box-shadow: 0 0 20px rgba(238, 148, 65, 0.28), 0 0 40px rgba(238, 148, 65, 0.1);
 }
 .text-glow-cyan {
-  text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+  text-shadow: 0 0 20px rgba(107, 252, 246, 0.45);
 }
 
 /* Score bar */
 .score-bar {
   height: 4px;
-  border-radius: 2px;
   background: var(--border);
   overflow: hidden;
 }
 .score-bar-fill {
   height: 100%;
-  border-radius: 2px;
   transition: width 0.6s ease;
 }
 
@@ -102,14 +236,14 @@ body {
 .gradient-border {
   position: relative;
   background: var(--card);
-  border-radius: 12px;
+  border-radius: var(--radius-card);
 }
 .gradient-border::before {
   content: '';
   position: absolute;
   inset: -1px;
-  border-radius: 13px;
-  background: linear-gradient(135deg, rgba(0, 212, 255, 0.3), transparent, rgba(245, 158, 11, 0.2));
+  border-radius: calc(var(--radius-card) + 1px);
+  background: linear-gradient(135deg, rgba(107, 252, 246, 0.3), transparent, var(--gold-soft));
   z-index: -1;
 }
 
@@ -119,13 +253,13 @@ body {
 }
 .hover-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 16px rgba(0, 212, 255, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 16px rgba(107, 252, 246, 0.08);
 }
 
 /* Grid pattern overlay */
 .grid-overlay {
-  background-image: linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+  background-image: linear-gradient(rgba(107, 252, 246, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(107, 252, 246, 0.03) 1px, transparent 1px);
   background-size: 32px 32px;
 }
 
@@ -136,24 +270,31 @@ input[type='number']::-webkit-outer-spin-button {
   margin: 0;
 }
 
-/* Prose / article content */
+/* ---------------------------------------------------------------- prose */
+
 .prose-aqua {
   color: var(--text-dim);
   line-height: 1.8;
 }
 .prose-aqua h2 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  color: var(--heading);
   margin-top: 2.5rem;
   margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--gold-soft);
 }
 .prose-aqua h3 {
-  font-size: 1.125rem;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
   font-weight: 600;
-  color: var(--text);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--heading);
   margin-top: 1.75rem;
   margin-bottom: 0.75rem;
 }
@@ -174,16 +315,15 @@ input[type='number']::-webkit-outer-spin-button {
   content: '';
   position: absolute;
   left: 0;
-  top: 0.6rem;
+  top: 0.7rem;
   width: 6px;
   height: 6px;
-  border-radius: 50%;
   background: var(--cyan);
-  opacity: 0.7;
+  opacity: 0.8;
 }
 .prose-aqua strong {
   color: var(--text);
-  font-weight: 600;
+  font-weight: 700;
 }
 .prose-aqua a {
   color: var(--cyan);
@@ -197,20 +337,19 @@ input[type='number']::-webkit-outer-spin-button {
   align-items: center;
   gap: 0.375rem;
   padding: 0.25rem 0.625rem;
-  border-radius: 6px;
+  border-radius: 0;
   font-size: 0.75rem;
   font-weight: 600;
-  background: rgba(0, 212, 255, 0.08);
-  border: 1px solid rgba(0, 212, 255, 0.2);
+  background: rgba(107, 252, 246, 0.08);
+  border: 1px solid rgba(107, 252, 246, 0.22);
   color: var(--cyan);
 }
 
-/* Stat bar animation */
+/* Animations */
 @keyframes fill-bar {
   from { width: 0; }
 }
 
-/* Page transition */
 @keyframes page-in {
   from {
     opacity: 0;
@@ -232,13 +371,13 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 .score-bar-fill[data-score="good"] {
-  background: #10b981;
+  background: var(--emerald);
 }
 
 .score-bar-fill[data-score="caution"] {
-  background: #f59e0b;
+  background: var(--amber);
 }
 
 .score-bar-fill[data-score="risk"] {
-  background: #f43f5e;
+  background: var(--rose);
 }

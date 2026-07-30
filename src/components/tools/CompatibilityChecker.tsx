@@ -623,8 +623,8 @@ export default function CompatibilityChecker() {
     if (a && b) setResult(checkCompatibility(a, b))
   }
 
-  const selectClass = 'w-full bg-spawn-surface border border-spawn-border rounded-lg px-3 py-2.5 text-spawn-text text-sm focus:outline-none focus:border-spawn-cyan/60 transition-colors'
-  const labelClass = 'text-xs font-semibold text-spawn-muted-text uppercase tracking-wide mb-1.5 block'
+  const selectClass = 'w-full bg-spawn-surface border border-spawn-border rounded-none px-3 py-3 text-spawn-text text-sm focus:outline-none focus:border-spawn-cyan/70 hover:border-spawn-border-strong transition-colors'
+  const labelClass = 'bw-eyebrow mb-2 block'
 
   const scoreWidthClass =
     !result ? 'w-0' :
@@ -656,7 +656,7 @@ export default function CompatibilityChecker() {
 
   return (
     <div className="max-w-2xl">
-      <div className="glass-card rounded-xl border border-spawn-border/50 p-6">
+      <div className="glass-card rounded-none border-l-2 border-l-spawn-cyan/60 border-y border-r border-spawn-border p-6">
         <div className="grid sm:grid-cols-2 gap-4 mb-5">
           <div>
             <label className={labelClass}>Species A</label>
@@ -681,18 +681,18 @@ export default function CompatibilityChecker() {
         <button
           onClick={check}
           disabled={!speciesA || !speciesB}
-          className="w-full py-3 rounded-xl bg-spawn-cyan text-spawn-bg font-bold text-sm hover:bg-opacity-90 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+          className="bw-btn w-full text-base"
         >
           Check Compatibility
         </button>
       </div>
 
       {result && (
-        <div className={`mt-6 glass-card rounded-xl border p-6 ${verdictStyle}`}>
+        <div className={`mt-6 glass-card rounded-none border p-6 ${verdictStyle}`}>
           <div className="flex items-center justify-between mb-5">
-            <div className="text-xl font-black">{result.verdict}</div>
+            <div className="font-display text-2xl font-semibold uppercase tracking-wide">{result.verdict}</div>
             <div className="text-right">
-              <div className="text-3xl font-black">{result.score}</div>
+              <div className="font-display text-4xl font-semibold leading-none">{result.score}</div>
               <div className="text-xs text-spawn-muted-text">/ 100</div>
             </div>
           </div>
@@ -708,9 +708,9 @@ export default function CompatibilityChecker() {
 
           {/* Relationship intelligence */}
           <div className="grid sm:grid-cols-2 gap-3 mb-5">
-            <div className="rounded-xl border border-spawn-border/60 bg-spawn-bg/40 p-4">
-              <div className="text-xs font-semibold text-spawn-muted-text uppercase tracking-wide mb-1">Relationship Type</div>
-              <div className="text-lg font-black text-spawn-text">{result.relationshipType}</div>
+            <div className="rounded-none border border-spawn-border/60 bg-spawn-bg/40 p-4">
+              <div className="bw-eyebrow mb-1">Relationship Type</div>
+              <div className="font-display text-xl font-semibold uppercase tracking-wide text-spawn-heading">{result.relationshipType}</div>
               <div className="text-xs text-spawn-muted-text mt-1">
                 {result.relationshipType === 'Live Food'
                   ? 'Useful as food/enrichment, not a tankmate.'
@@ -722,11 +722,11 @@ export default function CompatibilityChecker() {
               </div>
             </div>
 
-            <div className="rounded-xl border border-spawn-border/60 bg-spawn-bg/40 p-4">
-              <div className="text-xs font-semibold text-spawn-muted-text uppercase tracking-wide mb-2">Risk Flags</div>
+            <div className="rounded-none border border-spawn-border/60 bg-spawn-bg/40 p-4">
+              <div className="bw-eyebrow mb-2">Risk Flags</div>
               <div className="flex flex-wrap gap-1.5">
                 {result.riskBadges.map((badge) => (
-                  <span key={badge} className="text-[0.68rem] font-bold uppercase tracking-wide rounded-full border border-spawn-amber/30 bg-spawn-amber/10 text-spawn-amber px-2 py-1">
+                  <span key={badge} className="text-[0.68rem] font-bold uppercase tracking-wide rounded-none border border-spawn-amber/40 bg-spawn-amber/10 text-spawn-amber px-2 py-1">
                     {badge}
                   </span>
                 ))}
@@ -736,7 +736,7 @@ export default function CompatibilityChecker() {
 
           {/* Subscores */}
           <div className="mb-5">
-            <div className="text-xs font-semibold text-spawn-muted-text uppercase tracking-wide mb-3">Compatibility Intelligence</div>
+            <div className="bw-eyebrow mb-3">Compatibility Intelligence</div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
               {[
                 ['Water', result.subScores.water],
@@ -746,9 +746,9 @@ export default function CompatibilityChecker() {
                 ['Habitat', result.subScores.habitat],
                 ['Setup Ease', result.subScores.setup],
               ].map(([label, value]) => (
-                <div key={label as string} className="rounded-xl border border-spawn-border/50 bg-spawn-bg/35 p-3">
+                <div key={label as string} className="rounded-none border border-spawn-border/50 bg-spawn-bg/35 p-3">
                   <div className="text-[0.68rem] text-spawn-muted-text uppercase tracking-wide">{label}</div>
-                  <div className="text-lg font-black text-spawn-text">{value as number}/100</div>
+                  <div className="font-display text-xl font-semibold text-spawn-heading">{value as number}/100</div>
                   <div className="text-[0.68rem] text-spawn-muted-text">{labelRisk(value as number)} risk</div>
                 </div>
               ))}
@@ -756,8 +756,8 @@ export default function CompatibilityChecker() {
           </div>
 
           {/* Setup recommendation */}
-          <div className="mb-5 rounded-xl border border-spawn-cyan/20 bg-spawn-cyan/5 p-4">
-            <div className="text-xs font-semibold text-spawn-cyan uppercase tracking-wide mb-3">Recommended Setup</div>
+          <div className="mb-5 rounded-none border border-spawn-cyan/20 bg-spawn-cyan/5 p-4">
+            <div className="bw-eyebrow mb-3">Recommended Setup</div>
             <div className="grid sm:grid-cols-2 gap-2 text-sm text-spawn-muted-text">
               <div><span className="text-spawn-text font-semibold">Tank:</span> {result.setup.minimumTankGallons}+ gallons</div>
               <div><span className="text-spawn-text font-semibold">Flow:</span> {result.setup.flow}</div>
@@ -770,7 +770,7 @@ export default function CompatibilityChecker() {
 
           {/* Parameter overlap */}
           <div className="mb-5">
-            <div className="text-xs font-semibold text-spawn-muted-text uppercase tracking-wide mb-3">Parameter Overlap</div>
+            <div className="bw-eyebrow mb-3">Parameter Overlap</div>
             <div className="space-y-2">
               {result.paramOverlap.map((p) => (
                 <div key={p.param} className="flex items-center gap-3 text-sm">
@@ -802,7 +802,7 @@ export default function CompatibilityChecker() {
 
           {result.notes.length > 0 && (
             <div>
-              <div className="text-xs font-semibold text-spawn-muted-text uppercase tracking-wide mb-2">Notes</div>
+              <div className="bw-eyebrow mb-2">Notes</div>
               <ul className="space-y-1.5">
                 {result.notes.map((n, i) => (
                   <li key={i} className="text-sm text-spawn-muted-text">• {n}</li>
