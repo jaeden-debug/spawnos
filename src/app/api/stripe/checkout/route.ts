@@ -3,9 +3,32 @@ import { createClient } from '@/lib/supabase/server'
 
 export const runtime = 'nodejs'
 
-const PLAN_PRICES: Record<string, string | undefined> = {
-  pro:     process.env.STRIPE_PRO_PRICE_ID,
-  breeder: process.env.STRIPE_BREEDER_PRICE_ID,
+const PLANS = ['pro', 'breeder'] as const
+const PERIODS = ['monthly', 'annual'] as const
+type Plan = (typeof PLANS)[number]
+type Period = (typeof PERIODS)[number]
+
+/**
+ * Prices are resolved by Stripe lookup key (spawnos_<plan>_<period>), so the
+ * app needs no per-price env vars. STRIPE_PRO_PRICE_ID /
+ * STRIPE_BREEDER_PRICE_ID remain as monthly-only overrides if ever set.
+ */
+const ENV_OVERRIDES: Record<string, string | undefined> = {
+  'pro:monthly':     process.env.STRIPE_PRO_PRICE_ID,
+  'breeder:monthly': process.env.STRIPE_BREEDER_PRICE_ID,
+}
+
+async function resolvePriceId(
+  stripe: import('stripe').Stripe,
+  plan: Plan,
+  period: Period,
+): Promise<string | null> {
+  const override = ENV_OVERRIDES[`${plan}:${period}`]
+  if (override) return override
+
+  const lookupKey = `spawnos_${plan}_${period}`
+  const prices = await stripe.prices.list({ lookup_keys: [lookupKey], active: true, limit: 1 })
+  return prices.data[0]?.id ?? null
 }
 
 export async function POST(request: NextRequest) {
@@ -16,18 +39,11 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json()
-    const plan = body.plan as string
+    const plan = body.plan as Plan
+    const period: Period = body.period === 'monthly' ? 'monthly' : 'annual'
 
-    if (!plan || !PLAN_PRICES[plan]) {
+    if (!PLANS.includes(plan)) {
       return NextResponse.json({ error: 'Invalid plan.' }, { status: 400 })
-    }
-
-    const priceId = PLAN_PRICES[plan]
-    if (!priceId) {
-      return NextResponse.json(
-        { error: `Price ID for plan "${plan}" is not configured. Set STRIPE_${plan.toUpperCase()}_PRICE_ID.` },
-        { status: 503 }
-      )
     }
 
     // Get authenticated user
@@ -41,6 +57,14 @@ export async function POST(request: NextRequest) {
     // Get or create Stripe customer
     const { default: Stripe } = await import('stripe')
     const stripe = new Stripe(stripeKey, { apiVersion: '2026-05-27.dahlia' })
+
+    const priceId = await resolvePriceId(stripe, plan, period)
+    if (!priceId) {
+      return NextResponse.json(
+        { error: `No active Stripe price found for ${plan} (${period}). Expected lookup key spawnos_${plan}_${period}.` },
+        { status: 503 }
+      )
+    }
 
     // Check if user already has a Stripe customer ID
     const { data: profile } = await supabase
@@ -82,6 +106,7 @@ export async function POST(request: NextRequest) {
         metadata: {
           supabase_user_id: user.id,
           plan,
+          period,
         },
       },
       success_url: `${siteUrl}/dashboard?upgraded=true&plan=${plan}`,
@@ -89,6 +114,7 @@ export async function POST(request: NextRequest) {
       metadata: {
         supabase_user_id: user.id,
         plan,
+        period,
       },
     })
 

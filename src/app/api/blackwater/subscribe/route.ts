@@ -30,6 +30,41 @@ function applyUrl(code: string): string {
   return `${BWA_BASE}/discount/${encodeURIComponent(code)}?redirect=${encodeURIComponent(DISCOUNT_REDIRECT)}`
 }
 
+
+/**
+ * Enroll the subscriber in the "Blackwater Aquatics — 365-Day Live Food Drip"
+ * (Resend automation, trigger event `blackwater.subscribed`). Without this,
+ * signups only ever reached Shopify and no drip email was ever sent.
+ * Fire-and-forget: failures are logged, never surfaced to the user.
+ */
+async function fireResendEvent(email: string, firstName?: string): Promise<void> {
+  const apiKey = process.env.RESEND_API_KEY
+  if (!apiKey) {
+    console.warn('[blackwater/subscribe] RESEND_API_KEY not set; drip enrollment skipped')
+    return
+  }
+  try {
+    const res = await fetch('https://api.resend.com/events', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: process.env.BLACKWATER_SIGNUP_EVENT || 'blackwater.subscribed',
+        contact: { email, ...(firstName ? { first_name: firstName } : {}) },
+        data: { source: 'spawnos-signup-page' },
+      }),
+    })
+    if (!res.ok) {
+      const text = await res.text().catch(() => '')
+      console.error(`[blackwater/subscribe] Resend event failed ${res.status}: ${text}`)
+    }
+  } catch (err) {
+    console.error('[blackwater/subscribe] Resend event error:', err)
+  }
+}
+
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 interface Body {
@@ -110,6 +145,12 @@ export async function POST(request: NextRequest) {
 
   if (!EMAIL_RE.test(email)) {
     return NextResponse.json({ error: 'Please enter a valid email address.' }, { status: 400 })
+  }
+
+  // Enroll in the Resend drip regardless of Shopify configuration — email
+  // marketing must not depend on the storefront credentials being present.
+  if (consent) {
+    await fireResendEvent(email, firstName)
   }
 
   const domain = process.env.BLACKWATER_SHOPIFY_DOMAIN

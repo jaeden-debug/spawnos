@@ -1,7 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef, Suspense } from 'react'
 import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/layout/SiteFooter'
 
@@ -14,7 +15,7 @@ const PLANS = [
     monthlyPrice: 0,
     annualPrice: 0,
     cta: 'Get Started',
-    ctaHref: '/signup',
+    ctaHref: '/login?mode=register',
     ctaStyle: 'border',
     featured: false,
     features: [
@@ -127,7 +128,60 @@ const COMPARISON_FEATURES = [
 
 // ─── Component ────────────────────────────────────────────────────────────────
 export default function PricingPage() {
+  return (
+    <Suspense fallback={null}>
+      <PricingPageInner />
+    </Suspense>
+  )
+}
+
+function PricingPageInner() {
   const [annual, setAnnual] = useState(true)
+  const [checkoutLoading, setCheckoutLoading] = useState<string | null>(null)
+  const [checkoutError, setCheckoutError] = useState('')
+  const searchParams = useSearchParams()
+  const resumed = useRef(false)
+
+  async function startCheckout(plan: 'pro' | 'breeder', period: 'monthly' | 'annual') {
+    setCheckoutError('')
+    setCheckoutLoading(plan)
+    try {
+      const res = await fetch('/api/stripe/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan, period }),
+      })
+      const data = await res.json()
+
+      if (res.status === 401) {
+        // Not signed in — register/sign in first, then resume this checkout.
+        const next = `/pricing?checkout=${plan}&period=${period}`
+        window.location.href = `/login?mode=register&next=${encodeURIComponent(next)}`
+        return
+      }
+      if (data.url) {
+        window.location.href = data.url
+        return
+      }
+      setCheckoutError(data.error ?? 'Could not start checkout. Please try again.')
+    } catch {
+      setCheckoutError('Network error. Please try again.')
+    } finally {
+      setCheckoutLoading(null)
+    }
+  }
+
+  // Resume checkout after the login round-trip (?checkout=pro&period=annual).
+  useEffect(() => {
+    if (resumed.current) return
+    const plan = searchParams.get('checkout')
+    const period = searchParams.get('period')
+    if ((plan === 'pro' || plan === 'breeder') && (period === 'monthly' || period === 'annual')) {
+      resumed.current = true
+      startCheckout(plan, period)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams])
 
   function annualSavings(plan: typeof PLANS[0]) {
     if (plan.monthlyPrice === 0) return null
@@ -158,6 +212,12 @@ export default function PricingPage() {
               Free tools stay free — every calculator, every species guide. Pro and Breeder unlock
               the full operating system for serious fishkeepers.
             </p>
+
+            {checkoutError && (
+              <div className="max-w-md mx-auto mb-6 bg-spawn-rose/10 border border-spawn-rose/30 p-3 text-xs text-spawn-rose text-center">
+                {checkoutError}
+              </div>
+            )}
 
             {/* Annual / Monthly toggle */}
             <div className="inline-flex items-center gap-3 bg-spawn-surface/60 border border-spawn-border/50 rounded-xl p-1">
@@ -231,18 +291,26 @@ export default function PricingPage() {
                     <p className="text-sm text-spawn-muted-text mt-3 leading-relaxed">{plan.tagline}</p>
                   </div>
 
-                  <Link
-                    href={plan.ctaHref}
-                    className={`w-full py-3 rounded-xl text-sm font-bold text-center transition-all ${
-                      plan.ctaStyle === 'cyan'
-                        ? 'bg-spawn-cyan text-spawn-bg hover:bg-opacity-90'
-                        : plan.ctaStyle === 'amber'
-                        ? 'bg-spawn-amber text-spawn-bg hover:bg-opacity-90'
-                        : 'border border-spawn-border text-spawn-text hover:border-spawn-border/80 hover:bg-spawn-surface'
-                    }`}
-                  >
-                    {plan.cta}
-                  </Link>
+                  {plan.id === 'free' ? (
+                    <Link
+                      href={plan.ctaHref}
+                      className="w-full py-3 rounded-none text-sm font-display font-semibold uppercase tracking-wide text-center transition-all border border-spawn-border text-spawn-text hover:border-spawn-cyan/50 hover:bg-spawn-surface"
+                    >
+                      {plan.cta}
+                    </Link>
+                  ) : (
+                    <button
+                      onClick={() => startCheckout(plan.id as 'pro' | 'breeder', annual ? 'annual' : 'monthly')}
+                      disabled={checkoutLoading !== null}
+                      className={`w-full py-3 rounded-none text-sm font-display font-semibold uppercase tracking-wide text-center transition-all disabled:opacity-50 ${
+                        plan.ctaStyle === 'cyan'
+                          ? 'bg-spawn-cyan text-spawn-bg hover:bg-opacity-90'
+                          : 'bg-spawn-amber text-spawn-bg hover:bg-opacity-90'
+                      }`}
+                    >
+                      {checkoutLoading === plan.id ? 'Opening checkout…' : plan.cta}
+                    </button>
+                  )}
 
                   <ul className="space-y-2.5">
                     {plan.features.map((f, fi) => (

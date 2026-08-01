@@ -17,10 +17,21 @@ function mapStatus(stripeStatus: string): string {
   return MAP[stripeStatus] ?? 'active'
 }
 
-// Map Stripe price ID → SpawnOS tier
-function tierFromPriceId(priceId: string): string {
-  if (priceId === process.env.STRIPE_PRO_PRICE_ID) return 'pro'
-  if (priceId === process.env.STRIPE_BREEDER_PRICE_ID) return 'breeder'
+// Map a Stripe subscription's price → SpawnOS tier.
+// Primary source is price.metadata.tier (set on every SpawnOS price, monthly
+// and annual alike); subscription metadata and the legacy env-var price IDs
+// are fallbacks. Env-only matching silently mapped annual plans to 'free'.
+function tierFromSubscription(sub: {
+  items?: { data?: Array<{ price?: { id?: string; metadata?: Record<string, string> } }> }
+  metadata?: Record<string, string>
+}): string {
+  const price = sub.items?.data?.[0]?.price
+  const metaTier = price?.metadata?.tier ?? sub.metadata?.plan
+  if (metaTier === 'pro' || metaTier === 'breeder') return metaTier
+
+  const priceId = price?.id ?? ''
+  if (priceId && priceId === process.env.STRIPE_PRO_PRICE_ID) return 'pro'
+  if (priceId && priceId === process.env.STRIPE_BREEDER_PRICE_ID) return 'breeder'
   return 'free'
 }
 
@@ -97,8 +108,7 @@ export async function POST(request: NextRequest) {
 
         if (!profile) break
 
-        const priceId = sub.items.data[0]?.price?.id ?? ''
-        const tier = tierFromPriceId(priceId)
+        const tier = tierFromSubscription(sub)
         const status = mapStatus(sub.status)
         const endsAt = sub.current_period_end
           ? new Date(sub.current_period_end * 1000).toISOString()

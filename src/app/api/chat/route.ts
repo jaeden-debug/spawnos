@@ -1,4 +1,5 @@
 import { NextRequest } from 'next/server'
+import { FREE_DAILY_LIMIT, QUOTA_COOKIE, readQuota, quotaCookieHeader } from '@/lib/chat-quota'
 import { BLACKWATER_AI_CONTEXT } from '@/lib/blackwater'
 
 export const runtime = 'nodejs'
@@ -315,6 +316,45 @@ export async function POST(request: NextRequest) {
     })
   }
 
+  // ── Free-tier quota: 10 messages / UTC day. Pro & Breeder bypass. ─────────
+  // Signed-cookie counter (see lib/chat-quota.ts for the trade-offs).
+  let quotaCookie: string | null = null
+  try {
+    let tier: string = 'free'
+    try {
+      const { createClient } = await import('@/lib/supabase/server')
+      const supabase = await createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+      if (user) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('subscription_tier')
+          .eq('id', user.id)
+          .single()
+        tier = (profile as { subscription_tier?: string } | null)?.subscription_tier ?? 'free'
+      }
+    } catch {
+      // Supabase unavailable — treat as free tier.
+    }
+
+    if (tier !== 'pro' && tier !== 'breeder') {
+      const state = readQuota(request.cookies.get(QUOTA_COOKIE)?.value)
+      if (state.count >= FREE_DAILY_LIMIT) {
+        return new Response(
+          JSON.stringify({
+            error: `You've used your ${FREE_DAILY_LIMIT} free AI messages for today. Upgrade to Pro for unlimited access.`,
+            code: 'quota_exceeded',
+            upgradeUrl: '/pricing',
+          }),
+          { status: 429, headers: { 'Content-Type': 'application/json' } }
+        )
+      }
+      quotaCookie = quotaCookieHeader({ day: state.day, count: state.count + 1 })
+    }
+  } catch (err) {
+    console.error('[chat] quota check failed, allowing request:', err)
+  }
+
   const apiKey = process.env.OPENAI_API_KEY
 
   // ── Mock mode ──────────────────────────────────────────────────────────────
@@ -328,7 +368,11 @@ export async function POST(request: NextRequest) {
       },
     })
     return new Response(stream, {
-      headers: { 'Content-Type': 'text/plain; charset=utf-8', 'X-Mock-Mode': 'true' },
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8',
+        'X-Mock-Mode': 'true',
+        ...(quotaCookie ? { 'Set-Cookie': quotaCookie } : {}),
+      },
     })
   }
 
@@ -370,6 +414,7 @@ export async function POST(request: NextRequest) {
         'Content-Type': 'text/plain; charset=utf-8',
         'Cache-Control': 'no-cache',
         'X-Accel-Buffering': 'no',
+        ...(quotaCookie ? { 'Set-Cookie': quotaCookie } : {}),
       },
     })
   } catch (err) {

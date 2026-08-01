@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { requireTier } from '@/lib/subscription'
 import DashboardShell from '@/components/layout/DashboardShell'
 import { StatCard } from '@/components/ui/Card'
 import Link from 'next/link'
@@ -7,6 +8,10 @@ import { formatDate, slugToLabel, stageLabel } from '@/lib/utils'
 export const metadata = { title: 'Dashboard' }
 
 export default async function DashboardPage() {
+  // Breeder dashboard is a Pro feature — redirects to /login or /pricing.
+  // Also guarantees `user` is non-null below (previously crashed on user!.id).
+  await requireTier('pro')
+
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
