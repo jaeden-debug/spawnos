@@ -51,9 +51,16 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid signature' }, { status: 400 })
   }
 
-  // Dynamically import Supabase server client (avoids issues if env vars missing)
-  const { createClient } = await import('@/lib/supabase/server')
-  const supabase = await createClient()
+  // Stripe webhooks carry no user session, so the cookie-based client would be
+  // blocked by RLS on `profiles`. Use the service-role client instead.
+  const { createAdminClient } = await import('@/lib/supabase/admin')
+  let supabase
+  try {
+    supabase = createAdminClient()
+  } catch (err) {
+    console.error('[stripe/webhook] admin client unavailable:', err)
+    return NextResponse.json({ error: 'Server misconfigured' }, { status: 503 })
+  }
 
   try {
     switch (event.type) {
