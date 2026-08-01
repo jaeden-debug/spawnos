@@ -212,7 +212,7 @@ export default async function HomePage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {featuredSpecies.map((s) => {
                 const tempDisplay = s.param_temp
-                  ? `${s.param_temp.ideal_min ?? s.param_temp.min}–${s.param_temp.ideal_max ?? s.param_temp.max}°C`
+                  ? `${s.param_temp.ideal_min ?? s.param_temp.min}–${s.param_temp.ideal_max ?? s.param_temp.max}${s.param_temp.unit ?? '°F'}`
                   : null
                 const phDisplay = s.param_ph
                   ? `pH ${s.param_ph.ideal_min ?? s.param_ph.min}–${s.param_ph.ideal_max ?? s.param_ph.max}`

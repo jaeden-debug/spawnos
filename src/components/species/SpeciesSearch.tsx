@@ -196,7 +196,7 @@ export default function SpeciesSearch({ species }: Props) {
           {filtered.map((s) => {
             const minTankGal = s.min_tank_litres ? Math.round(s.min_tank_litres / 3.785) : null
             const tempDisplay = s.param_temp
-              ? `${s.param_temp.ideal_min ?? s.param_temp.min}–${s.param_temp.ideal_max ?? s.param_temp.max}°C`
+              ? `${s.param_temp.ideal_min ?? s.param_temp.min}–${s.param_temp.ideal_max ?? s.param_temp.max}${s.param_temp.unit ?? '°F'}`
               : null
             const phDisplay = s.param_ph
               ? `pH ${s.param_ph.ideal_min ?? s.param_ph.min}–${s.param_ph.ideal_max ?? s.param_ph.max}`
