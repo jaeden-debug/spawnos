@@ -45,19 +45,19 @@ export async function POST(request: NextRequest) {
   const eventName = process.env.SPAWNOS_SIGNUP_EVENT || 'spawnos.signup'
 
   try {
-    const res = await fetch('https://api.resend.com/events', {
+    const res = await fetch('https://api.resend.com/events/send', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        name: eventName,
-        contact: {
-          email,
+        event: eventName,
+        email,
+        payload: {
+          source: 'spawnos-account-signup',
           ...(firstName ? { first_name: firstName } : {}),
         },
-        data: { source: 'spawnos-account-signup' },
       }),
     })
 

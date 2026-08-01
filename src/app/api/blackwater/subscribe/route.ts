@@ -21,7 +21,7 @@ export const runtime = 'nodejs'
  * local dev and the success screen work end-to-end.
  */
 
-const API_VERSION = '2025-01'
+const API_VERSION = '2026-07'
 
 const DISCOUNT_CODE = process.env.BLACKWATER_DISCOUNT_CODE || 'SPAWNOS15'
 const DISCOUNT_REDIRECT = '/collections/live-fish-food-canada'
@@ -44,16 +44,16 @@ async function fireResendEvent(email: string, firstName?: string): Promise<void>
     return
   }
   try {
-    const res = await fetch('https://api.resend.com/events', {
+    const res = await fetch('https://api.resend.com/events/send', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        name: process.env.BLACKWATER_SIGNUP_EVENT || 'blackwater.subscribed',
-        contact: { email, ...(firstName ? { first_name: firstName } : {}) },
-        data: { source: 'spawnos-signup-page' },
+        event: process.env.BLACKWATER_SIGNUP_EVENT || 'blackwater.subscribed',
+        email,
+        payload: { source: 'spawnos-signup-page', ...(firstName ? { first_name: firstName } : {}) },
       }),
     })
     if (!res.ok) {
@@ -125,7 +125,7 @@ async function createShopifyCustomer(
   }
 
   if (json?.errors) {
-    return { ok: false, error: 'Shopify GraphQL error' }
+    return { ok: false, error: `Shopify GraphQL error: ${JSON.stringify(json.errors).slice(0, 500)}` }
   }
 
   return { ok: true }
