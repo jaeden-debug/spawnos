@@ -40,7 +40,9 @@ export default function PrivacyPage() {
                 content: [
                   '<strong>Account data:</strong> Email address, display name, and password hash (via Supabase Auth) when you create an account.',
                   '<strong>Profile data:</strong> Username, bio, location, and social links if you choose to add them.',
-                  '<strong>Usage data:</strong> Fish registry entries, pair records, spawn logs, and water parameter readings you enter into the dashboard.',
+                  '<strong>Breeding records:</strong> The animals, breeding pairs, spawns, milestones, observations, lineage links and notes you enter in the SpawnOS app or dashboard, plus water parameter readings on the web dashboard.',
+                  '<strong>Photos:</strong> Images you attach to an animal, spawn or log are stored in a private, per-user bucket and are readable only by your account. They are never public and are never used for training.',
+                  '<strong>Assistant usage count:</strong> A per-day count of Ask SpawnOS requests tied to your account, used only to enforce the free-tier daily allowance. The content of your questions is not stored with it.',
                   '<strong>Billing data:</strong> Payment method and subscription details are processed and stored by <strong>Stripe</strong> — we never receive or store full card numbers. We store your Stripe customer ID for subscription management.',
                   '<strong>AI chat history:</strong> Messages sent to the SpawnOS AI assistant are sent to OpenAI for processing. We do not persistently store conversation history. See OpenAI&apos;s privacy policy for their data practices.',
                   '<strong>Log data:</strong> Standard server logs including IP addresses, browser type, and pages visited. Retained for up to 90 days.',
