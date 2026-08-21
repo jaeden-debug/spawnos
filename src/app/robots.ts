@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next'
 
-const BASE = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://spawnos.app').replace(/\/$/, '')
+const BASE = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://spawnos.ca').replace(/\/$/, '')
 
 export default function robots(): MetadataRoute.Robots {
   return {

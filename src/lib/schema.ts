@@ -1,6 +1,6 @@
 import type { SpeciesData } from '@/types/species'
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://spawnos.app'
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://spawnos.ca'
 
 // ─── Author / E-E-A-T ────────────────────────────────────────────────────────
 // Jaeden Doody — founder of Blackwater Aquatics Canada and author of SpawnOS content.

@@ -7,7 +7,7 @@ import { getAllProblems } from '@/lib/problems'
 import { getAllCompat } from '@/lib/compatibility'
 import { getAllToolArticleSlugs } from '@/lib/tools-content'
 
-const BASE = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://spawnos.app').replace(/\/$/, '')
+const BASE = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://spawnos.ca').replace(/\/$/, '')
 
 // Public, indexable routes. Auth-gated (/dashboard), conversion (/login, /signup),
 // and API routes are intentionally excluded.
