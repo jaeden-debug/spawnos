@@ -80,9 +80,9 @@ export default function PrivacyPage() {
               {
                 title: '5. Your Rights',
                 content: [
-                  '<strong>Access:</strong> You can request a copy of your personal data by contacting us at privacy@spawnos.app.',
+                  '<strong>Access:</strong> You can request a copy of your personal data by contacting us at spawnos@blackwateraquatics.ca.',
                   '<strong>Correction:</strong> Update your profile and account details at any time via the dashboard settings.',
-                  '<strong>Deletion:</strong> Request account deletion via dashboard settings or by emailing privacy@spawnos.app. We will delete your personal data within 30 days.',
+                  '<strong>Deletion:</strong> Request account deletion via dashboard settings or by emailing spawnos@blackwateraquatics.ca. We will delete your personal data within 30 days.',
                   '<strong>Data portability:</strong> Pro and Breeder subscribers can export their fish, spawn, and parameter data as CSV from dashboard settings.',
                   '<strong>Opt-out:</strong> Unsubscribe from marketing emails at any time via the unsubscribe link in any email.',
                   'Canadian residents have additional rights under PIPEDA, including the right to file a complaint with the Office of the Privacy Commissioner of Canada.',
@@ -99,7 +99,7 @@ export default function PrivacyPage() {
               {
                 title: '7. Children',
                 content: [
-                  'SpawnOS is not directed at children under 13 years of age. We do not knowingly collect personal information from children under 13. If you believe we have inadvertently collected data from a child, please contact us immediately at privacy@spawnos.app.',
+                  'SpawnOS is not directed at children under 13 years of age. We do not knowingly collect personal information from children under 13. If you believe we have inadvertently collected data from a child, please contact us immediately at spawnos@blackwateraquatics.ca.',
                 ],
               },
               {
@@ -111,9 +111,9 @@ export default function PrivacyPage() {
               {
                 title: '9. Contact',
                 content: [
-                  'For privacy inquiries: <a href="mailto:privacy@spawnos.app" class="text-spawn-cyan hover:underline">privacy@spawnos.app</a>',
+                  'For privacy inquiries: <a href="mailto:spawnos@blackwateraquatics.ca" class="text-spawn-cyan hover:underline">spawnos@blackwateraquatics.ca</a>',
                   'Blackwater Aquatics Canada',
-                  'General support: <a href="mailto:support@spawnos.app" class="text-spawn-cyan hover:underline">support@spawnos.app</a>',
+                  'General support: <a href="mailto:spawnos@blackwateraquatics.ca" class="text-spawn-cyan hover:underline">spawnos@blackwateraquatics.ca</a>',
                 ],
               },
             ].map((section) => (

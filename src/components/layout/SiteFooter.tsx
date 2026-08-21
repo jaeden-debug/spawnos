@@ -19,9 +19,11 @@ const SPECIES_LINKS = [
 ]
 
 const SITE_LINKS = [
+  { href: '/app', label: 'Get the App' },
   { href: '/blueprints', label: 'AI Tank Blueprints' },
   { href: '/knowledge', label: 'Knowledge Base' },
   { href: '/about', label: 'About SpawnOS' },
+  { href: '/support', label: 'Support' },
   { href: '/spawnos-by-blackwater-aquatics', label: 'SpawnOS by Blackwater' },
   { href: 'https://blackwateraquatics.ca', label: 'Blackwater Aquatics', external: true },
 ]

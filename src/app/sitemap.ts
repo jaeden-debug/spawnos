@@ -32,6 +32,7 @@ const STATIC_ROUTES = [
   { path: '/breeders', priority: 0.6, changeFrequency: 'weekly' },
   { path: '/knowledge', priority: 0.6, changeFrequency: 'monthly' },
   { path: '/about', priority: 0.5, changeFrequency: 'monthly' },
+  { path: '/support', priority: 0.5, changeFrequency: 'monthly' },
   { path: '/privacy', priority: 0.3, changeFrequency: 'yearly' },
   // NOTE: '/terms' was listed here but the route has never existed — it 404s in
   // production. Listing a 404 in the sitemap is a Search Console error, so it is

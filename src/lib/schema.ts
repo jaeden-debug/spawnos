@@ -7,6 +7,17 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://spawnos.ca'
 // else. Never inline a second copy of one of these nodes — duplicating an
 // entity under a different (or missing) @id is how a knowledge graph ends up
 // with two SpawnOS products that it cannot reconcile.
+/**
+ * The one contact address SpawnOS publishes.
+ *
+ * It lives on blackwateraquatics.ca because that domain has working MX records
+ * (Google Workspace). spawnos.ca and spawnos.app have NO MX records, so the
+ * previously published support@spawnos.app and privacy@spawnos.app could not
+ * receive mail — a dead address in a privacy policy is both a compliance
+ * problem and an App Review failure, since Apple tests the support URL.
+ */
+export const SUPPORT_EMAIL = 'spawnos@blackwateraquatics.ca'
+
 export const ORG_ID = 'https://blackwateraquatics.ca/#organization'
 export const SPAWNOS_ID = `${SITE_URL}/#spawnos`
 
@@ -257,5 +268,18 @@ export function toolPageSchema(opts: {
     applicationCategory: 'UtilitiesApplication',
     operatingSystem: 'Web',
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'CAD' },
+  }
+}
+
+/** FAQPage schema for any page with a real, visible Q&A list. */
+export function faqPageSchema(faq: { q: string; a: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
   }
 }
