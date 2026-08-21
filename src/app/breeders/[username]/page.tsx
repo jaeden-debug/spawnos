@@ -264,7 +264,7 @@ export default async function BreederProfilePage({ params }: Props) {
               Build your own breeder profile
             </h2>
             <p className="text-spawn-muted-text text-sm leading-relaxed mb-6">
-              SpawnOS Breeder gives you a public profile, fish registry, spawn tracker, genetics engine, and verified badge — all in one platform.
+              SpawnOS keeps your fish registry, breeding pairs, spawn timelines and lineage in one place — free for your first breeding project.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link

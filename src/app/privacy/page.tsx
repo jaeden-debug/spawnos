@@ -31,7 +31,7 @@ export default function PrivacyPage() {
         <section className="py-12 px-4">
           <div className="max-w-3xl mx-auto prose-legal space-y-10">
             <div className="p-5 rounded-xl bg-spawn-surface/50 border border-spawn-border/40 text-sm text-spawn-muted-text leading-relaxed">
-              SpawnOS is operated by <strong className="text-spawn-text">Blackwater Aquatics Canada</strong>, a Canadian business. This policy applies to spawnos.app and all SpawnOS services. We comply with Canada&apos;s <em>Personal Information Protection and Electronic Documents Act</em> (PIPEDA) and applicable provincial privacy legislation.
+              SpawnOS is operated by <strong className="text-spawn-text">Blackwater Aquatics Canada</strong>, a Canadian business. This policy applies to spawnos.ca, spawnos.app, the SpawnOS iPhone app and all SpawnOS services. We comply with Canada&apos;s <em>Personal Information Protection and Electronic Documents Act</em> (PIPEDA) and applicable provincial privacy legislation.
             </div>
 
             {[

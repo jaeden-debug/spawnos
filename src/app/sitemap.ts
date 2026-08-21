@@ -13,6 +13,9 @@ const BASE = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://spawnos.ca').replace(
 // and API routes are intentionally excluded.
 const STATIC_ROUTES = [
   { path: '', priority: 1.0, changeFrequency: 'weekly' },
+  // The app is the product — /app is the destination every "get SpawnOS" CTA
+  // routes to, so it ranks second only to the homepage.
+  { path: '/app', priority: 0.9, changeFrequency: 'weekly' },
   { path: '/species', priority: 0.9, changeFrequency: 'weekly' },
   { path: '/tools', priority: 0.9, changeFrequency: 'weekly' },
   { path: '/lab-notes', priority: 0.9, changeFrequency: 'weekly' },
@@ -30,7 +33,10 @@ const STATIC_ROUTES = [
   { path: '/knowledge', priority: 0.6, changeFrequency: 'monthly' },
   { path: '/about', priority: 0.5, changeFrequency: 'monthly' },
   { path: '/privacy', priority: 0.3, changeFrequency: 'yearly' },
-  { path: '/terms', priority: 0.3, changeFrequency: 'yearly' },
+  // NOTE: '/terms' was listed here but the route has never existed — it 404s in
+  // production. Listing a 404 in the sitemap is a Search Console error, so it is
+  // removed. A real Terms of Service page is still needed before App Store
+  // submission with subscriptions; add the route, then restore this entry.
 ] as const
 
 export default function sitemap(): MetadataRoute.Sitemap {

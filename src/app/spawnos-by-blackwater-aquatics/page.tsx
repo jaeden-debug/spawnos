@@ -10,7 +10,7 @@ import { breadcrumbSchema } from '@/lib/schema'
 export const metadata: Metadata = {
   title: 'SpawnOS by Blackwater Aquatics Canada | Aquarium Tools, Fish Compatibility & Breeder Intelligence',
   description:
-    'SpawnOS is a Blackwater Aquatics Canada product — the aquarium operating system. Free science-grade calculators, a deep species database, a fish compatibility checker, breeder intelligence, and AI tank guidance.',
+    'SpawnOS is a Blackwater Aquatics Canada product — a breeding-records app for aquarium fish, with a free species library, fish compatibility checker and 15 aquarium calculators.',
   keywords: [
     'SpawnOS',
     'Blackwater Aquatics Canada',
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: '/spawnos-by-blackwater-aquatics' },
   openGraph: {
-    title: 'SpawnOS by Blackwater Aquatics Canada — The Aquarium Operating System',
+    title: 'SpawnOS by Blackwater Aquatics Canada — The Fish Breeding App',
     description:
       'Free aquarium calculators, species intelligence, a fish compatibility engine, and breeder tools. SpawnOS is a Blackwater Aquatics Canada product.',
     type: 'article',

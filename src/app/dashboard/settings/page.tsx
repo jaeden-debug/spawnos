@@ -193,7 +193,7 @@ export default function SettingsPage() {
         {tier === 'free' ? (
           <div className="space-y-3">
             <p className="text-sm text-spawn-muted-text leading-relaxed">
-              You&apos;re on the Free plan. Upgrade to unlock the full breeder dashboard, unlimited AI, genetics engine, and parameter logging.
+              You&apos;re on the Free plan. SpawnOS Pro lets you run several breeding projects at once in the SpawnOS app, with a higher daily Ask SpawnOS allowance.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <button
@@ -269,7 +269,7 @@ export default function SettingsPage() {
               </div>
               {form.username && (
                 <p className="text-xs text-spawn-muted-text mt-1">
-                  spawnos.app/breeders/{form.username}
+                  spawnos.ca/breeders/{form.username}
                 </p>
               )}
             </div>
@@ -337,7 +337,7 @@ export default function SettingsPage() {
                 Make profile public
               </label>
               <p className="text-xs text-spawn-muted-text mt-0.5">
-                Show your breeder profile at spawnos.app/breeders/{form.username || 'yourname'}.
+                Show your breeder profile at spawnos.ca/breeders/{form.username || 'yourname'}.
                 {tier !== 'breeder' && ' Requires Breeder plan.'}
               </p>
             </div>

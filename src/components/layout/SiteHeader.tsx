@@ -3,8 +3,10 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { trackBlackwaterReferral } from '@/lib/analytics'
 
 const NAV_LINKS = [
+  { href: '/app', label: 'The App' },
   { href: '/species', label: 'Species' },
   { href: '/library', label: 'Library' },
   { href: '/lab-notes', label: 'Lab Notes' },
@@ -18,6 +20,12 @@ export default function SiteHeader() {
   const [visible, setVisible] = useState(true)
   const prevScrollY = useRef(0)
   const pathname = usePathname()
+
+  // Attribute the visit to Blackwater once per session. Reads the referrer,
+  // so the existing blackwateraquatics.ca links keep working untagged.
+  useEffect(() => {
+    trackBlackwaterReferral()
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {

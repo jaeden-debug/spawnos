@@ -77,7 +77,10 @@ export async function meterUsage(auth: AppAIAuth): Promise<Response | null> {
     return json(
       {
         error:
-          "You've used today's free Ask SpawnOS questions. SpawnOS Pro includes unlimited breeding intelligence — upgrade on the SpawnOS website.",
+          // No purchase instruction and no external link: this string is
+          // rendered inside the iOS app, where steering users to an outside
+          // checkout is App Review Guideline 3.1.1.
+          "You've used today's free Ask SpawnOS questions. Your allowance resets tomorrow.",
         code: 'quota_exceeded',
       },
       429

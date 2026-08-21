@@ -1,5 +1,20 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+
+/**
+ * The web dashboard is no longer the product SpawnOS sells — the iPhone app
+ * is. These routes stay available and working for anyone who used them, but
+ * they are private, signed-in-only surfaces with no search value, and they
+ * must not compete with /app for product intent.
+ *
+ * robots.txt already disallows /dashboard; this makes the intent explicit at
+ * the page level too, which is what search engines honour if a signed-in URL
+ * is ever linked externally.
+ */
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+}
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   try {

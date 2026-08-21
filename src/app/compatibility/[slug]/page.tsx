@@ -10,6 +10,11 @@ import { getCompat, getAllCompatSlugs, getRelatedCompat, rateScore } from '@/lib
 import { getRecentLabNotes } from '@/lib/lab-notes'
 import { breadcrumbSchema } from '@/lib/schema'
 
+// Canonical host. These pages moved from spawnos.app to spawnos.ca when the
+// domains split; pointing structured data at the old host now names a URL that
+// 308-redirects, which is a real schema error rather than a cosmetic one.
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://spawnos.ca'
+
 interface Props {
   params: Promise<{ slug: string }>
 }
@@ -59,8 +64,8 @@ export default async function CompatDetailPage({ params }: Props) {
     datePublished: c.date,
     dateModified: c.date,
     author: { '@type': 'Organization', name: 'SpawnOS' },
-    publisher: { '@type': 'Organization', name: 'SpawnOS', url: 'https://spawnos.app' },
-    mainEntityOfPage: `https://spawnos.app/compatibility/${slug}`,
+    publisher: { '@type': 'Organization', name: 'SpawnOS', url: SITE_URL },
+    mainEntityOfPage: `${SITE_URL}/compatibility/${slug}`,
   }
   const faqSchema = c.faq.length > 0 ? {
     '@context': 'https://schema.org',

@@ -3,12 +3,13 @@ import Link from 'next/link'
 import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/layout/SiteFooter'
 import { getFeaturedSpecies } from '@/lib/species-db'
-import { softwareApplicationSchema, websiteSchema } from '@/lib/schema'
+import { websiteSchema } from '@/lib/schema'
+import AppCta from '@/components/spawnos/AppCta'
 
 export const metadata: Metadata = {
-  title: 'SpawnOS — The Aquarium Operating System',
+  title: 'SpawnOS — Breeding Records & Spawn Timelines for Aquarium Fish',
   description:
-    'Species intelligence, science-grade calculators, and an AI that actually knows fish. The operating system for serious aquarists — by Blackwater Aquatics Canada.',
+    'Track your breeding pairs, spawn dates, fry milestones and lineage in one app. Plus a free species library, fish compatibility checker and 15 aquarium calculators. First breeding project free.',
   alternates: { canonical: '/' },
 }
 
@@ -49,18 +50,18 @@ const PLATFORM_FEATURES = [
   {
     icon: '🤖',
     title: 'AI Aquarium Intelligence',
-    desc: 'Ask anything. Fish care, compatibility, water chemistry, breeding triggers, disease diagnosis. GPT-4o trained on the SpawnOS knowledge base.',
+    desc: 'Ask anything. Fish care, compatibility, water chemistry, breeding triggers, disease diagnosis. Grounded in the SpawnOS species knowledge base.',
     href: '/blueprints',
     accent: 'cyan',
     stat: 'Powered by GPT-4o',
   },
   {
     icon: '🧬',
-    title: 'Breeder Dashboard',
-    desc: 'Fish registry, pair builder, spawn tracker, genetics engine, lineage tree, survival analytics. A real operating system for your breeding operation.',
-    href: '/dashboard',
+    title: 'Breeding Records That Know Biology',
+    desc: 'Register your fish, build a pair, log one spawn date — SpawnOS builds the timeline from there. Hatch, free-swimming, first feeding, when to pull the male, when to jar. Plus lineage and relatedness warnings as your lines grow.',
+    href: '/app',
     accent: 'amber',
-    stat: 'Pro feature',
+    stat: 'First project free',
   },
 ]
 
@@ -73,7 +74,9 @@ const BWA_PRODUCTS = [
 
 export default async function HomePage() {
   const featuredSpecies = await getFeaturedSpecies(6)
-  const jsonLd = [softwareApplicationSchema(), websiteSchema()]
+  // The SpawnOS product node ships sitewide inside organizationSchema() in
+  // layout.tsx, so the homepage must not emit a second copy of it.
+  const jsonLd = [websiteSchema()]
 
   return (
     <>
@@ -118,34 +121,26 @@ export default async function HomePage() {
               </div>
 
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.02] tracking-tight text-spawn-text mb-6">
-                The Aquarium<br />
+                Breeding fish?<br />
                 <span className="text-spawn-cyan" style={{ textShadow: '0 0 44px rgba(0,212,255,0.45)' }}>
-                  Operating System.
+                  Stop guessing the dates.
                 </span>
               </h1>
 
-              <p className="text-lg sm:text-xl text-spawn-text-dim leading-relaxed mb-9 max-w-md">
-                Species intelligence. Science-grade tools. An AI that actually knows fish.
+              <p className="text-lg sm:text-xl text-spawn-text-dim leading-relaxed mb-4 max-w-md">
+                SpawnOS keeps your pairs, spawn dates, fry milestones and lineage in one app —
+                and tells you what should be happening in the tank today.
+              </p>
+              <p className="text-sm text-spawn-muted-text mb-9 max-w-md">
+                Your first breeding project is free. The species library and all 15 calculators
+                are free with no account at all.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-3">
-                <Link
-                  href="/blueprints"
-                  className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl bg-spawn-cyan text-spawn-bg font-bold text-sm hover:bg-opacity-90 transition-all"
-                  style={{ boxShadow: '0 0 28px rgba(0,212,255,0.28)' }}
-                >
-                  Ask the AI
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                    <path d="M3 8H13M9 4L13 8L9 12" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </Link>
-                <Link
-                  href="/species"
-                  className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl border border-spawn-border/70 bg-spawn-surface/40 backdrop-blur text-spawn-text hover:border-spawn-cyan/40 hover:bg-spawn-surface/70 transition-all text-sm font-semibold"
-                >
-                  Explore Species
-                </Link>
-              </div>
+              <AppCta
+                source="home_hero"
+                secondaryHref="/tools/fish-compatibility"
+                secondaryLabel="Try a free tool"
+              />
             </div>
           </div>
         </section>
@@ -200,7 +195,7 @@ export default async function HomePage() {
                 <div className="text-xs font-semibold uppercase tracking-widest text-spawn-cyan mb-2">Species Intelligence</div>
                 <h2 className="text-3xl font-black text-spawn-text">Not a Wikipedia summary.</h2>
                 <p className="text-spawn-muted-text mt-2 max-w-lg leading-relaxed">
-                  Every guide is peer-reviewed parameters, real breeding protocols, and disease identification
+                  Every guide is sourced water parameters, real breeding protocols, and disease identification
                   written from primary sources — not aggregated pet-store advice.
                 </p>
               </div>
@@ -328,44 +323,39 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* ── PRICING PREVIEW ──────────────────────────────────────────── */}
+        {/* ── HOW FREE → PRO WORKS ────────────────────────────────────
+             Two plans, and the prices here must match src/app/pricing/page.tsx
+             and the live Stripe prices (spawnos_pro_monthly = $7). */}
         <section className="py-20 px-4 bg-spawn-surface/20 border-t border-spawn-border/30">
           <div className="max-w-4xl mx-auto text-center">
             <div className="text-xs font-semibold uppercase tracking-widest text-spawn-muted-text mb-4">Pricing</div>
             <h2 className="text-3xl font-black text-spawn-text mb-4">
-              Free tools. No tricks.
+              One breeding project, free.
             </h2>
             <p className="text-spawn-muted-text leading-relaxed mb-10 max-w-lg mx-auto">
-              Every calculator and every species guide stays free forever. Pro and Breeder unlock the
-              dashboard, unlimited AI, and your public breeder profile — when you need them.
+              Register your animals, create a pair, record the spawn and follow the whole timeline
+              through to grow-out without paying. The only thing Pro adds is running more than one
+              project at a time.
             </p>
 
-            <div className="grid sm:grid-cols-3 gap-4 mb-10">
+            <div className="grid sm:grid-cols-2 gap-4 mb-10 max-w-2xl mx-auto">
               {[
                 {
                   name: 'Free',
                   price: '$0',
-                  desc: 'Species database, all 15 calculators, 10 AI messages/day.',
-                  cta: 'Get Started',
-                  href: '/signup',
+                  desc: 'One active breeding project, full timeline and lineage, the whole species library and all 15 calculators.',
+                  cta: 'Get SpawnOS',
+                  href: '/app',
                   style: 'border',
                 },
                 {
                   name: 'Pro',
-                  price: '$9/mo',
-                  desc: 'Unlimited AI, full breeder dashboard, genetics engine, parameter logging.',
-                  cta: 'Start Pro — Free 14 Days',
-                  href: '/signup?plan=pro',
+                  price: '$7/mo',
+                  desc: 'Unlimited active breeding projects, running side by side, with one history across all of them.',
+                  cta: 'See Pro',
+                  href: '/pricing',
                   style: 'cyan',
                   badge: true,
-                },
-                {
-                  name: 'Breeder',
-                  price: '$24/mo',
-                  desc: 'Public breeder profile, verified badge, API access, advanced analytics.',
-                  cta: 'Go Breeder',
-                  href: '/signup?plan=breeder',
-                  style: 'amber',
                 },
               ].map((plan) => (
                 <div
@@ -378,7 +368,7 @@ export default async function HomePage() {
                 >
                   {plan.badge && (
                     <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-spawn-cyan text-spawn-bg text-xs font-bold whitespace-nowrap">
-                      Most Popular
+                      For active breeders
                     </div>
                   )}
                   <div className="text-xs font-semibold text-spawn-muted-text uppercase tracking-wide mb-2">{plan.name}</div>
@@ -389,8 +379,6 @@ export default async function HomePage() {
                     className={`block text-center py-2.5 rounded-lg text-xs font-bold transition-all ${
                       plan.style === 'cyan'
                         ? 'bg-spawn-cyan text-spawn-bg hover:bg-opacity-90'
-                        : plan.style === 'amber'
-                        ? 'bg-spawn-amber text-spawn-bg hover:bg-opacity-90'
                         : 'border border-spawn-border text-spawn-text hover:border-spawn-border/80'
                     }`}
                   >
@@ -401,7 +389,7 @@ export default async function HomePage() {
             </div>
 
             <Link href="/pricing" className="text-sm text-spawn-cyan hover:underline font-semibold">
-              Compare all features →
+              Compare Free and Pro →
             </Link>
           </div>
         </section>
@@ -410,28 +398,20 @@ export default async function HomePage() {
         <section className="py-24 px-4 border-t border-spawn-border/30">
           <div className="max-w-2xl mx-auto text-center">
             <h2 className="text-4xl font-black text-spawn-text mb-5 leading-tight">
-              Stop guessing.<br />
-              <span className="text-spawn-cyan">Start knowing.</span>
+              Your notes app<br />
+              <span className="text-spawn-cyan">doesn&rsquo;t know fish.</span>
             </h2>
             <p className="text-spawn-muted-text text-lg leading-relaxed mb-10">
-              Every tool you need. Every species guide you want. An AI that actually knows aquariums.
-              Free to start. No credit card.
+              Spawn dates in a camera roll, milestones in your head, lineage in a spreadsheet you
+              stopped updating. SpawnOS holds all of it and tells you what today should look like.
+              First project free, no credit card.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Link
-                href="/blueprints"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-spawn-cyan text-spawn-bg font-bold text-sm hover:bg-opacity-90 transition-all"
-                style={{ boxShadow: '0 0 24px rgba(0,212,255,0.2)' }}
-              >
-                Try the AI — Free
-              </Link>
-              <Link
-                href="/species"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl border border-spawn-border text-spawn-text hover:border-spawn-cyan/40 text-sm font-semibold transition-all"
-              >
-                Browse Species Database
-              </Link>
-            </div>
+            <AppCta
+              source="home_footer"
+              className="justify-center"
+              secondaryHref="/species"
+              secondaryLabel="Browse Species"
+            />
           </div>
         </section>
 

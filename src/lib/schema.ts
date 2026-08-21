@@ -2,6 +2,14 @@ import type { SpeciesData } from '@/types/species'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://spawnos.ca'
 
+// ─── Stable entity IDs ───────────────────────────────────────────────────────
+// Three entities, three permanent @ids, referenced by { '@id': … } everywhere
+// else. Never inline a second copy of one of these nodes — duplicating an
+// entity under a different (or missing) @id is how a knowledge graph ends up
+// with two SpawnOS products that it cannot reconcile.
+export const ORG_ID = 'https://blackwateraquatics.ca/#organization'
+export const SPAWNOS_ID = `${SITE_URL}/#spawnos`
+
 // ─── Author / E-E-A-T ────────────────────────────────────────────────────────
 // Jaeden Doody — founder of Blackwater Aquatics Canada and author of SpawnOS content.
 export const AUTHOR = {
@@ -10,7 +18,13 @@ export const AUTHOR = {
   jobTitle: 'Founder, Blackwater Aquatics Canada',
 }
 
-/** Person schema for the content author, referenced by Article schemas. */
+/**
+ * Person schema for the founder/author, referenced by Article schemas.
+ *
+ * `sameAs` points at the Blackwater founder page, which is the other public
+ * profile describing this same person. Without it the two pages read as two
+ * unrelated people, which is precisely the signal E-E-A-T depends on.
+ */
 export function authorSchema() {
   return {
     '@type': 'Person',
@@ -19,32 +33,104 @@ export function authorSchema() {
     jobTitle: AUTHOR.jobTitle,
     description:
       'Aquarist, breeder, and founder of Blackwater Aquatics Canada. Writes the SpawnOS species, live-food, and breeding guides from hands-on fishkeeping and breeding experience.',
-    worksFor: { '@id': 'https://blackwateraquatics.ca/#organization' },
+    worksFor: { '@id': ORG_ID },
     url: `${SITE_URL}/about`,
+    sameAs: ['https://blackwateraquatics.ca/pages/jaeden-doody'],
+    knowsAbout: [
+      'Aquarium fish breeding',
+      'Betta splendens breeding',
+      'Live food culturing',
+      'Freshwater shrimp keeping',
+      'Aquarium water chemistry',
+    ],
   }
 }
 
-export function softwareApplicationSchema() {
+/**
+ * SpawnOS the product — ONE node, one @id, referenced everywhere.
+ *
+ * This previously existed twice on the homepage: a `WebApplication` inside the
+ * organization graph and a separate `SoftwareApplication` with no @id, carrying
+ * a different description and different offers (CAD 0 vs USD 0/7). Two nodes
+ * describing one product is entity fragmentation — search engines have no way
+ * to know they are the same thing. There is now a single definition.
+ *
+ * Offers match what /api/stripe/checkout actually charges: Stripe lookup keys
+ * spawnos_pro_monthly = 7.00 USD and spawnos_pro_annual = 79.00 USD. Currency
+ * is USD because that is what Stripe bills in, regardless of the Canadian
+ * publisher.
+ *
+ * No aggregateRating, reviewCount or downloads is emitted — SpawnOS has no
+ * published ratings to cite, and inventing them risks a manual action.
+ *
+ * `operatingSystem` stays 'Web' until the iPhone app is publicly downloadable.
+ * When the App Store listing goes live, add a MobileApplication node with the
+ * real installUrl; declaring iOS availability now would describe an app that
+ * nobody outside TestFlight can install.
+ */
+export function spawnosProductNode() {
   return {
-    '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
+    '@id': SPAWNOS_ID,
     name: 'SpawnOS',
+    url: SITE_URL,
     applicationCategory: 'UtilitiesApplication',
+    applicationSubCategory: 'Aquarium breeding records',
     operatingSystem: 'Web',
     description:
-      'Aquarium science platform with species database, water parameter calculators, fish compatibility tools, and AI-powered tank blueprint generator.',
-    url: SITE_URL,
-    author: {
-      '@type': 'Organization',
-      name: 'Blackwater Aquatics Canada',
-      url: 'https://blackwateraquatics.ca',
-    },
-    offers: {
-      '@type': 'Offer',
-      price: '0',
-      priceCurrency: 'CAD',
-    },
+      'Breeding records for aquarium fish: register your animals, build breeding pairs, log spawns, and follow a species-aware timeline of milestones. Includes a free species library, fish compatibility checker and 15 aquarium calculators.',
+    publisher: { '@id': ORG_ID },
+    author: { '@id': AUTHOR.id },
+    offers: [
+      {
+        '@type': 'Offer',
+        name: 'SpawnOS Free',
+        description:
+          'One active breeding project, the full species library and all 15 calculators.',
+        price: '0',
+        priceCurrency: 'USD',
+        availability: 'https://schema.org/InStock',
+        url: `${SITE_URL}/pricing`,
+      },
+      {
+        '@type': 'Offer',
+        name: 'SpawnOS Pro',
+        description: 'Unlimited active breeding projects.',
+        price: '7.00',
+        priceCurrency: 'USD',
+        availability: 'https://schema.org/InStock',
+        url: `${SITE_URL}/pricing`,
+      },
+    ],
   }
+}
+
+/**
+ * Declares that a given page is *about* the SpawnOS product, without emitting a
+ * second copy of the product node.
+ *
+ * The product itself ships once, sitewide, inside organizationSchema(). Pages
+ * that lead with the product (/app, /pricing) reference it by @id through
+ * `mainEntity` — that is what tells a search engine "this page is the page for
+ * that entity" while keeping exactly one definition of it.
+ */
+export function productPageSchema(path: string, name: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${SITE_URL}${path}#webpage`,
+    url: `${SITE_URL}${path}`,
+    name,
+    isPartOf: { '@id': `${SITE_URL}/#website` },
+    about: { '@id': SPAWNOS_ID },
+    mainEntity: { '@id': SPAWNOS_ID },
+    publisher: { '@id': ORG_ID },
+  }
+}
+
+/** Standalone product graph for pages that lead with the product (/, /app, /pricing). */
+export function softwareApplicationSchema() {
+  return { '@context': 'https://schema.org', ...spawnosProductNode() }
 }
 
 /**
@@ -58,36 +144,30 @@ export function organizationSchema() {
     '@graph': [
       {
         '@type': 'Organization',
-        '@id': 'https://blackwateraquatics.ca/#organization',
+        '@id': ORG_ID,
         name: 'Blackwater Aquatics Canada',
         url: 'https://blackwateraquatics.ca',
         description:
           'Canadian aquatics company specializing in breeder-grade live foods, fish, and aquarium intelligence. Parent company of SpawnOS.',
-        logo: `${SITE_URL}/icon-512.png`,
+        // Blackwater's logo must be hosted on Blackwater's own domain — pointing
+        // the parent company's logo at spawnos.ca associated the asset with the
+        // wrong entity.
+        logo: {
+          '@type': 'ImageObject',
+          url: 'https://blackwateraquatics.ca/cdn/shop/files/blackwater-aquatics-canada-app-logo.png',
+        },
         founder: { '@id': AUTHOR.id },
+        foundingLocation: { '@type': 'Country', name: 'Canada' },
+        // Self-reference removed — sameAs exists to connect an entity to its
+        // other verifiable profiles, not to repeat its own url.
         sameAs: [
-          'https://blackwateraquatics.ca',
           'https://www.tiktok.com/@blackwateraquaticscanada',
         ],
-        brand: {
-          '@type': 'Brand',
-          name: 'SpawnOS',
-          url: SITE_URL,
-        },
+        brand: { '@id': SPAWNOS_ID },
+        owns: { '@id': SPAWNOS_ID },
       },
       authorSchema(),
-      {
-        '@type': 'WebApplication',
-        '@id': `${SITE_URL}/#spawnos`,
-        name: 'SpawnOS',
-        url: SITE_URL,
-        applicationCategory: 'UtilitiesApplication',
-        operatingSystem: 'Web',
-        description:
-          'SpawnOS is a Blackwater Aquatics Canada product — the aquarium operating system. Species intelligence, science-grade calculators, fish compatibility tools, and AI-powered tank blueprints.',
-        publisher: { '@id': 'https://blackwateraquatics.ca/#organization' },
-        offers: { '@type': 'Offer', price: '0', priceCurrency: 'CAD' },
-      },
+      spawnosProductNode(),
     ],
   }
 }
@@ -96,14 +176,13 @@ export function websiteSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
+    '@id': `${SITE_URL}/#website`,
     name: 'SpawnOS',
     url: SITE_URL,
-    description: 'The aquarium operating system — species database, calculators, and AI tank blueprints.',
-    publisher: {
-      '@type': 'Organization',
-      name: 'Blackwater Aquatics Canada',
-      url: 'https://blackwateraquatics.ca',
-    },
+    description:
+      'Breeding records and spawn timelines for aquarium fish, plus a free species library, fish compatibility checker and 15 aquarium calculators.',
+    inLanguage: 'en-CA',
+    publisher: { '@id': ORG_ID },
   }
 }
 
@@ -116,15 +195,8 @@ export function speciesPageSchema(species: SpeciesData) {
     description: species.seoDescription,
     url,
     dateModified: species.lastUpdated,
-    author: {
-      '@type': 'Organization',
-      name: 'Blackwater Aquatics Canada',
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: 'SpawnOS',
-      url: SITE_URL,
-    },
+    author: { '@id': AUTHOR.id },
+    publisher: { '@id': ORG_ID },
     mainEntityOfPage: { '@type': 'WebPage', '@id': url },
   }
 }

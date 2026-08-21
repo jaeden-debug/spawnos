@@ -11,6 +11,8 @@ import SpeciesRelated from '@/components/species/SpeciesRelated'
 import { getAllSpeciesSlugs, getSpeciesRecord, getSpeciesFAQ, getSpeciesReferences } from '@/lib/species-db'
 import { getSpeciesMDX } from '@/lib/content'
 import { breadcrumbSchema } from '@/lib/schema'
+import BreedingPrompt from '@/components/spawnos/BreedingPrompt'
+import { spawnosSupportFor } from '@/lib/spawnos-species'
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -118,6 +120,7 @@ export default async function SpeciesDetailPage({ params }: Props) {
   if (!species) notFound()
 
   const mdxSource = getSpeciesMDX(slug)
+  const spawnosSupport = spawnosSupportFor(slug)
 
   const faqSchema = faq.length > 0 ? {
     '@context': 'https://schema.org',
@@ -381,6 +384,24 @@ export default async function SpeciesDetailPage({ params }: Props) {
                       </details>
                     ))}
                   </div>
+                </section>
+              )}
+
+              {/* SECTION 13b: SPAWNOS BREEDING MODULE
+                  Only rendered for species the app genuinely supports, with
+                  copy written for that species. See src/lib/spawnos-species.ts
+                  — a blanket "download our app" banner on all 103 species
+                  pages is exactly what this avoids. */}
+              {spawnosSupport && (
+                <section id="spawnos" className="mt-12">
+                  <BreedingPrompt
+                    headline={spawnosSupport.headline}
+                    body={spawnosSupport.body}
+                    cta="See how SpawnOS tracks a breeding project"
+                    source="species_page"
+                    event="species_to_app_click"
+                    target={slug}
+                  />
                 </section>
               )}
 

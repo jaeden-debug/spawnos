@@ -9,6 +9,11 @@ import CompatibilityCard from '@/components/compatibility/CompatibilityCard'
 import { getAllCompat } from '@/lib/compatibility'
 import { breadcrumbSchema } from '@/lib/schema'
 
+// Canonical host. These pages moved from spawnos.app to spawnos.ca when the
+// domains split; pointing structured data at the old host now names a URL that
+// 308-redirects, which is a real schema error rather than a cosmetic one.
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://spawnos.ca'
+
 export const metadata: Metadata = {
   title: 'Fish Compatibility: The Complete Guide — Which Fish Can Live Together?',
   description:
@@ -60,8 +65,8 @@ export default function FishCompatibilityGuidePage() {
     description:
       'The four factors that decide aquarium fish compatibility — water parameters, temperament, size and predation, and competition — plus special cases and tank design.',
     author: { '@type': 'Organization', name: 'Blackwater Aquatics Canada', url: 'https://blackwateraquatics.ca' },
-    publisher: { '@type': 'Organization', name: 'SpawnOS', url: 'https://spawnos.app' },
-    mainEntityOfPage: 'https://spawnos.app/compatibility/fish-compatibility-guide',
+    publisher: { '@type': 'Organization', name: 'SpawnOS', url: SITE_URL },
+    mainEntityOfPage: `${SITE_URL}/compatibility/fish-compatibility-guide`,
   }
 
   const faqSchema = {

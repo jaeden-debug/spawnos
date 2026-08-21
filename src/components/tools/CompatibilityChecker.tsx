@@ -1,7 +1,9 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { SPECIES_DATA } from '@/data/species'
+import { track } from '@/lib/analytics'
 import type { SpeciesData } from '@/types/species'
 
 type RelationshipType =
@@ -620,7 +622,23 @@ export default function CompatibilityChecker() {
     if (!speciesA || !speciesB || speciesA === speciesB) return
     const a = SPECIES_DATA.find((s) => s.slug === speciesA)
     const b = SPECIES_DATA.find((s) => s.slug === speciesB)
-    if (a && b) setResult(checkCompatibility(a, b))
+    if (!a || !b) return
+    const r = checkCompatibility(a, b)
+    setResult(r)
+    track('compatibility_completed', {
+      source: 'compatibility_checker',
+      target: `${a.slug}+${b.slug}`,
+      verdict: r.verdict,
+      score: r.score,
+    })
+  }
+
+  /** Clear the result so the visitor can run another pairing in place. */
+  function reset() {
+    setResult(null)
+    setSpeciesA('')
+    setSpeciesB('')
+    if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const selectClass = 'w-full bg-spawn-surface border border-spawn-border rounded-none px-3 py-3 text-spawn-text text-sm focus:outline-none focus:border-spawn-cyan/70 hover:border-spawn-border-strong transition-colors'
@@ -812,6 +830,133 @@ export default function CompatibilityChecker() {
           )}
         </div>
       )}
+
+      {result && (
+        <CompatibilityNextSteps
+          result={result}
+          speciesA={SPECIES_DATA.find((s) => s.slug === speciesA)}
+          speciesB={SPECIES_DATA.find((s) => s.slug === speciesB)}
+          onCompareAnother={reset}
+        />
+      )}
+    </div>
+  )
+}
+
+/**
+ * What to offer once the visitor already has their answer.
+ *
+ * The result above is complete and free — nothing here gates it. These are
+ * next useful actions, and they differ by verdict: someone told "Incompatible"
+ * needs a different route than someone told "Compatible", and offering both
+ * the identical "download our app" button would waste the moment.
+ */
+function CompatibilityNextSteps({
+  result,
+  speciesA,
+  speciesB,
+  onCompareAnother,
+}: {
+  result: CompatResult
+  speciesA?: SpeciesData
+  speciesB?: SpeciesData
+  onCompareAnother: () => void
+}) {
+  const workable = result.verdict === 'Compatible' || result.verdict === 'Caution'
+
+  return (
+    <div className="mt-6 space-y-4">
+      <div className="glass-card rounded-none border border-spawn-border p-6">
+        <div className="bw-eyebrow mb-4">What next</div>
+        <div className="grid sm:grid-cols-2 gap-3">
+          {speciesA && (
+            <Link
+              href={`/species/${speciesA.slug}`}
+              className="block p-4 border border-spawn-border/60 bg-spawn-bg/40 hover:border-spawn-cyan/40 transition-colors"
+            >
+              <div className="text-sm font-semibold text-spawn-text mb-1">
+                {speciesA.commonName} care guide
+              </div>
+              <div className="text-xs text-spawn-muted-text">
+                Parameters, temperament, tank size and breeding notes
+              </div>
+            </Link>
+          )}
+          {speciesB && (
+            <Link
+              href={`/species/${speciesB.slug}`}
+              className="block p-4 border border-spawn-border/60 bg-spawn-bg/40 hover:border-spawn-cyan/40 transition-colors"
+            >
+              <div className="text-sm font-semibold text-spawn-text mb-1">
+                {speciesB.commonName} care guide
+              </div>
+              <div className="text-xs text-spawn-muted-text">
+                Parameters, temperament, tank size and breeding notes
+              </div>
+            </Link>
+          )}
+
+          {workable ? (
+            <Link
+              href="/tools/stocking-density"
+              className="block p-4 border border-spawn-border/60 bg-spawn-bg/40 hover:border-spawn-cyan/40 transition-colors"
+            >
+              <div className="text-sm font-semibold text-spawn-text mb-1">Check your stocking level</div>
+              <div className="text-xs text-spawn-muted-text">
+                They can share a tank — make sure yours is big enough
+              </div>
+            </Link>
+          ) : (
+            <Link
+              href="/compatibility"
+              className="block p-4 border border-spawn-border/60 bg-spawn-bg/40 hover:border-spawn-cyan/40 transition-colors"
+            >
+              <div className="text-sm font-semibold text-spawn-text mb-1">Find tankmates that do work</div>
+              <div className="text-xs text-spawn-muted-text">
+                Browse scored pairings for species like these
+              </div>
+            </Link>
+          )}
+
+          <button
+            onClick={onCompareAnother}
+            className="block text-left p-4 border border-spawn-border/60 bg-spawn-bg/40 hover:border-spawn-cyan/40 transition-colors"
+          >
+            <div className="text-sm font-semibold text-spawn-text mb-1">Compare another pair</div>
+            <div className="text-xs text-spawn-muted-text">Run a different combination</div>
+          </button>
+        </div>
+      </div>
+
+      {/* Breeding intent is a genuinely different question from tankmate
+          compatibility, so it gets its own module rather than being mixed
+          into the list above. */}
+      <aside className="rounded-none border border-spawn-cyan/25 bg-spawn-cyan/[0.04] p-6">
+        <p className="bw-eyebrow text-spawn-cyan mb-2">Pairing them to breed?</p>
+        <h3 className="text-lg font-black text-spawn-text mb-2 leading-snug">
+          Tankmate compatibility is not the same question as a breeding pair.
+        </h3>
+        <p className="text-sm text-spawn-muted-text leading-relaxed mb-4">
+          If you are putting two of the same species together to spawn, SpawnOS tracks the pair,
+          builds the spawn timeline, tells you what should be happening in the tank today, and
+          warns you if the two fish are related. Your first breeding project is free.
+        </p>
+        <Link
+          href="/app"
+          onClick={() =>
+            track('tool_to_app_click', {
+              source: 'compatibility_result',
+              target: 'fish-compatibility',
+            })
+          }
+          className="inline-flex items-center gap-2 text-sm font-semibold text-spawn-cyan hover:underline"
+        >
+          See how SpawnOS tracks a pair
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8H13M9 4L13 8L9 12" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </Link>
+      </aside>
     </div>
   )
 }
