@@ -677,8 +677,8 @@ export default function CompatibilityChecker() {
       <div className="glass-card rounded-none border-l-2 border-l-spawn-cyan/60 border-y border-r border-spawn-border p-6">
         <div className="grid sm:grid-cols-2 gap-4 mb-5">
           <div>
-            <label className={labelClass}>Species A</label>
-            <select title="Select option" aria-label="Select option" className={selectClass} value={speciesA} onChange={(e) => setSpeciesA(e.target.value)}>
+            <label className={labelClass} htmlFor="compat-species-a">Species A</label>
+            <select id="compat-species-a" className={selectClass} value={speciesA} onChange={(e) => setSpeciesA(e.target.value)}>
               <option value="">Select species...</option>
               {SPECIES_DATA.map((s) => (
                 <option key={s.slug} value={s.slug}>{s.commonName} ({s.scientificName})</option>
@@ -686,8 +686,8 @@ export default function CompatibilityChecker() {
             </select>
           </div>
           <div>
-            <label className={labelClass}>Species B</label>
-            <select title="Select option" aria-label="Select option" className={selectClass} value={speciesB} onChange={(e) => setSpeciesB(e.target.value)}>
+            <label className={labelClass} htmlFor="compat-species-b">Species B</label>
+            <select id="compat-species-b" className={selectClass} value={speciesB} onChange={(e) => setSpeciesB(e.target.value)}>
               <option value="">Select species...</option>
               {SPECIES_DATA.filter((s) => s.slug !== speciesA).map((s) => (
                 <option key={s.slug} value={s.slug}>{s.commonName} ({s.scientificName})</option>

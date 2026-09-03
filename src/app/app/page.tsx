@@ -20,7 +20,7 @@ import { APP_VERSION, PLATFORM } from '@/lib/app-store'
 const APP_STATUS = 'live' as 'testflight' | 'live'
 
 export const metadata: Metadata = {
-  title: 'Download SpawnOS for iPhone — Breeding Records for Aquarium Fish',
+  title: { absolute: 'Download SpawnOS for iPhone — Breeding Records for Aquarium Fish' },
   description:
     'SpawnOS for iPhone tracks your breeding pairs, spawn dates, fry milestones and lineage. Free on the App Store, and your first breeding project is free. Requires iOS 17 or later.',
   alternates: { canonical: '/app' },
@@ -86,7 +86,7 @@ export default function GetAppPage() {
             <p className="text-spawn-muted-text text-lg leading-relaxed max-w-xl mx-auto mb-8">
               SpawnOS keeps your breeding pairs, spawn dates, fry milestones and lineage in one
               place — and tells you what should be happening in the tank today.
-              Your first breeding project is free.
+              Free on the App Store.
             </p>
 
             <div className="flex flex-col items-center gap-4">
@@ -132,8 +132,8 @@ export default function GetAppPage() {
                   >
                     Blackwater Aquatics Canada
                   </a>
-                  . There is no Android version and no paid download — your first breeding project
-                  is free, and Pro is an optional subscription bought on this website.
+                  . There is no Android version and no paid download. Pro is an optional
+                  subscription bought on this website that removes the daily Ask SpawnOS limit.
                 </p>
                 <p className="text-sm text-spawn-muted-text leading-relaxed mt-4">
                   Your SpawnOS account is the same one you use here, so records and any Pro
@@ -151,7 +151,7 @@ export default function GetAppPage() {
               What a breeding project looks like
             </h2>
             <p className="text-spawn-muted-text text-center max-w-xl mx-auto mb-12 leading-relaxed">
-              Every step below is included free for your first project.
+              Every step below is included free.
             </p>
             <div className="space-y-3">
               {WORKFLOW.map((w) => (
@@ -210,12 +210,11 @@ export default function GetAppPage() {
         <section className="px-4 py-16">
           <div className="max-w-2xl mx-auto text-center">
             <h2 className="text-2xl font-black text-spawn-text mb-4">
-              Your first breeding project is free.
+              Free to download, free to use.
             </h2>
             <p className="text-spawn-muted-text leading-relaxed mb-8">
-              Register your animals, create a pair, record the spawn and follow the whole timeline
-              without paying. Pro is for the point where you want to run a second line alongside
-              the first.
+              Register your animals, create pairs, record spawns and follow the whole timeline
+              without paying. Pro removes the daily limit on Ask SpawnOS.
             </p>
             <div className="flex flex-col items-center gap-4">
               <AppStoreBadge source="app_page_footer" width={180} />

@@ -13,7 +13,7 @@ import { breadcrumbSchema, faqPageSchema, SUPPORT_EMAIL } from '@/lib/schema'
  * spawnos.app have no MX records and cannot receive mail at all.
  */
 export const metadata: Metadata = {
-  title: 'SpawnOS Support — Help With Breeding Records, Sync and Billing',
+  title: { absolute: 'SpawnOS Support — Help With Breeding Records, Sync and Billing' },
   description:
     'Get help with SpawnOS: account and sync problems, breeding timelines, species coverage, subscriptions and data deletion. Contact the SpawnOS team directly.',
   alternates: { canonical: '/support' },

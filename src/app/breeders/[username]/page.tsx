@@ -66,7 +66,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const breeder = await getBreeder(username)
 
   if (!breeder) {
-    return { title: 'Breeder Not Found — SpawnOS' }
+    return { title: 'Breeder Not Found' }
   }
 
   const name = breeder.display_name ?? breeder.username

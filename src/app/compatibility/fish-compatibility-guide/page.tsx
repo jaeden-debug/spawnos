@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     'fish that can live together',
   ],
   alternates: { canonical: '/compatibility/fish-compatibility-guide' },
-  openGraph: {
+  openGraph: { images: ['https://spawnos.ca/spawnos-brand-card.png'],
     title: 'Fish Compatibility: The Complete Guide',
     description:
       'The four factors that actually decide whether two fish can share a tank — and how to design for them.',

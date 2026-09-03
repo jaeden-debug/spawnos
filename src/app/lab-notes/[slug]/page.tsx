@@ -6,7 +6,7 @@ import SiteFooter from '@/components/layout/SiteFooter'
 import MdxRenderer, { slugify } from '@/components/content/MdxRenderer'
 import RecommendedReading from '@/components/lab-notes/RecommendedReading'
 import { getLabNote, getAllLabNoteSlugs, getRelatedLabNotes } from '@/lib/lab-notes'
-import { breadcrumbSchema, authorSchema, AUTHOR } from '@/lib/schema'
+import { breadcrumbSchema, authorSchema, AUTHOR, ORG_ID } from '@/lib/schema'
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -21,7 +21,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const note = getLabNote(slug)
   if (!note) return {}
   return {
-    title: `${note.title} — Lab Notes`,
+    // The root template appends "| SpawnOS". Notes whose own title already
+    // names the brand would otherwise ship it twice, so those bypass the
+    // template with an absolute title.
+    title: /spawnos/i.test(note.title)
+      ? { absolute: `${note.title} — Lab Notes` }
+      : `${note.title} — Lab Notes`,
     description: note.excerpt,
     keywords: note.tags,
     authors: [{ name: AUTHOR.name, url: 'https://spawnos.app/about' }],
@@ -69,7 +74,10 @@ export default async function LabNotePage({ params }: Props) {
     dateModified: note.date,
     image: note.thumbnail,
     author: authorSchema(),
-    publisher: { '@type': 'Organization', name: 'SpawnOS', url: 'https://spawnos.app' },
+    // Reference the one canonical publisher node rather than minting a second
+    // Organization named 'SpawnOS' on the non-canonical domain — that is the
+    // entity fragmentation the schema module exists to prevent.
+    publisher: { '@id': ORG_ID },
     mainEntityOfPage: `https://spawnos.app/lab-notes/${slug}`,
   }
 

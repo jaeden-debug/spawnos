@@ -6,13 +6,13 @@ import { TOOLS_DATA } from '@/data/tools'
 import { breadcrumbSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
-  title: 'Free Aquarium Calculators & Tools — 13 Science-Based Tools | SpawnOS',
+  title: 'Free Aquarium Calculators & Tools — 15 Science-Based Tools',
   description:
     'Free aquarium science tools: water change calculator, GH/KH converter, nitrogen cycle tracker, fish compatibility checker, heater size, filter size, lighting calculator, salt dosage, medication dosing, and more. No signup required.',
   alternates: { canonical: '/tools' },
-  openGraph: {
-    title: 'Free Aquarium Calculators & Tools — SpawnOS',
-    description: '13 free science-based aquarium tools. Water parameters, stocking, chemistry, lighting, disease treatment, and AI blueprint generation.',
+  openGraph: { images: ['https://spawnos.ca/spawnos-brand-card.png'],
+    title: 'Free Aquarium Calculators & Tools',
+    description: '15 free science-based aquarium tools. Water parameters, stocking, chemistry, lighting, disease treatment, and AI blueprint generation.',
     type: 'website',
   },
 }

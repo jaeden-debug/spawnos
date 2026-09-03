@@ -5,7 +5,7 @@ import SiteFooter from '@/components/layout/SiteFooter'
 import MedicationCalculator from '@/components/tools/MedicationCalculator'
 
 export const metadata: Metadata = {
-  title: 'Aquarium Medication Dosage Calculator — Fish Disease Treatment | SpawnOS',
+  title: 'Aquarium Medication Dosage Calculator — Fish Disease Treatment',
   description:
     'Calculate precise aquarium medication doses for kanamycin, metronidazole, copper, ich treatments, and more. Includes treatment schedules, species safety warnings, and hospital tank protocols.',
   alternates: { canonical: '/tools/medication-calculator' },

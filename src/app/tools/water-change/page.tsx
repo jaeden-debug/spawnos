@@ -5,7 +5,7 @@ import SiteFooter from '@/components/layout/SiteFooter'
 import WaterChangeCalculator from '@/components/tools/WaterChangeCalculator'
 
 export const metadata: Metadata = {
-  title: 'Aquarium Water Change Calculator — Volume & Nitrate Reduction | SpawnOS',
+  title: 'Aquarium Water Change Calculator — Volume & Nitrate Reduction',
   description:
     'Calculate exact water change volumes, nitrate reduction across multiple changes, and weekly maintenance percentages. Supports litres and US gallons with tap water nitrate adjustment.',
   alternates: { canonical: '/tools/water-change' },

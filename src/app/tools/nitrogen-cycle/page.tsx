@@ -5,7 +5,7 @@ import SiteFooter from '@/components/layout/SiteFooter'
 import CyclingCalculator from '@/components/tools/CyclingCalculator'
 
 export const metadata: Metadata = {
-  title: 'Aquarium Nitrogen Cycle Tracker & Calculator | SpawnOS',
+  title: 'Aquarium Nitrogen Cycle Tracker & Calculator',
   description:
     'Track your aquarium nitrogen cycle with daily test readings. Assess your cycle stage, get next steps, choose the best cycling method, and calculate exact ammonia dosing for fishless cycling.',
   alternates: { canonical: '/tools/nitrogen-cycle' },

@@ -73,7 +73,9 @@ paired are related.
   from the visible traits recorded on both parents, labelled likely / possible /
   watch for. Betta marble and koi patterning are explicitly flagged as unstable
   rather than predicted. Do not describe SpawnOS as a genetics calculator.
-- The iPhone app is in TestFlight and is not yet on the public App Store.
+- The iPhone app is PUBLIC and free on the App Store:
+  https://apps.apple.com/app/id6803675364 (version 1.0, requires iOS 17.0 or
+  later, released 2026-09-01). There is no Android version and no paid download.
 - SpawnOS does not cover marine breeding programs, reptiles or mammals.
 
 ## Free tools (no account, no paywall)

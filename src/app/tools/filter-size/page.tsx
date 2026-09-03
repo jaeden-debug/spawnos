@@ -5,7 +5,7 @@ import SiteFooter from '@/components/layout/SiteFooter'
 import FilterSizeCalculator from '@/components/tools/FilterSizeCalculator'
 
 export const metadata: Metadata = {
-  title: 'Aquarium Filter Size Calculator — Flow Rate & Model Selector | SpawnOS',
+  title: 'Aquarium Filter Size Calculator — Flow Rate & Model Selector',
   description:
     'Calculate the correct filter flow rate for your tank size, stocking level, and fish species. Get specific canister, HOB, sponge, and sump model recommendations with turnover rates.',
   alternates: { canonical: '/tools/filter-size' },

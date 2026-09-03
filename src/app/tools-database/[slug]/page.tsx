@@ -21,11 +21,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const article = getToolArticle(slug)
   if (!article) return {}
   return {
-    title: article.seoTitle,
+    title: /spawnos/i.test(article.seoTitle)
+      ? { absolute: article.seoTitle }
+      : article.seoTitle,
     description: article.seoDescription,
     alternates: { canonical: `/tools-database/${slug}` },
-    openGraph: { title: article.seoTitle, description: article.seoDescription, type: 'article', locale: 'en_CA' },
-    twitter: { card: 'summary_large_image', title: article.seoTitle, description: article.seoDescription },
+    // Declared summary_large_image with no image, which renders as a blank card.
+    openGraph: { title: article.seoTitle, description: article.seoDescription, type: 'article', locale: 'en_CA', images: ['https://spawnos.ca/spawnos-brand-card.png'] },
+    twitter: { card: 'summary_large_image', title: article.seoTitle, description: article.seoDescription, images: ['https://spawnos.ca/spawnos-brand-card.png'] },
   }
 }
 

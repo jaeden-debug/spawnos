@@ -25,7 +25,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const p = getProblem(slug)
   if (!p) return {}
   return {
-    title: `${p.title} — SpawnOS`,
+    // Root template appends '| SpawnOS'; do not hardcode a second copy.
+    title: p.title,
     description: p.excerpt,
     keywords: p.tags,
     alternates: { canonical: `/problems/${slug}` },

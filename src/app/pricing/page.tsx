@@ -16,7 +16,7 @@ import { FAQ, COMPARISON_FEATURES, type FaqItem, type ComparisonRow } from './pl
  * of visible text.
  */
 export const metadata: Metadata = {
-  title: 'SpawnOS Pricing — Your First Breeding Project Is Free',
+  title: { absolute: 'SpawnOS Pricing — Free Plan and Pro at $7/month' },
   description:
     'SpawnOS Free covers the whole breeding workflow — animals, pairs, spawn timeline and lineage — with no project cap in 1.0. Pro is $7/month and removes the daily Ask SpawnOS limit. Species library and all 15 calculators are free.',
   alternates: { canonical: '/pricing' },

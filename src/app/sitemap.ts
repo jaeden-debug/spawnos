@@ -27,9 +27,9 @@ const STATIC_ROUTES = [
   { path: '/spawnos-by-blackwater-aquatics', priority: 0.8, changeFrequency: 'monthly' },
   { path: '/tools-database', priority: 0.8, changeFrequency: 'weekly' },
   { path: '/live-foods', priority: 0.9, changeFrequency: 'monthly' },
-  { path: '/blueprints', priority: 0.8, changeFrequency: 'monthly' },
+
   { path: '/pricing', priority: 0.7, changeFrequency: 'monthly' },
-  { path: '/breeders', priority: 0.6, changeFrequency: 'weekly' },
+
   { path: '/knowledge', priority: 0.6, changeFrequency: 'monthly' },
   { path: '/about', priority: 0.5, changeFrequency: 'monthly' },
   { path: '/support', priority: 0.5, changeFrequency: 'monthly' },

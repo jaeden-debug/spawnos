@@ -5,7 +5,7 @@ import SiteFooter from '@/components/layout/SiteFooter'
 import { breadcrumbSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
-  title: 'About SpawnOS — Fish Breeding App by Blackwater Aquatics Canada',
+  title: { absolute: 'About SpawnOS — Fish Breeding App by Blackwater Aquatics Canada' },
   description:
     'SpawnOS is the aquarium science platform built by Blackwater Aquatics Canada. Species database, calculators, and AI-powered tank blueprints for serious freshwater fishkeepers.',
   alternates: { canonical: '/about' },
