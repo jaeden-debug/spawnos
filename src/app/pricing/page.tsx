@@ -39,13 +39,13 @@ export default function PricingPage() {
               Simple pricing
             </div>
             <h1 className="text-5xl font-black text-spawn-text mb-5 leading-tight">
-              Your first breeding<br />
-              <span className="text-spawn-cyan">project is free.</span>
+              Every breeding record<br />
+              <span className="text-spawn-cyan">is free.</span>
             </h1>
             <p className="text-spawn-muted-text text-lg leading-relaxed max-w-xl mx-auto mb-10">
-              Register your animals, build a pair, record the spawn and follow the whole timeline
-              without paying. Pro is for running more than one project at a time. Every calculator
-              and species guide on this site stays free either way.
+              Register your animals, build pairs, record spawns and follow every timeline without
+              paying — there is no cap on breeding projects in 1.0. Pro removes the daily limit on
+              Ask SpawnOS. Every calculator and species guide on this site stays free either way.
             </p>
           </div>
         </section>
@@ -149,7 +149,7 @@ export default function PricingPage() {
             </h2>
             <p className="text-spawn-muted-text mb-8 leading-relaxed">
               No credit card. No expiry. Every calculator and every species guide stays free forever.
-              Pro is for when you&apos;re running more than one breeding project at a time.
+              Pro is for when 10 Ask SpawnOS questions a day stops being enough.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link

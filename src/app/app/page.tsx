@@ -22,7 +22,7 @@ const APP_STATUS = 'live' as 'testflight' | 'live'
 export const metadata: Metadata = {
   title: { absolute: 'Download SpawnOS for iPhone — Breeding Records for Aquarium Fish' },
   description:
-    'SpawnOS for iPhone tracks your breeding pairs, spawn dates, fry milestones and lineage. Free on the App Store, and your first breeding project is free. Requires iOS 17 or later.',
+    'SpawnOS for iPhone tracks your breeding pairs, spawn dates, fry milestones and lineage. Free on the App Store, with no cap on breeding projects. Requires iOS 17 or later.',
   alternates: { canonical: '/app' },
 }
 

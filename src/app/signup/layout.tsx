@@ -7,7 +7,7 @@ import type { Metadata } from 'next'
  */
 export const metadata: Metadata = {
   title: 'Create your SpawnOS account',
-  description: 'Create a free SpawnOS account — your first breeding project is free.',
+  description: 'Create a free SpawnOS account — every breeding record is free, with no project cap.',
   robots: { index: false, follow: false },
 }
 

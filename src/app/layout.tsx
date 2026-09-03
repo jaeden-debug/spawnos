@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     template: '%s | SpawnOS',
   },
   description:
-    'Track your breeding pairs, spawn dates, fry milestones and lineage in one app. Plus a free species library, fish compatibility checker and 15 aquarium calculators. First breeding project free.',
+    'Track your breeding pairs, spawn dates, fry milestones and lineage in one app. Plus a free species library, fish compatibility checker and 15 aquarium calculators. No cap on breeding projects.',
   // Ordered by measured demand (Google Keyword Planner, Aug 2026). The
   // product-category terms people would expect here — "fish breeding app",
   // "fish breeding software" — have almost no search volume, so they are not
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'SpawnOS — Breeding Records & Spawn Timelines for Aquarium Fish',
     description:
-      'Pairs, spawn dates, fry milestones and lineage in one app. First breeding project free.',
+      'Pairs, spawn dates, fry milestones and lineage in one app. No cap on breeding projects.',
     type: 'website',
     locale: 'en_CA',
     siteName: 'SpawnOS',
@@ -63,7 +63,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'SpawnOS — Breeding Records & Spawn Timelines for Aquarium Fish',
     description:
-      'Pairs, spawn dates, fry milestones and lineage in one app. First breeding project free.',
+      'Pairs, spawn dates, fry milestones and lineage in one app. No cap on breeding projects.',
     images: ['/spawnos-brand-card.png'],
   },
   robots: {

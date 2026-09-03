@@ -939,7 +939,7 @@ function CompatibilityNextSteps({
         <p className="text-sm text-spawn-muted-text leading-relaxed mb-4">
           If you are putting two of the same species together to spawn, SpawnOS tracks the pair,
           builds the spawn timeline, tells you what should be happening in the tank today, and
-          warns you if the two fish are related. Your first breeding project is free.
+          warns you if the two fish are related. Free, with no cap on breeding projects.
         </p>
         <Link
           href="/app"
