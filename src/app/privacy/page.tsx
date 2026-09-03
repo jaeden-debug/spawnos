@@ -4,7 +4,7 @@ import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/layout/SiteFooter'
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy — SpawnOS',
+  title: 'Privacy Policy',
   description: 'SpawnOS privacy policy. How we collect, use, and protect your data.',
   alternates: { canonical: '/privacy' },
 }

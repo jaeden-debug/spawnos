@@ -5,7 +5,7 @@ import SiteFooter from '@/components/layout/SiteFooter'
 import LightingCalculator from '@/components/tools/LightingCalculator'
 
 export const metadata: Metadata = {
-  title: 'Aquarium Lighting Calculator — PAR, Lux & Plant Requirements | SpawnOS',
+  title: 'Aquarium Lighting Calculator — PAR, Lux & Plant Requirements',
   description:
     'Calculate aquarium lighting requirements for your plants and fish. Convert between PAR, lux, and lumens. Get fixture recommendations for low-light, medium, and high-light planted tanks.',
   alternates: { canonical: '/tools/lighting-calculator' },

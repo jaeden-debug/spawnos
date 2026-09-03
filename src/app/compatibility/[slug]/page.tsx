@@ -28,7 +28,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const c = getCompat(slug)
   if (!c) return {}
   return {
-    title: `${c.title} — SpawnOS Compatibility`,
+    // Root template appends '| SpawnOS'; do not hardcode a second copy.
+    title: `${c.title} — Compatibility`,
     description: c.verdict || `Compatibility, parameters, tank size, and risks for ${c.speciesA} and ${c.speciesB}.`,
     keywords: c.tags,
     alternates: { canonical: `/compatibility/${slug}` },

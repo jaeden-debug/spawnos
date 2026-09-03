@@ -5,7 +5,7 @@ import SiteFooter from '@/components/layout/SiteFooter'
 import SaltDosageCalculator from '@/components/tools/SaltDosageCalculator'
 
 export const metadata: Metadata = {
-  title: 'Aquarium Salt Dosage Calculator — Freshwater, Brackish & Marine | SpawnOS',
+  title: 'Aquarium Salt Dosage Calculator — Freshwater, Brackish & Marine',
   description:
     'Calculate exact aquarium salt doses for disease treatment, electrolyte support, brackish water, and marine saltwater preparation. Includes species safety warnings and marine SG presets.',
   alternates: { canonical: '/tools/salt-dosage' },

@@ -677,8 +677,8 @@ export default function CompatibilityChecker() {
       <div className="glass-card rounded-none border-l-2 border-l-spawn-cyan/60 border-y border-r border-spawn-border p-6">
         <div className="grid sm:grid-cols-2 gap-4 mb-5">
           <div>
-            <label className={labelClass}>Species A</label>
-            <select title="Select option" aria-label="Select option" className={selectClass} value={speciesA} onChange={(e) => setSpeciesA(e.target.value)}>
+            <label className={labelClass} htmlFor="compat-species-a">Species A</label>
+            <select id="compat-species-a" className={selectClass} value={speciesA} onChange={(e) => setSpeciesA(e.target.value)}>
               <option value="">Select species...</option>
               {SPECIES_DATA.map((s) => (
                 <option key={s.slug} value={s.slug}>{s.commonName} ({s.scientificName})</option>
@@ -686,8 +686,8 @@ export default function CompatibilityChecker() {
             </select>
           </div>
           <div>
-            <label className={labelClass}>Species B</label>
-            <select title="Select option" aria-label="Select option" className={selectClass} value={speciesB} onChange={(e) => setSpeciesB(e.target.value)}>
+            <label className={labelClass} htmlFor="compat-species-b">Species B</label>
+            <select id="compat-species-b" className={selectClass} value={speciesB} onChange={(e) => setSpeciesB(e.target.value)}>
               <option value="">Select species...</option>
               {SPECIES_DATA.filter((s) => s.slug !== speciesA).map((s) => (
                 <option key={s.slug} value={s.slug}>{s.commonName} ({s.scientificName})</option>
@@ -939,7 +939,7 @@ function CompatibilityNextSteps({
         <p className="text-sm text-spawn-muted-text leading-relaxed mb-4">
           If you are putting two of the same species together to spawn, SpawnOS tracks the pair,
           builds the spawn timeline, tells you what should be happening in the tank today, and
-          warns you if the two fish are related. Your first breeding project is free.
+          warns you if the two fish are related. Free, with no cap on breeding projects.
         </p>
         <Link
           href="/app"

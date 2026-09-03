@@ -10,8 +10,8 @@ export const metadata: Metadata = {
   description:
     'Deep, science-based guides to every SpawnOS aquarium calculator — stocking, cycling, water chemistry, filtration, heating, lighting, dosing, and compatibility. The reasoning behind each tool, with worked examples.',
   alternates: { canonical: '/tools-database' },
-  openGraph: {
-    title: 'Tools Database — SpawnOS',
+  openGraph: { images: ['https://spawnos.ca/spawnos-brand-card.png'],
+    title: 'Tools Database',
     description: 'In-depth guides to every aquarium calculator, with the science and worked examples behind each tool.',
     type: 'website',
     locale: 'en_CA',

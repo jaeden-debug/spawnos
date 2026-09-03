@@ -21,8 +21,22 @@
 export type SpawnOSEvent =
   /** Any "get the app" CTA anywhere on the site. */
   | 'spawnos_app_cta_click'
+  /**
+   * An outbound click to the App Store listing. This is the launch conversion
+   * event — the last thing measurable on the web before Apple takes over.
+   * Nothing after this point is visible to us: Apple reports impressions and
+   * installs in App Store Connect, and there is no shared identifier between
+   * the two, by design.
+   */
+  | 'spawnos_app_store_click'
+  /** A compatibility check was started (inputs chosen). */
+  | 'compatibility_started'
   /** A compatibility check produced a result. */
   | 'compatibility_completed'
+  /** Stripe Checkout session requested. */
+  | 'checkout_start'
+  /** Returned from Stripe to the success URL. */
+  | 'checkout_success'
   /** A calculator/tool page sent someone toward the app. */
   | 'tool_to_app_click'
   /** A species page sent someone toward the app. */

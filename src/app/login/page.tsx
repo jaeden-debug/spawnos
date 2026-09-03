@@ -3,7 +3,7 @@ import Link from 'next/link'
 import LoginForm from '@/components/auth/LoginForm'
 
 export const metadata: Metadata = {
-  title: 'Sign In — SpawnOS',
+  title: 'Sign In',
   description: 'Sign in to your SpawnOS account.',
   robots: { index: false, follow: false },
 }

@@ -5,7 +5,7 @@ import SiteFooter from '@/components/layout/SiteFooter'
 import GHKHConverter from '@/components/tools/GHKHConverter'
 
 export const metadata: Metadata = {
-  title: 'GH/KH Hardness Converter — dGH, dKH, ppm, mmol/L | SpawnOS',
+  title: 'GH/KH Hardness Converter — dGH, dKH, ppm, mmol/L',
   description:
     'Convert aquarium water hardness between dGH, dKH, ppm (mg/L CaCO₃), and mmol/L. Includes carbonate hardness buffering guide and species GH/KH reference table.',
   alternates: { canonical: '/tools/gh-kh-converter' },

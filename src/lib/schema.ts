@@ -1,4 +1,11 @@
 import type { SpeciesData } from '@/types/species'
+import {
+  APP_STORE_URL,
+  APP_STORE_URL_CA,
+  APP_VERSION,
+  PLATFORM,
+  RELEASE_DATE,
+} from '@/lib/app-store'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://spawnos.ca'
 
@@ -71,25 +78,49 @@ export function authorSchema() {
  * is USD because that is what Stripe bills in, regardless of the Canadian
  * publisher.
  *
- * No aggregateRating, reviewCount or downloads is emitted — SpawnOS has no
- * published ratings to cite, and inventing them risks a manual action.
+ * No aggregateRating, reviewCount or downloads is emitted — the live listing
+ * reports userRatingCount 0, and inventing ratings risks a manual action. See
+ * HAS_PUBLIC_RATINGS in `@/lib/app-store`.
  *
- * `operatingSystem` stays 'Web' until the iPhone app is publicly downloadable.
- * When the App Store listing goes live, add a MobileApplication node with the
- * real installUrl; declaring iOS availability now would describe an app that
- * nobody outside TestFlight can install.
+ * iOS 1.0 went public on 2026-09-01, so this node is now multi-typed as
+ * SoftwareApplication + MobileApplication and carries the real installUrl.
+ * It deliberately stays ONE node under ONE @id: emitting a separate
+ * MobileApplication beside this one would recreate exactly the entity
+ * fragmentation this file was written to remove. SpawnOS is one product with an
+ * iPhone app and a web surface, so it is described once.
  */
 export function spawnosProductNode() {
   return {
-    '@type': 'SoftwareApplication',
+    '@type': ['SoftwareApplication', 'MobileApplication'],
     '@id': SPAWNOS_ID,
     name: 'SpawnOS',
+    alternateName: 'SpawnOS for iPhone',
     url: SITE_URL,
     applicationCategory: 'UtilitiesApplication',
     applicationSubCategory: 'Aquarium breeding records',
-    operatingSystem: 'Web',
+    // Both surfaces are real: the iPhone app is the product; the site carries
+    // the species library and calculators that need no install.
+    operatingSystem: `${PLATFORM}, Web`,
+    softwareVersion: APP_VERSION,
+    datePublished: RELEASE_DATE,
+    downloadUrl: APP_STORE_URL,
+    installUrl: APP_STORE_URL,
+    // The App Store listing is the other authoritative public profile of this
+    // same product — this is the link that lets a crawler reconcile the website
+    // entity with the store entity.
+    sameAs: [APP_STORE_URL_CA],
     description:
-      'Breeding records for aquarium fish: register your animals, build breeding pairs, log spawns, and follow a species-aware timeline of milestones. Includes a free species library, fish compatibility checker and 15 aquarium calculators.',
+      'Breeding records for aquarium fish: register your animals, build breeding pairs, log spawns, and follow a species-aware timeline of milestones. Free on the App Store for iPhone, with a free species library, fish compatibility checker and 15 aquarium calculators on the web.',
+    featureList: [
+      'Animal registry with photos, species, sex and visible traits',
+      'Breeding pair management with species and sex checks',
+      'Spawn records with species-aware milestone timelines',
+      'Adaptive timelines that re-anchor when a milestone is confirmed',
+      'Lineage tracking with relatedness warnings',
+      'Trait observations from recorded parent traits, labelled preliminary',
+      'Preparation checklists and local reminders',
+      'Ask SpawnOS breeding assistant',
+    ],
     publisher: { '@id': ORG_ID },
     author: { '@id': AUTHOR.id },
     offers: [
@@ -97,7 +128,7 @@ export function spawnosProductNode() {
         '@type': 'Offer',
         name: 'SpawnOS Free',
         description:
-          'One active breeding project, the full species library and all 15 calculators.',
+          'The full breeding workflow with no project cap in 1.0, the species library and all 15 calculators.',
         price: '0',
         priceCurrency: 'USD',
         availability: 'https://schema.org/InStock',
@@ -106,7 +137,7 @@ export function spawnosProductNode() {
       {
         '@type': 'Offer',
         name: 'SpawnOS Pro',
-        description: 'Unlimited active breeding projects.',
+        description: 'Removes the 10-per-day Ask SpawnOS limit, plus priority email support.',
         price: '7.00',
         priceCurrency: 'USD',
         availability: 'https://schema.org/InStock',

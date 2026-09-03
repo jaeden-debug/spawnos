@@ -10,7 +10,7 @@ import { getAllToolArticles } from '@/lib/tools-content'
 import { getRecentLabNotes } from '@/lib/lab-notes'
 
 export const metadata: Metadata = {
-  title: 'The SpawnOS Library — Aquarium Knowledge Hub',
+  title: { absolute: 'The SpawnOS Library — Aquarium Knowledge Hub' },
   description:
     'Every SpawnOS authority resource in one place: the microfauna database, live food encyclopedia, aquarium problem database, fish compatibility database, and breeding guides.',
   alternates: { canonical: '/library' },

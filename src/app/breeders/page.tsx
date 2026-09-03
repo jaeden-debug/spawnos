@@ -4,7 +4,11 @@ import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/layout/SiteFooter'
 
 export const metadata: Metadata = {
-  title: 'Breeder Directory — SpawnOS',
+  title: 'Breeder Directory',
+  // Renders an empty-state directory with no listings and no inbound links.
+  // Indexing an empty directory is a thin-content signal; re-index it when it
+  // has real breeder profiles.
+  robots: { index: false, follow: true },
   description: 'Discover verified fish breeders on SpawnOS. Browse public breeder profiles, their fish registries, spawn history, and specialties.',
   alternates: { canonical: '/breeders' },
 }

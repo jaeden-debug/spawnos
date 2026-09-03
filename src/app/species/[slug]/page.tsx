@@ -28,20 +28,44 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const species = await getSpeciesRecord(slug)
   if (!species) return {}
 
-  const title = species.seo_title ?? `${species.common_name} Care Guide — SpawnOS`
+  /**
+   * Root layout applies the title template `%s | SpawnOS`. Most seo_title rows
+   * already end in the brand, so 103 of 104 species pages were shipping
+   * "… | SpawnOS | SpawnOS" — 11 wasted characters of SERP budget and a strong
+   * nudge for Google to rewrite the title. Strip the brand here rather than
+   * editing 104 CMS rows; the template re-adds exactly one.
+   */
+  const rawTitle = species.seo_title ?? `${species.common_name} Care Guide`
+  const title = rawTitle.replace(/\s*[|\u2014-]\s*SpawnOS\s*$/i, '').trim()
   const description = species.seo_description ?? `Complete ${species.common_name} care guide: water parameters, tank setup, feeding, tank mates, and breeding for ${species.scientific_name}.`
+
+  // Species pages declared summary_large_image with no image, which renders as a
+  // blank card. Fall back to the brand card the lab-notes template already uses.
+  const ogImage = 'https://spawnos.ca/spawnos-brand-card.png'
 
   return {
     title,
     description,
     keywords: species.seo_keywords,
     alternates: { canonical: `/species/${slug}` },
-    openGraph: { title, description, type: 'article', modifiedTime: species.updated_at },
-    twitter: { card: 'summary_large_image', title, description },
+    openGraph: { title, description, type: 'article', modifiedTime: species.updated_at, images: [ogImage] },
+    twitter: { card: 'summary_large_image', title, description, images: [ogImage] },
   }
 }
 
 const mdxComponents = {
+  /**
+   * Species MDX bodies open with `# Title`, which rendered a SECOND <h1>
+   * alongside the one SpeciesHero already emits — 101 of 104 species pages
+   * shipped two H1s. Render MDX h1 as an h2 so each page has exactly one H1.
+   * Styling is unchanged; the visual weight comes from the classes, not the tag.
+   */
+  h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
+    <h2
+      className="group relative text-[1.7rem] sm:text-3xl font-black tracking-tight text-spawn-text mt-16 mb-5 pl-4 scroll-mt-28 border-l-[3px] border-spawn-cyan/70"
+      {...props}
+    />
+  ),
   h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h2
       className="group relative text-[1.7rem] sm:text-3xl font-black tracking-tight text-spawn-text mt-16 mb-5 pl-4 scroll-mt-28 border-l-[3px] border-spawn-cyan/70"
@@ -111,13 +135,36 @@ const mdxComponents = {
 
 export default async function SpeciesDetailPage({ params }: Props) {
   const { slug } = await params
-  const [species, faq, references] = await Promise.all([
+  const [species, faq, references, allSlugs] = await Promise.all([
     getSpeciesRecord(slug),
     getSpeciesFAQ(slug),
     getSpeciesReferences(slug),
+    getAllSpeciesSlugs(),
   ])
 
   if (!species) notFound()
+
+  /**
+   * Compatibility lists hold DISPLAY NAMES ("Corydoras", "Neon Tetra"), and
+   * some are not species at all ("Aggressive fish", "Weak or slow-moving
+   * shrimp/snails"). They were being interpolated straight into
+   * /species/{value}, which produced 590 sitewide 404s across 88 pages —
+   * /species/Corydoras, /species/Kuhli%20Loach, /species/Nothing — harmless…
+   * The `capitalize` class hid it, because a slug renders identically.
+   *
+   * Resolve against the real slug set: link only what actually exists, and
+   * render everything else as plain text rather than a dead link.
+   */
+  const slugSet = new Set(allSlugs)
+  const resolveSpeciesSlug = (label: string): string | null => {
+    const candidate = label.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
+    if (slugSet.has(candidate)) return candidate
+    if (slugSet.has(label)) return label
+    // Common plural/singular drift, e.g. "Corydoras Catfish" -> "corydoras".
+    const head = candidate.split('-')[0]
+    if (head && slugSet.has(head)) return head
+    return null
+  }
 
   const mdxSource = getSpeciesMDX(slug)
   const spawnosSupport = spawnosSupportFor(slug)
@@ -343,9 +390,17 @@ export default async function SpeciesDetailPage({ params }: Props) {
                         <ul className="space-y-1.5">
                           {species.compatible_with.map((s) => (
                             <li key={s}>
-                              <Link href={`/species/${s}`} className="text-sm text-spawn-muted-text hover:text-spawn-cyan transition-colors capitalize">
-                                {s.replace(/-/g, ' ')}
-                              </Link>
+                              {(() => {
+                                const target = resolveSpeciesSlug(s)
+                                const label = s.replace(/-/g, ' ')
+                                return target ? (
+                                  <Link href={`/species/${target}`} className="text-sm text-spawn-muted-text hover:text-spawn-cyan transition-colors capitalize">
+                                    {label}
+                                  </Link>
+                                ) : (
+                                  <span className="text-sm text-spawn-muted-text capitalize">{label}</span>
+                                )
+                              })()}
                             </li>
                           ))}
                         </ul>
@@ -357,9 +412,17 @@ export default async function SpeciesDetailPage({ params }: Props) {
                         <ul className="space-y-1.5">
                           {species.incompatible_with.map((s) => (
                             <li key={s}>
-                              <Link href={`/species/${s}`} className="text-sm text-spawn-muted-text hover:text-spawn-cyan transition-colors capitalize">
-                                {s.replace(/-/g, ' ')}
-                              </Link>
+                              {(() => {
+                                const target = resolveSpeciesSlug(s)
+                                const label = s.replace(/-/g, ' ')
+                                return target ? (
+                                  <Link href={`/species/${target}`} className="text-sm text-spawn-muted-text hover:text-spawn-cyan transition-colors capitalize">
+                                    {label}
+                                  </Link>
+                                ) : (
+                                  <span className="text-sm text-spawn-muted-text capitalize">{label}</span>
+                                )
+                              })()}
                             </li>
                           ))}
                         </ul>

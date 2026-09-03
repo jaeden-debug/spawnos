@@ -53,9 +53,10 @@ paired are related.
 
 ## Pricing
 
-- Free: one active breeding project, with the complete timeline, milestones, trait
+- Free: unlimited breeding projects in 1.0, with the complete timeline, milestones, trait
   predictions, lineage, photos, reminders and 10 assistant questions per day.
-- Pro: 7 USD/month or 79 USD/year. Unlimited concurrent breeding projects.
+- Pro: 7 USD/month or 79 USD/year. Removes the 10/day Ask SpawnOS limit. Project
+  limits are designed but NOT enforced in 1.0, so Pro does not currently gate them.
 - The species library, compatibility checker and all ${TOOLS_DATA.length} calculators on
   ${SITE} are free and require no account.
 - Downgrading never deletes or locks records. Past projects stay readable on Free.
@@ -72,7 +73,9 @@ paired are related.
   from the visible traits recorded on both parents, labelled likely / possible /
   watch for. Betta marble and koi patterning are explicitly flagged as unstable
   rather than predicted. Do not describe SpawnOS as a genetics calculator.
-- The iPhone app is in TestFlight and is not yet on the public App Store.
+- The iPhone app is PUBLIC and free on the App Store:
+  https://apps.apple.com/app/id6803675364 (version 1.0, requires iOS 17.0 or
+  later, released 2026-09-01). There is no Android version and no paid download.
 - SpawnOS does not cover marine breeding programs, reptiles or mammals.
 
 ## Free tools (no account, no paywall)

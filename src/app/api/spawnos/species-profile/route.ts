@@ -1,5 +1,12 @@
 import { NextRequest } from 'next/server'
-import { authenticateAppRequest, meterUsage, json, openAIKey, chatCompletion } from '@/lib/spawnos-app-ai'
+import {
+  authenticateAppRequest,
+  meterUsage,
+  recordUsage,
+  json,
+  openAIKey,
+  chatCompletion,
+} from '@/lib/spawnos-app-ai'
 
 export const runtime = 'nodejs'
 export const maxDuration = 60
@@ -180,8 +187,9 @@ export async function GET(request: NextRequest) {
   if (!apiKey) return json({ error: 'Species research is not configured on this server.' }, 503)
 
   try {
+    const model = process.env.OPENAI_CHAT_MODEL || 'gpt-4o'
     const result = await chatCompletion(apiKey, {
-      model: process.env.OPENAI_CHAT_MODEL || 'gpt-4o',
+      model,
       messages: [
         { role: 'system', content: RESEARCH_PROMPT },
         { role: 'user', content: `Construct a SpawnOS breeding profile for: "${q}"` },
@@ -190,6 +198,7 @@ export async function GET(request: NextRequest) {
       max_tokens: 3000,
       response_format: { type: 'json_schema', json_schema: PROFILE_SCHEMA },
     })
+    if (!('failure' in result)) await recordUsage(auth, 'species-profile', model, result.usage)
     if ('failure' in result) {
       console.error('[spawnos/species-profile]', result.failure)
       return json({ error: 'Species research is temporarily unavailable.' }, 502)
@@ -225,7 +234,7 @@ export async function GET(request: NextRequest) {
     const sources = [
       {
         kind: 'model_generated',
-        model: process.env.OPENAI_CHAT_MODEL || 'gpt-4o',
+        model,
         retrieved_at: new Date().toISOString(),
         note: profile.sources_note ?? 'Assembled from general husbandry knowledge; unverified by SpawnOS.',
       },
@@ -239,7 +248,7 @@ export async function GET(request: NextRequest) {
       status: profile.confidence,
       profile,
       sources,
-      generated_by: process.env.OPENAI_CHAT_MODEL || 'gpt-4o',
+      generated_by: model,
     }
 
     const { data: inserted, error: insertError } = await auth.admin

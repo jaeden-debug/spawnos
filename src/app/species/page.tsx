@@ -11,8 +11,8 @@ export const metadata: Metadata = {
   description:
     'The most comprehensive aquarium species database online. Verified water parameters, care difficulty, compatibility, and breeding guides for 100+ freshwater and saltwater fish, shrimp, snails, live foods, microfauna, amphibians, and aquatic plants.',
   alternates: { canonical: '/species' },
-  openGraph: {
-    title: 'Aquarium Species Database — SpawnOS',
+  openGraph: { images: ['https://spawnos.ca/spawnos-brand-card.png'],
+    title: 'Aquarium Species Database',
     description:
       'Verified water parameters, care profiles, and breeding intelligence for 100+ aquarium species. Betta, discus, clownfish, tangs, axolotl, shrimp, snails, daphnia, and more.',
     type: 'website',

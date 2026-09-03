@@ -5,7 +5,7 @@ import SiteFooter from '@/components/layout/SiteFooter'
 import HeaterSizeCalculator from '@/components/tools/HeaterSizeCalculator'
 
 export const metadata: Metadata = {
-  title: 'Aquarium Heater Size Calculator — Wattage, Model & Cost | SpawnOS',
+  title: 'Aquarium Heater Size Calculator — Wattage, Model & Cost',
   description:
     'Calculate the correct aquarium heater wattage for your tank size, room temperature, and target temperature. Includes model recommendations, dual heater setup guide, and monthly energy cost estimate.',
   alternates: { canonical: '/tools/heater-size' },

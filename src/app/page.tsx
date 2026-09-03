@@ -9,7 +9,7 @@ import AppCta from '@/components/spawnos/AppCta'
 export const metadata: Metadata = {
   title: 'SpawnOS — Breeding Records & Spawn Timelines for Aquarium Fish',
   description:
-    'Track your breeding pairs, spawn dates, fry milestones and lineage in one app. Plus a free species library, fish compatibility checker and 15 aquarium calculators. First breeding project free.',
+    'Track your breeding pairs, spawn dates, fry milestones and lineage in one app. Plus a free species library, fish compatibility checker and 15 aquarium calculators. No cap on breeding projects.',
   alternates: { canonical: '/' },
 }
 
@@ -61,7 +61,7 @@ const PLATFORM_FEATURES = [
     desc: 'Register your fish, build a pair, log one spawn date — SpawnOS builds the timeline from there. Hatch, free-swimming, first feeding, when to pull the male, when to jar. Plus lineage and relatedness warnings as your lines grow.',
     href: '/app',
     accent: 'amber',
-    stat: 'First project free',
+    stat: 'No project cap',
   },
 ]
 
@@ -132,8 +132,8 @@ export default async function HomePage() {
                 and tells you what should be happening in the tank today.
               </p>
               <p className="text-sm text-spawn-muted-text mb-9 max-w-md">
-                Your first breeding project is free. The species library and all 15 calculators
-                are free with no account at all.
+                Every breeding record is free — pairs, spawns, milestones and lineage, with no
+                project cap. The species library and all 15 calculators need no account at all.
               </p>
 
               <AppCta
@@ -330,12 +330,12 @@ export default async function HomePage() {
           <div className="max-w-4xl mx-auto text-center">
             <div className="text-xs font-semibold uppercase tracking-widest text-spawn-muted-text mb-4">Pricing</div>
             <h2 className="text-3xl font-black text-spawn-text mb-4">
-              One breeding project, free.
+              Every breeding record, free.
             </h2>
             <p className="text-spawn-muted-text leading-relaxed mb-10 max-w-lg mx-auto">
-              Register your animals, create a pair, record the spawn and follow the whole timeline
-              through to grow-out without paying. The only thing Pro adds is running more than one
-              project at a time.
+              Register your animals, create pairs, record spawns and follow every timeline through
+              to grow-out without paying — as many projects as you run. The one thing Pro adds is
+              unlimited Ask SpawnOS; Free includes 10 questions a day.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 mb-10 max-w-2xl mx-auto">
@@ -343,7 +343,7 @@ export default async function HomePage() {
                 {
                   name: 'Free',
                   price: '$0',
-                  desc: 'One active breeding project, full timeline and lineage, the whole species library and all 15 calculators.',
+                  desc: 'Breeding projects uncapped in 1.0, full timeline and lineage, the whole species library and all 15 calculators.',
                   cta: 'Get SpawnOS',
                   href: '/app',
                   style: 'border',
@@ -351,7 +351,7 @@ export default async function HomePage() {
                 {
                   name: 'Pro',
                   price: '$7/mo',
-                  desc: 'Unlimited active breeding projects, running side by side, with one history across all of them.',
+                  desc: 'Unlimited Ask SpawnOS with no daily cap, priority email support, and it funds the build.',
                   cta: 'See Pro',
                   href: '/pricing',
                   style: 'cyan',
@@ -404,7 +404,7 @@ export default async function HomePage() {
             <p className="text-spawn-muted-text text-lg leading-relaxed mb-10">
               Spawn dates in a camera roll, milestones in your head, lineage in a spreadsheet you
               stopped updating. SpawnOS holds all of it and tells you what today should look like.
-              First project free, no credit card.
+              Free, with no cap on breeding projects. No credit card.
             </p>
             <AppCta
               source="home_footer"

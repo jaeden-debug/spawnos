@@ -2,13 +2,19 @@
 
 import Link from 'next/link'
 import { track } from '@/lib/analytics'
+import { APP_STORE_URL } from '@/lib/app-store'
 
 /**
  * The primary "get SpawnOS" call to action.
  *
- * Always routes to /app — never to a hardcoded App Store URL. The App Store
- * listing is not public yet, and /app is the one place that states the real
- * status, so when the listing goes live only that page changes.
+ * Routes to /app by default rather than straight to Apple. iOS 1.0 is public,
+ * but sending every CTA offsite would turn spawnos.ca into an App Store
+ * redirect and strand the free species library and calculators that bring
+ * people here in the first place. /app explains the product and carries the
+ * real badge; that is where the handoff to Apple belongs.
+ *
+ * Pass `storeHref` where a direct store link genuinely is the right next step
+ * (for example a page whose whole job is the download).
  */
 export default function AppCta({
   source,
@@ -16,6 +22,7 @@ export default function AppCta({
   secondaryHref = '/pricing',
   secondaryLabel = 'See pricing',
   label = 'Get SpawnOS',
+  storeHref = false,
 }: {
   /** Placement identifier for analytics, e.g. 'app_page_hero'. */
   source: string
@@ -23,12 +30,25 @@ export default function AppCta({
   secondaryHref?: string | null
   secondaryLabel?: string
   label?: string
+  /** Link straight to the App Store instead of /app. */
+  storeHref?: boolean
 }) {
+  const primaryProps = storeHref
+    ? {
+        href: APP_STORE_URL,
+        target: '_blank' as const,
+        rel: 'noopener',
+        onClick: () => track('spawnos_app_store_click', { source }),
+      }
+    : {
+        href: '/app',
+        onClick: () => track('spawnos_app_cta_click', { source }),
+      }
+
   return (
     <div className={`flex flex-col sm:flex-row gap-3 ${className}`}>
       <Link
-        href="/app"
-        onClick={() => track('spawnos_app_cta_click', { source })}
+        {...primaryProps}
         className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl bg-spawn-cyan text-spawn-bg font-bold text-sm hover:bg-opacity-90 transition-all"
         style={{ boxShadow: '0 0 28px rgba(0,212,255,0.28)' }}
       >

@@ -8,7 +8,7 @@ import MdxRenderer from '@/components/content/MdxRenderer'
 import { breadcrumbSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
-  title: 'SpawnOS by Blackwater Aquatics Canada | Aquarium Tools, Fish Compatibility & Breeder Intelligence',
+  title: { absolute: 'SpawnOS by Blackwater Aquatics Canada — Aquarium Tools, Fish Compatibility & Breeding Records' },
   description:
     'SpawnOS is a Blackwater Aquatics Canada product — a breeding-records app for aquarium fish, with a free species library, fish compatibility checker and 15 aquarium calculators.',
   keywords: [
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     'aquarium operating system',
   ],
   alternates: { canonical: '/spawnos-by-blackwater-aquatics' },
-  openGraph: {
+  openGraph: { images: ['https://spawnos.ca/spawnos-brand-card.png'],
     title: 'SpawnOS by Blackwater Aquatics Canada — The Fish Breeding App',
     description:
       'Free aquarium calculators, species intelligence, a fish compatibility engine, and breeder tools. SpawnOS is a Blackwater Aquatics Canada product.',
