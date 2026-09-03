@@ -9,6 +9,31 @@ import { getAllToolArticleSlugs } from '@/lib/tools-content'
 
 const BASE = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://spawnos.ca').replace(/\/$/, '')
 
+/**
+ * Date the species TEMPLATE last changed the rendered page.
+ *
+ * `lastModified` must reflect when a page last significantly changed, and for a
+ * templated page that includes changes made by the template, not just the
+ * content row. On 2026-09-03 the species reader stopped emitting each file's YAML
+ * frontmatter as a visible heading — a defect that affected 101 of 103 species
+ * pages and put build metadata directly under the table of contents. Every one of
+ * those pages therefore changed materially that day, while `species.lastUpdated`
+ * still reports when the COPY was last edited, in May and June.
+ *
+ * Reporting the copy date alone tells Google nothing changed, so the pages it
+ * already crawled in their defective state would not be re-crawled on any useful
+ * horizon. Taking the later of the two dates is the accurate answer, not an
+ * inflated one — invented lastmod values get the whole sitemap discounted.
+ *
+ * Bump this ONLY when a change alters what species pages actually render.
+ */
+const SPECIES_TEMPLATE_REVISED = new Date('2026-09-03T00:00:00Z')
+
+/** The later of two dates — a page changed if EITHER its copy or its template did. */
+function latest(a: Date, b: Date): Date {
+  return a.getTime() > b.getTime() ? a : b
+}
+
 // Public, indexable routes. Auth-gated (/dashboard), conversion (/login, /signup),
 // and API routes are intentionally excluded.
 const STATIC_ROUTES = [
@@ -52,7 +77,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const speciesEntries: MetadataRoute.Sitemap = SPECIES_DATA.map((s) => ({
     url: `${BASE}/species/${s.slug}`,
-    lastModified: s.lastUpdated ? new Date(s.lastUpdated) : now,
+    lastModified: latest(
+      s.lastUpdated ? new Date(s.lastUpdated) : now,
+      SPECIES_TEMPLATE_REVISED,
+    ),
     changeFrequency: 'monthly',
     priority: 0.8,
   }))
