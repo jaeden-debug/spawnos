@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { APP_STORE_URL, PLATFORM } from '@/lib/app-store'
 
 /**
  * The fallback shown at https://spawnos.app when someone opens the app domain
@@ -33,12 +34,11 @@ export default function AppLandingPage() {
           SpawnOS assistant — on your iPhone.
         </p>
         <p style={{ fontSize: 15, lineHeight: 1.6, opacity: 0.75, margin: '0 0 28px' }}>
-          SpawnOS for iPhone is currently in <strong>TestFlight for invited
-          testers</strong>. If you have an invitation, open it on your iPhone to
-          install.
+          <strong>SpawnOS is free on the App Store</strong> for iPhone, and
+          requires {PLATFORM}.
         </p>
         <a
-          href="https://spawnos.ca"
+          href={APP_STORE_URL}
           style={{
             display: 'inline-block',
             padding: '14px 30px',
@@ -49,8 +49,13 @@ export default function AppLandingPage() {
             textDecoration: 'none',
           }}
         >
-          Explore SpawnOS
+          Download on the App Store
         </a>
+        <p style={{ fontSize: 14, margin: '18px 0 0' }}>
+          <a href="https://spawnos.ca" style={{ color: '#6BFCF6' }}>
+            Explore SpawnOS on the web
+          </a>
+        </p>
       </div>
     </main>
   )
