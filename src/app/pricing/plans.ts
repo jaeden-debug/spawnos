@@ -18,7 +18,7 @@ export const PLANS = [
   {
     id: 'free',
     name: 'Free',
-    tagline: 'Your first breeding project — start to finish.',
+    tagline: 'The whole breeding workflow, start to finish.',
     monthlyPrice: 0,
     annualPrice: 0,
     cta: 'Get the App',
@@ -26,49 +26,67 @@ export const PLANS = [
     ctaStyle: 'border',
     featured: false,
     features: [
-      { text: 'One active breeding project', included: true },
+      { text: 'Breeding projects — not capped in 1.0', included: true },
       { text: 'Register your animals — photos, traits, notes', included: true },
       { text: 'Species-aware spawn timeline & milestone windows', included: true },
       { text: 'Preparation checklists and reminders', included: true },
       { text: 'Lineage and relatedness warnings', included: true },
+      { text: 'Trait predictions from recorded parent traits', included: true },
+      { text: 'Photos, sync and multi-device restore', included: true },
       { text: 'Ask SpawnOS — 10 questions/day', included: true },
       { text: 'Full species library & all 15 calculators', included: true },
-      { text: 'Several breeding projects at once', included: false },
-      { text: 'Higher daily Ask SpawnOS allowance', included: false },
+      { text: 'Unlimited Ask SpawnOS', included: false },
     ],
   },
   {
     id: 'pro',
     name: 'Pro',
-    tagline: 'For breeders running more than one line.',
+    tagline: 'Unlimited Ask SpawnOS, and it funds the build.',
     monthlyPrice: 7,
     annualPrice: 79,
     cta: 'Start Pro — Free 14 days',
     ctaHref: '/signup?plan=pro',
     ctaStyle: 'cyan',
     featured: true,
-    badge: 'For active breeders',
+    badge: 'Supports development',
     features: [
       { text: 'Everything in Free', included: true },
-      { text: 'Unlimited active breeding projects', included: true },
-      { text: 'Run multiple spawns side by side', included: true },
-      { text: 'Full breeding history across every project', included: true },
-      { text: 'Higher daily Ask SpawnOS allowance', included: true },
-      { text: 'Deeper lineage across your whole collection', included: true },
-      { text: 'Records sync and restore on every device', included: true },
+      { text: 'Unlimited Ask SpawnOS — no daily cap', included: true },
+      { text: 'Priority email support', included: true },
+      { text: 'Funds SpawnOS development directly', included: true },
+      { text: 'Locks in this price before project limits arrive', included: true },
       { text: '14-day free trial, cancel anytime', included: true },
     ],
   },
 ]
 
+/**
+ * PRICING TRUTH
+ *
+ * These strings are the public commercial claim and must match what the shipped
+ * build actually does. As of iOS 1.0, `Entitlements.capacityLimitsEnforced` is
+ * FALSE — the one-active-project boundary is written and tested but deliberately
+ * not enforced, because the binary ships without in-app purchase and capping a
+ * user with no in-app way to lift it is both a dead end and an App Review 3.1.1
+ * problem for a non-US developer.
+ *
+ * So the project limit is NOT a Pro differentiator today. The only capability
+ * Pro actually gates is the Ask SpawnOS daily quota, enforced server-side in
+ * `src/lib/spawnos-app-ai.ts` (APP_FREE_DAILY_LIMIT = 10, unlimited for
+ * pro/breeder/founder). Selling "unlimited projects" while every Free account
+ * already has them would be charging for something the customer owns.
+ *
+ * When capacityLimitsEnforced flips to true alongside StoreKit, revisit this
+ * file in the same commit.
+ */
 export const FAQ = [
   {
     q: 'Is SpawnOS free?',
-    a: "The app is free to download and your first breeding project is free — register your animals, create a pair, record the spawn, and follow the whole timeline through to grow-out without paying. The species library and all 15 calculators on this site are free with no account at all.",
+    a: "Yes. The app is free on the App Store, and in version 1.0 there is no cap on breeding projects — register your animals, create pairs, record spawns and follow the whole timeline through to grow-out without paying. The species library and all 15 calculators on this site are free with no account at all.",
   },
   {
     q: 'What actually triggers the upgrade?',
-    a: "One thing: running a second breeding project at the same time. Free covers one active pair. When you want to run another line alongside it, that's Pro. Retiring a finished project frees the slot again, and a retired project keeps all of its records.",
+    a: "Today, one thing: the Ask SpawnOS daily limit. Free includes 10 questions a day; Pro removes the cap. We designed Free around a single active breeding project, but that limit is not enforced in 1.0 — the app ships without in-app purchase, and capping someone with no way to lift it inside the app would be a dead end. So Pro right now is the unlimited assistant, priority support, and directly funding the build. When project limits do arrive, this price is locked in for existing subscribers.",
   },
   {
     q: 'Does my subscription work in the iPhone app?',
@@ -76,7 +94,7 @@ export const FAQ = [
   },
   {
     q: 'What happens to my data if I cancel or downgrade?',
-    a: "Nothing is deleted and nothing is locked. Every animal, pair, spawn, milestone, photo and lineage link you recorded stays readable on any plan. Downgrading only limits how many projects you can run at once going forward.",
+    a: "Nothing is deleted and nothing is locked. Every animal, pair, spawn, milestone, photo and lineage link you recorded stays readable on any plan. Downgrading returns Ask SpawnOS to 10 questions a day; your records are untouched.",
   },
   {
     q: 'What happens after the 14-day Pro trial?',
@@ -102,18 +120,18 @@ export const FAQ = [
 
 export const COMPARISON_FEATURES = [
   { label: 'iPhone app', free: 'Included', pro: 'Included' },
-  { label: 'Active breeding projects', free: '1', pro: 'Unlimited' },
+  { label: 'Active breeding projects', free: 'Not capped in 1.0', pro: 'Not capped in 1.0' },
   { label: 'Registered animals', free: 'Unlimited', pro: 'Unlimited' },
   { label: 'Spawn timeline & milestone windows', free: '✓', pro: '✓' },
   { label: 'Preparation checklists & reminders', free: '✓', pro: '✓' },
   { label: 'Trait predictions from parent traits', free: '✓', pro: '✓' },
   { label: 'Lineage & relatedness warnings', free: '✓', pro: '✓' },
   { label: 'Photos & multi-device restore', free: '✓', pro: '✓' },
-  { label: 'Ask SpawnOS', free: '10 / day', pro: 'Higher allowance' },
+  { label: 'Ask SpawnOS', free: '10 / day', pro: 'Unlimited' },
   { label: 'Species library', free: 'Full access', pro: 'Full access' },
   { label: 'Calculators', free: 'All 15', pro: 'All 15' },
   { label: 'Access to your past records', free: 'Always', pro: 'Always' },
-  { label: 'Support', free: 'Community', pro: 'Email' },
+  { label: 'Support', free: 'Community', pro: 'Priority email' },
 ]
 
 export type Plan = (typeof PLANS)[number]

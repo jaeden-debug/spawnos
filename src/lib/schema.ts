@@ -128,7 +128,7 @@ export function spawnosProductNode() {
         '@type': 'Offer',
         name: 'SpawnOS Free',
         description:
-          'One active breeding project, the full species library and all 15 calculators.',
+          'The full breeding workflow with no project cap in 1.0, the species library and all 15 calculators.',
         price: '0',
         priceCurrency: 'USD',
         availability: 'https://schema.org/InStock',
@@ -137,7 +137,7 @@ export function spawnosProductNode() {
       {
         '@type': 'Offer',
         name: 'SpawnOS Pro',
-        description: 'Unlimited active breeding projects.',
+        description: 'Removes the 10-per-day Ask SpawnOS limit, plus priority email support.',
         price: '7.00',
         priceCurrency: 'USD',
         availability: 'https://schema.org/InStock',

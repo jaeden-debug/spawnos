@@ -343,7 +343,7 @@ export default async function HomePage() {
                 {
                   name: 'Free',
                   price: '$0',
-                  desc: 'One active breeding project, full timeline and lineage, the whole species library and all 15 calculators.',
+                  desc: 'Breeding projects uncapped in 1.0, full timeline and lineage, the whole species library and all 15 calculators.',
                   cta: 'Get SpawnOS',
                   href: '/app',
                   style: 'border',
@@ -351,7 +351,7 @@ export default async function HomePage() {
                 {
                   name: 'Pro',
                   price: '$7/mo',
-                  desc: 'Unlimited active breeding projects, running side by side, with one history across all of them.',
+                  desc: 'Unlimited Ask SpawnOS with no daily cap, priority email support, and it funds the build.',
                   cta: 'See Pro',
                   href: '/pricing',
                   style: 'cyan',

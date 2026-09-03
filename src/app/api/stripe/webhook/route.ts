@@ -207,11 +207,32 @@ export async function POST(request: NextRequest) {
         break
       }
 
-      // Plan change, renewal, trial end, cancel-at-period-end, deletion.
+      /**
+       * Plan change, renewal, trial end, cancel-at-period-end, deletion.
+       *
+       * Re-read from Stripe rather than trusting event.data.object. The payload
+       * is a snapshot of the subscription when the event was CREATED, so an
+       * out-of-order delivery carries stale state and would transiently write
+       * the wrong tier until the next event corrected it. Retrieving makes the
+       * write reflect Stripe's current truth regardless of arrival order.
+       *
+       * A deleted subscription still retrieves (status 'canceled'), so this is
+       * safe for the deletion case too. If the retrieve fails we fall back to
+       * the payload — a stale write beats no write, and the next event
+       * reconciles.
+       */
       case 'customer.subscription.created':
       case 'customer.subscription.updated':
       case 'customer.subscription.deleted': {
-        const sub = event.data.object as any
+        const payload = event.data.object as any
+        let sub = payload
+        if (payload?.id) {
+          try {
+            sub = await stripe.subscriptions.retrieve(payload.id)
+          } catch (e) {
+            console.warn('[stripe/webhook] retrieve failed, using payload', payload.id, e)
+          }
+        }
         await syncSubscription(supabase, sub)
         break
       }
