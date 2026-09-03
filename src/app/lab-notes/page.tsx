@@ -66,6 +66,51 @@ export default function LabNotesPage() {
                 <LabNotesExplorer notes={notes} categories={categories} />
               </div>
             </section>
+
+            {/*
+              Complete, server-rendered index of every lab note, grouped by topic.
+
+              LabNotesExplorer is a client island that renders PAGE_SIZE (9) cards and
+              reveals the rest behind a "Load more" button. That means the hub shipped
+              only 9 of its 42 article links in the HTML, and the other 33 were reachable
+              only by executing a click — which crawlers do not reliably do. The betta
+              breeding cluster, which is the most differentiated content on this site,
+              was in that 33 and sat four clicks from the homepage as a result.
+
+              This list is the crawl path and the topical hierarchy: every article,
+              grouped under its category, in the initial response. The explorer above
+              stays exactly as it is for people.
+            */}
+            <section className="px-4 pb-16 border-t border-spawn-border/30 pt-12">
+              <div className="max-w-6xl mx-auto">
+                <h2 className="text-sm font-bold uppercase tracking-widest text-spawn-muted-text mb-8">
+                  Every article by topic
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10">
+                  {categories.map(({ category, count }) => (
+                    <div key={category}>
+                      <h3 className="text-xs font-bold uppercase tracking-widest text-spawn-cyan mb-3">
+                        {category} <span className="text-spawn-muted-text font-semibold">({count})</span>
+                      </h3>
+                      <ul className="space-y-2">
+                        {notes
+                          .filter((n) => n.category === category)
+                          .map((n) => (
+                            <li key={n.slug}>
+                              <Link
+                                href={`/lab-notes/${n.slug}`}
+                                className="text-sm text-spawn-muted-text hover:text-spawn-cyan leading-snug"
+                              >
+                                {n.title}
+                              </Link>
+                            </li>
+                          ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
           </>
         )}
       </main>
