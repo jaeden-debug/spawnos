@@ -3,23 +3,26 @@ import Link from 'next/link'
 import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/layout/SiteFooter'
 import { breadcrumbSchema, productPageSchema } from '@/lib/schema'
-import AppCta from '@/components/spawnos/AppCta'
+import AppStoreBadge from '@/components/spawnos/AppStoreBadge'
+import { APP_VERSION, PLATFORM } from '@/lib/app-store'
 
 /**
- * The single destination for every "get the app" CTA across the site.
+ * The single destination for every "get the app" CTA across the site, and the
+ * marketing URL registered on the App Store listing — Apple sends visitors here
+ * from the listing itself, so this page must always state the app's real,
+ * current availability.
  *
- * Until the App Store listing is public this page states the real status —
- * TestFlight, invite only — and captures intent instead. There is deliberately
- * no "Download on the App Store" button and no fabricated App Store link; when
- * the listing goes live, replace the status block with the real badge and
- * update `APP_STATUS` below.
+ * iOS 1.0 went public on 2026-09-01 (verified against Apple's lookup API; see
+ * `@/lib/app-store`). The page now carries Apple's official badge and links to
+ * the real listing. Every fact below comes from that module — do not restate
+ * the version, platform or price inline.
  */
-const APP_STATUS = 'testflight' as 'testflight' | 'live'
+const APP_STATUS = 'live' as 'testflight' | 'live'
 
 export const metadata: Metadata = {
-  title: 'Get SpawnOS for iPhone — Breeding Records for Aquarium Fish',
+  title: 'Download SpawnOS for iPhone — Breeding Records for Aquarium Fish',
   description:
-    'SpawnOS for iPhone tracks your breeding pairs, spawn dates, fry milestones and lineage. Your first breeding project is free. Currently in TestFlight ahead of the App Store release.',
+    'SpawnOS for iPhone tracks your breeding pairs, spawn dates, fry milestones and lineage. Free on the App Store, and your first breeding project is free. Requires iOS 17 or later.',
   alternates: { canonical: '/app' },
 }
 
@@ -85,7 +88,13 @@ export default function GetAppPage() {
               place — and tells you what should be happening in the tank today.
               Your first breeding project is free.
             </p>
-            <AppCta source="app_page_hero" className="justify-center" />
+
+            <div className="flex flex-col items-center gap-4">
+              <AppStoreBadge source="app_page_hero" width={180} />
+              <p className="text-xs text-spawn-muted-text">
+                Free on the App Store · {PLATFORM} · Version {APP_VERSION}
+              </p>
+            </div>
           </div>
         </section>
 
@@ -98,19 +107,39 @@ export default function GetAppPage() {
                   Where the app is right now
                 </h2>
                 <p className="text-sm text-spawn-muted-text leading-relaxed">
-                  SpawnOS for iPhone is in <strong className="text-spawn-text">TestFlight with invited
-                  testers</strong> while we finish the App Store release. It is a real, working build
-                  — the breeding engine, timelines, lineage and assistant all run against the
-                  same account you would use here. If you have an invitation, open it on your
-                  iPhone to install.
-                </p>
-                <p className="text-sm text-spawn-muted-text leading-relaxed mt-4">
-                  Not a tester yet? Create a free SpawnOS account below — it is the same login the
-                  app uses, so you will be ready the day the App Store listing opens.
+                  SpawnOS for iPhone is in TestFlight with invited testers while we finish the
+                  App Store release.
                 </p>
               </>
             ) : (
-              <h2 className="text-xl font-black text-spawn-text">Available on the App Store.</h2>
+              <>
+                <h2 className="text-xl font-black text-spawn-text mb-3">
+                  SpawnOS is on the App Store
+                </h2>
+                {/*
+                  Plain crawlable prose, not just a badge image. This is the
+                  passage an AI assistant quotes when asked "is SpawnOS
+                  available / what platform / who makes it".
+                */}
+                <p className="text-sm text-spawn-muted-text leading-relaxed">
+                  <strong className="text-spawn-text">SpawnOS is free to download on the
+                  App Store</strong> for iPhone, and requires {PLATFORM}. It is built and published
+                  by{' '}
+                  <a
+                    href="https://blackwateraquatics.ca"
+                    className="text-spawn-cyan hover:underline"
+                    rel="noopener"
+                  >
+                    Blackwater Aquatics Canada
+                  </a>
+                  . There is no Android version and no paid download — your first breeding project
+                  is free, and Pro is an optional subscription bought on this website.
+                </p>
+                <p className="text-sm text-spawn-muted-text leading-relaxed mt-4">
+                  Your SpawnOS account is the same one you use here, so records and any Pro
+                  subscription follow you onto every device you sign in on.
+                </p>
+              </>
             )}
           </div>
         </section>
@@ -188,7 +217,9 @@ export default function GetAppPage() {
               without paying. Pro is for the point where you want to run a second line alongside
               the first.
             </p>
-            <AppCta source="app_page_footer" className="justify-center" />
+            <div className="flex flex-col items-center gap-4">
+              <AppStoreBadge source="app_page_footer" width={180} />
+            </div>
             <p className="mt-6 text-sm text-spawn-muted-text">
               <Link href="/pricing" className="text-spawn-cyan hover:underline">
                 See what Free and Pro include
