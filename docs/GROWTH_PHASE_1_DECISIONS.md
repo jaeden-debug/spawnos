@@ -84,8 +84,67 @@ prompt caching on the stable system prompt; A/B species-profile on gpt-4o-mini.
 - Subtitle (28/30): `Breeding logs & fry timeline`
 - Keywords (97/100): `betta,guppy,aquarium,fish,breeder,hatch,lineage,pedigree,tracker,shrimp,eggs,pair,genetics,strain`
 
+## MEASURED AI economics (2026-09-03)
+
+Measured with tiktoken `o200k_base` against the live prompts, not estimated.
+Fixed overhead per request: system 623 tok + response schema 411 tok + wrapper 25 tok
+= **1,059 tokens** before any user data.
+
+| Scenario | in tok | out | $/req now | $/req optimized |
+|---|---|---|---|---|
+| minimal — general question, no records | 1,078 | 300 | $0.0057 | $0.0057 |
+| typical — mid-spawn, short thread | 3,197 | 550 | $0.0135 | **$0.0102** (−25%) |
+| heavy — rich fishroom, long thread | 6,203 | 550 | $0.0210 | $0.0138 (−34%) |
+| CEILING — server caps saturated | 10,821 | 900 | **$0.0361** | $0.0199 (−45%) |
+
+**Corrections to figures previously carried:**
+- Worst case is **$0.0361**, not the $0.0508 I estimated with a chars/4 approximation.
+- The species route makes **one** model call, not two (~$0.0331). It is also cached
+  globally (`spawnos_species_profiles` has no `user_id`), so it is a once-per-species
+  cost across all users — a few dollars lifetime. Routing it to gpt-4o-mini would save
+  a rounding error for a real quality risk. **Do not.**
+
+Break-even at $7/mo (~$6.30 net, Stripe CA incl. cross-border + FX):
+**620 questions/month (~20.7/day)** optimized-typical; 317/mo (10.6/day) optimized-worst.
+
+Monthly exposure per user, optimized: 30 q/mo = $0.31 · 100 q/mo = $1.02 ·
+free cap 10/day = $3.05 · a paid account at 100/day = $30.50.
+
+**Verdict: "unlimited Ask SpawnOS, fair use" IS financially defensible** at $7/mo,
+because breaking even needs >20 questions/day sustained every day. It was *not*
+defensible as literally uncapped, and it was never measurable.
+
+### Shipped 2026-09-03
+- Token accounting: `chatCompletion` was discarding `data.usage`; `spawnos_ai_usage`
+  now records input/output/cached tokens, tier, route and server-computed USD.
+- Paid tiers metered at **150/day** fair-use (abuse ceiling, ~7x above break-even).
+  Free stays at 10/day — tightening it pushes heavy users into the uncapped tier.
+- Context serialized compact instead of `indent: 1` — a third of the context budget
+  was whitespace (1,198 tok pretty vs 795 compact on a representative bundle).
+- No prompt, model, temperature or `max_tokens` changed. Quality untouched.
+
+### Still to decide (needs the data now being collected)
+History summarization beyond 4 turns and retrieval-instead-of-injection for the
+context block. Both change behaviour, so they wait for real P50/P90/P99 — which
+**cannot be computed today**: total real usage is 3 questions, 1 user, one day
+(2026-08-22). Any percentile quoted before instrumentation accrues would be invented.
+
+## Measurement status (2026-09-03, Zylx reconnected)
+
+- **GSC connected and healthy** — but the two resources are
+  `sc-domain:blackwateraquatics.ca` and `sc-domain:spawnos.app`.
+  **There is no `spawnos.ca` resource.** Canonical-domain search data is not being
+  collected at all. GSC data only accrues from property creation, so every day of
+  delay is permanently lost. Create/connect `sc-domain:spawnos.ca` now.
+- **Semrush: `API UNITS BALANCE IS ZERO`** — keyword volume still unavailable.
+  Do not quote or invent search volume.
+- **GA4 property 535548495: `permission_denied`** — authenticated but not authorized.
+  Reconnecting will not fix it; the property must grant the connected account access.
+- Google Ads (580-849-7735) and Shopify are healthy.
+
 ## Constraints
 
-No search-volume figure in the plan is measured — GSC and Keyword Planner need re-auth.
+No search-volume figure in the plan is measured — Semrush is out of API units and
+GA4 is unauthorized. GSC is live but points at the wrong domain (see above).
 Blackwater CTR experiment hold runs to **2026-09-16** and blocks the breeding-pair link.
 Nothing has been published, shipped, submitted or spent.
