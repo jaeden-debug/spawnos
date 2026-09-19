@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       : `${note.title} — Lab Notes`,
     description: note.excerpt,
     keywords: note.tags,
-    authors: [{ name: AUTHOR.name, url: 'https://spawnos.app/about' }],
+    authors: [{ name: AUTHOR.name, url: 'https://spawnos.ca/about' }],
     alternates: { canonical: `/lab-notes/${slug}` },
     openGraph: {
       title: note.title,
