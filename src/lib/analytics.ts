@@ -82,6 +82,42 @@ export function track(event: SpawnOSEvent, props: EventProps = {}): void {
   } catch {
     // Analytics must never break a page. Swallow deliberately.
   }
+
+  sendToLedger(event, props)
+}
+
+/**
+ * Also record the event in the first-party funnel ledger (/api/funnel).
+ *
+ * The providers above are absent on this site, so without this every call was
+ * a no-op and the Blackwater -> SpawnOS -> App Store funnel had no readable
+ * numbers at all. The ledger stores no personal data: event name, page path,
+ * placement, and whether this session arrived from Blackwater.
+ *
+ * sendBeacon survives the navigation an App Store click triggers, which a
+ * fetch would not reliably do.
+ */
+function sendToLedger(event: SpawnOSEvent, props: EventProps): void {
+  try {
+    if (!navigator.sendBeacon) return
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('funnel_test') === '1') sessionStorage.setItem('spawnos_funnel_test', '1')
+    const path = window.location.pathname
+    navigator.sendBeacon(
+      '/api/funnel',
+      JSON.stringify({
+        event,
+        site: 'spawnos',
+        page_path: path,
+        page_type: path === '/' ? 'home' : path.split('/')[1] || 'other',
+        placement: props.source ?? null,
+        from_blackwater: sessionStorage.getItem('spawnos_bwa_ref') === '1',
+        is_test: sessionStorage.getItem('spawnos_funnel_test') === '1',
+      }),
+    )
+  } catch {
+    // Counting must never break a page.
+  }
 }
 
 /**
