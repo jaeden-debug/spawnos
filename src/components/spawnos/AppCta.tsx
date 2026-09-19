@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { track } from '@/lib/analytics'
+import { track, trackAppStoreClick } from '@/lib/analytics'
 import { APP_STORE_URL } from '@/lib/app-store'
 
 /**
@@ -38,7 +38,7 @@ export default function AppCta({
         href: APP_STORE_URL,
         target: '_blank' as const,
         rel: 'noopener',
-        onClick: () => track('spawnos_app_store_click', { source }),
+        onClick: (e: React.MouseEvent<HTMLAnchorElement>) => trackAppStoreClick(e.currentTarget, source),
       }
     : {
         href: '/app',

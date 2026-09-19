@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { track } from '@/lib/analytics'
+import { trackAppStoreClick } from '@/lib/analytics'
 import { APP_STORE_URL } from '@/lib/app-store'
 
 /**
@@ -35,7 +35,7 @@ export default function AppStoreBadge({
       target="_blank"
       rel="noopener"
       aria-label="Download SpawnOS on the App Store (opens the App Store)"
-      onClick={() => track('spawnos_app_store_click', { source })}
+      onClick={(e) => trackAppStoreClick(e.currentTarget, source)}
       className={`inline-flex items-center justify-center rounded-xl p-1 -m-1 transition-opacity hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-spawn-cyan ${className}`}
     >
       <Image
