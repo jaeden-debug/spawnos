@@ -32,7 +32,10 @@ export const SPAWNOS_ID = `${SITE_URL}/#spawnos`
 // Jaeden Doody — founder of Blackwater Aquatics Canada and author of SpawnOS content.
 export const AUTHOR = {
   name: 'Jaeden Doody',
-  id: `${SITE_URL}/#jaeden-doody`,
+  // The shop's @id, not a spawnos.ca one: blackwateraquatics.ca and
+  // links.blackwateraquatics.ca publish this same person under it, and one
+  // person must have one @id or the graphs read as two different people.
+  id: 'https://blackwateraquatics.ca/#founder',
   jobTitle: 'Founder, Blackwater Aquatics Canada',
 }
 
