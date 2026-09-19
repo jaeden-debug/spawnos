@@ -18,6 +18,15 @@
  * placement names only.
  */
 
+import {
+  appStoreCampaignUrl,
+  appStoreProviderToken,
+  isBlackwaterAttribution,
+  parseAttribution,
+  spawnosCampaignToken,
+  type Attribution,
+} from '@/lib/acquisition/attribution'
+
 export type SpawnOSEvent =
   /** Any "get the app" CTA anywhere on the site. */
   | 'spawnos_app_cta_click'
@@ -103,6 +112,7 @@ function sendToLedger(event: SpawnOSEvent, props: EventProps): void {
     const params = new URLSearchParams(window.location.search)
     if (params.get('funnel_test') === '1') sessionStorage.setItem('spawnos_funnel_test', '1')
     const path = window.location.pathname
+    const attr = readAttribution()
     navigator.sendBeacon(
       '/api/funnel',
       JSON.stringify({
@@ -113,6 +123,9 @@ function sendToLedger(event: SpawnOSEvent, props: EventProps): void {
         placement: props.source ?? null,
         from_blackwater: sessionStorage.getItem('spawnos_bwa_ref') === '1',
         is_test: sessionStorage.getItem('spawnos_funnel_test') === '1',
+        // Campaign context for this visit (see captureAttribution). No PII.
+        ...(attr ?? {}),
+        app_store_ct: typeof props.app_store_ct === 'string' ? props.app_store_ct : null,
       }),
     )
   } catch {
@@ -131,12 +144,69 @@ function sendToLedger(event: SpawnOSEvent, props: EventProps): void {
 export function trackBlackwaterReferral(): void {
   if (typeof window === 'undefined') return
   try {
+    const attr = captureAttribution()
     const ref = document.referrer
-    if (!ref || !/(^|\.)blackwateraquatics\.ca$/i.test(new URL(ref).hostname)) return
+    const fromReferrer = Boolean(ref) && /(^|\.)blackwateraquatics\.ca$/i.test(new URL(ref).hostname)
+    // Blackwater's links now also carry bw_placement/utm tags, which survive
+    // where a referrer does not (in-app browsers, strict referrer policies).
+    const fromParams = isBlackwaterAttribution(attr)
+    if (!fromReferrer && !fromParams) return
     if (sessionStorage.getItem('spawnos_bwa_ref') === '1') return
     sessionStorage.setItem('spawnos_bwa_ref', '1')
-    track('blackwater_to_spawnos_click', { source: 'referrer', target: window.location.pathname })
+    track('blackwater_to_spawnos_click', {
+      source: attr?.ref_placement ?? 'referrer',
+      target: window.location.pathname,
+    })
   } catch {
     // Malformed referrer or storage blocked — nothing to record.
   }
+}
+
+/**
+ * Remembers this visit's campaign context (utm_*, Google Ads click id, and the
+ * Blackwater placement that sent it) for the rest of the browser session, so
+ * the App Store click at the end of the visit still knows where it came from.
+ *
+ * sessionStorage only: nothing persists past the tab, no cookie is set, and a
+ * later landing with new campaign parameters replaces the old context.
+ */
+export function captureAttribution(): Attribution | null {
+  if (typeof window === 'undefined') return null
+  try {
+    const fromUrl = parseAttribution(window.location.search)
+    if (fromUrl) sessionStorage.setItem('spawnos_attr', JSON.stringify(fromUrl))
+    return fromUrl ?? readAttribution()
+  } catch {
+    return null
+  }
+}
+
+function readAttribution(): Attribution | null {
+  try {
+    const raw = sessionStorage.getItem('spawnos_attr')
+    return raw ? (JSON.parse(raw) as Attribution) : null
+  } catch {
+    return null
+  }
+}
+
+/**
+ * Records an App Store click and, when an Apple provider token is configured,
+ * points the link at an App Store Connect campaign link (pt/ct/mt) just before
+ * the browser follows it. Server-rendered hrefs stay the plain listing URL, so
+ * the link works with JavaScript disabled or before a token exists.
+ */
+export function trackAppStoreClick(anchor: HTMLAnchorElement | null, source: string): void {
+  if (typeof window === 'undefined') return
+  let ct: string | undefined
+  try {
+    const fromBlackwater = sessionStorage.getItem('spawnos_bwa_ref') === '1'
+    if (appStoreProviderToken()) {
+      ct = spawnosCampaignToken(readAttribution(), fromBlackwater)
+      if (anchor) anchor.href = appStoreCampaignUrl(ct)
+    }
+  } catch {
+    // Fall through with the plain link.
+  }
+  track('spawnos_app_store_click', { source, ...(ct ? { app_store_ct: ct } : {}) })
 }
